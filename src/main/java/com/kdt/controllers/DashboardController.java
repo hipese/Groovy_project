@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -51,7 +52,7 @@ public class DashboardController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@PostMapping("/checkout")
+	@PutMapping("/checkout")
 	public ResponseEntity<Integer> checkout(@RequestPart("id")String id, @RequestPart("date") String date, @RequestPart("time")String time) throws Exception{
 		System.out.println(id+" / "+date+" / "+time);
 		         
@@ -69,8 +70,9 @@ public class DashboardController {
          
          dto.setId(id);
          dto.setWorkend(timestamp);
+         int result = AtdService.updateWorkEnd(dto);
          
-		return ResponseEntity.ok(1);
+		return ResponseEntity.ok(result);
 	}
 	
 	@GetMapping("/workstart/{id}")

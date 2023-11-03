@@ -19,5 +19,9 @@ public class AttendenceService {
 	public AttendenceDTO selectWorkStart(String id) {
 		return dao.selectWorkStart(id);
 	}
+	
+	public int updateWorkEnd(AttendenceDTO dto) {
+		return dao.updateWorkEnd(dto);
+	}
 
 }
