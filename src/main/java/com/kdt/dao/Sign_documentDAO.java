@@ -12,6 +12,7 @@ public class Sign_documentDAO {
 	private SqlSession db;
 	
 	public int insert(Sign_documentDTO dto) {
-		return db.insert("Sign_document.insert",dto);
+		db.insert("Sign_document.insert",dto);
+		return dto.getSeq();
 	}
 }
