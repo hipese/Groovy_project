@@ -27,7 +27,7 @@ public class Sign_documentService {
 		return sdao.insert(dto);
 	}
 	
-	public List<Sign_documentDTO> selectByID(String id){
-		return sdao.selectByID(id);
+	public List<Sign_documentDTO> selectProgress(String id){
+		return sdao.selectProgress(id);
 	}
 }
