@@ -12,7 +12,7 @@ public class MemberDAO {
 	@Autowired
 	SqlSession db;
 	
-	public MemberDTO getprofile() {
-		return db.selectOne("");
+	public MemberDTO getprofile(String id) {
+		return db.selectOne("Member.selectprofile",id);
 	}
 }

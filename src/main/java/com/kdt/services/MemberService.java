@@ -13,7 +13,7 @@ public class MemberService {
 	MemberDAO dao;
 	
 	
-	public MemberDTO getprofile() {
-		return dao.getprofile();
+	public MemberDTO getprofile(String id) {
+		return dao.getprofile(id);
 	}
 }
