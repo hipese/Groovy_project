@@ -9,9 +9,16 @@
 		into sign_document
 		values(null,#{writer},#{document_type},#{recipient},#{title},#{contents},#{accept},#{write_date},#{comment})
 	</insert>
-	
-	<select id="selectProgress" resultType="com.kdt.dto.Sign_documentDTO">
-		 select * from sign_document where writer = #{value} and accept = 0
+
+	<select id="selectProgress"
+		resultType="com.kdt.dto.Sign_documentDTO">
+		select * from sign_document where writer = #{value} and
+		accept = 0
 	</select>
-	
+
+	<select id="selectBySeq"
+		resultType="com.kdt.dto.Sign_documentDTO">
+		select * from sign_document where seq=#{value}
+	</select>
+
 </mapper>
