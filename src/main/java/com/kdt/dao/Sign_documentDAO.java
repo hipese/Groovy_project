@@ -1,5 +1,7 @@
 package com.kdt.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,4 +17,9 @@ public class Sign_documentDAO {
 		db.insert("Sign_document.insert",dto);
 		return dto.getSeq();
 	}
+	
+	public List<Sign_documentDTO> selectByID(String id) {
+		return db.selectList("Sign_document.selectByID", id);
+	}
+	
 }
