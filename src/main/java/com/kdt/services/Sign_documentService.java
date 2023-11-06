@@ -8,13 +8,20 @@ import org.springframework.stereotype.Service;
 import com.kdt.dao.Sign_documentDAO;
 import com.kdt.dto.Sign_documentDTO;
 
+import jakarta.servlet.http.HttpSession;
+
 @Service
 public class Sign_documentService {
 	@Autowired
 	private Sign_documentDAO sdao;
+	@Autowired
+	private HttpSession session;
 
 	public int insert(Sign_documentDTO dto) {
+		String id = (String)session.getAttribute("loginID");
 		Timestamp date = new Timestamp(System.currentTimeMillis());
+		System.out.println(id);
+		dto.setWriter(id);
 		dto.setWrite_date(date);
 		return sdao.insert(dto);
 	}

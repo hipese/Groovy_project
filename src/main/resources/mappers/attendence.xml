@@ -10,8 +10,13 @@
 	<select id="selectWorkStart" resultType="com.kdt.dto.AttendenceDTO">
 		SELECT * FROM attendence WHERE DATE(workstart) = CURDATE() and id = #{value};
 	</select>
+	
 	<update id="updateWorkEnd">
 		update attendence set workend = #{workend} where id = #{id}
 	</update>
+	
+	<select id="selectByID" resultType="com.kdt.dto.AttendenceDTO">
+		SELECT * FROM attendence WHERE id = #{id}
+	</select>
 
 </mapper>

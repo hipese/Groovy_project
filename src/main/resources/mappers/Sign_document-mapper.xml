@@ -3,9 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Sign_document">
-	<insert id="insert">
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="seq">
 		insert
 		into sign_document
 		values(null,#{writer},#{document_type},#{recipient},#{title},#{contents},#{accept},#{write_date},#{comment})
 	</insert>
+	
 </mapper>
