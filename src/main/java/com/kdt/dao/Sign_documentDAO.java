@@ -18,8 +18,8 @@ public class Sign_documentDAO {
 		return dto.getSeq();
 	}
 	
-	public List<Sign_documentDTO> selectByID(String id) {
-		return db.selectList("Sign_document.selectByID", id);
+	public List<Sign_documentDTO> selectProgress(String id) {
+		return db.selectList("Sign_document.selectProgress", id);
 	}
 	
 }
