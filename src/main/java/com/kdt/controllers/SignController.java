@@ -60,10 +60,11 @@ public class SignController {
 
 		return ResponseEntity.ok("완전 성공!"); // 클라이언트에게 http 응답코드 200번대 반환
 	}
+	
 	@GetMapping
-	public ResponseEntity<List<Sign_documentDTO>> selectAll() {
+	public ResponseEntity<List<Sign_documentDTO>> selectProgress() {
 		String id = (String)session.getAttribute("loginID");
-		List<Sign_documentDTO> list = signservice.selectByID(id);
+		List<Sign_documentDTO> list = signservice.selectProgress(id);
 		return ResponseEntity.ok(list);
 	}
 }
