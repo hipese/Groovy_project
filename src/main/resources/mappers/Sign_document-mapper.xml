@@ -10,4 +10,8 @@
 		values(null,#{writer},#{document_type},#{recipient},#{title},#{contents},#{accept},#{write_date},#{comment})
 	</insert>
 	
+	<select id="selectByID" resultType="com.kdt.dto.Sign_documentDTO">
+		select * from sign_document where writer = #{value}
+	</select>
+	
 </mapper>
