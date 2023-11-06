@@ -1,12 +1,19 @@
 package com.kdt.dto;
 
 public class ContactDTO {
-
+	
+	private String id;
 	private String group_name;
 	private String name;
 	private String position;
 	private String contact;
 	private String email;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getGroup_name() {
 		return group_name;
 	}
@@ -37,8 +44,9 @@ public class ContactDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public ContactDTO(String group_name, String name, String position, String contact, String email) {
+	public ContactDTO(String id, String group_name, String name, String position, String contact, String email) {
 		super();
+		this.id = id;
 		this.group_name = group_name;
 		this.name = name;
 		this.position = position;
@@ -49,6 +57,7 @@ public class ContactDTO {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	
 	
 }
