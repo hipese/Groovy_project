@@ -1,5 +1,7 @@
 package com.kdt.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +24,10 @@ public class AttendenceDAO {
 	
 	public int updateWorkEnd(AttendenceDTO dto) {
 		return db.update("Attendence.updateWorkEnd",dto);
+	}
+	
+	public List<AttendenceDTO> selectById(String id) {
+		return db.selectList("Attendence.selectByID", id);
 	}
 
 }

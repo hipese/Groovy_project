@@ -1,5 +1,7 @@
 package com.kdt.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,10 @@ public class AttendenceService {
 	
 	public int updateWorkEnd(AttendenceDTO dto) {
 		return dao.updateWorkEnd(dto);
+	}
+	
+	public List<AttendenceDTO> selectByID(String id) {
+		return dao.selectById(id);
 	}
 
 }
