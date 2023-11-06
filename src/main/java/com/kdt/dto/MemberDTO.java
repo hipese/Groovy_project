@@ -11,8 +11,6 @@ public class MemberDTO {
 	private String profile_image;
 	
 	
-	
-	
 	public MemberDTO() {
 		super();
 		

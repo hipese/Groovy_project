@@ -17,8 +17,10 @@ public class MemberController {
 	MemberService mservice;
 	
 	@GetMapping
-	public ResponseEntity<String> memberProfile(){
-		return ResponseEntity.ok("성공");
+	public ResponseEntity<MemberDTO> memberProfile(){
+		
+		MemberDTO dto =mservice.getprofile();
+		return ResponseEntity.ok(dto);
 	}
 
 }
