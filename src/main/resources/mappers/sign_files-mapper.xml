@@ -8,8 +8,8 @@
 		insert into sign_files values(null,#{ori_name},#{sys_name},#{parent_seq})
 	</insert>
 	
-	<select id="select" resultType="com.kdt.dto.Sign_filesDTO">
-		select * from files where parent_seq = #{parent_seq}
+	<select id="selectBySeq" resultType="com.kdt.dto.Sign_filesDTO">
+		select * from sign_files where parent_seq = #{parent_seq}
 	</select>
 
 </mapper>

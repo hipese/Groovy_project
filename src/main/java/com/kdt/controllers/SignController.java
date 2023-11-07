@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,6 +66,12 @@ public class SignController {
 	public ResponseEntity<List<Sign_documentDTO>> selectProgress() {
 		String id = (String)session.getAttribute("loginID");
 		List<Sign_documentDTO> list = signservice.selectProgress(id);
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/{seq}")
+	public ResponseEntity<Sign_documentDTO> selectBySeq(@PathVariable Integer seq) {
+		Sign_documentDTO list = signservice.selectBySeq(seq);
 		return ResponseEntity.ok(list);
 	}
 }

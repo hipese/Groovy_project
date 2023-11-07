@@ -8,13 +8,25 @@
 		select id, group_name, name, position, contact, email from member
 	</select>
 	
+	<select id="selectFavorite" resultType="com.kdt.dto.ContactDTO">
+		select id, group_name, name, position, contact, email from member where id in(SELECT favorite.target_id from member join favorite on member.id = favorite.id where member.id=#{id});
+	</select>
+	
 	<insert id="insert">
 		insert into member values(id=#{id}, password=#{password}, name=#{name}, group_name=#{group_name},
 		position=#{position}, contact=#{contact}, email=#{email})
 	</insert>
 	
-	<select id="favorite" resultType="list">
+	<select id="favorite" resultType="string">
 		select target_id from favorite where id=#{id}
 	</select>
+	
+	<insert id="setFavorite">
+		insert into favorite values(#{id}, #{target_id})
+	</insert>
+	
+	<delete id="delFavorite">
+		delete from favorite where id=#{id} and target_id=#{target_id}
+	</delete>
 	
 </mapper>
