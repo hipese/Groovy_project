@@ -8,6 +8,10 @@
 		select id, group_name, name, position, contact, email from member
 	</select>
 	
+	<select id="selectFavorite" resultType="com.kdt.dto.ContactDTO">
+		select id, group_name, name, position, contact, email from member where id in(SELECT favorite.target_id from member join favorite on member.id = favorite.id where member.id=#{id});
+	</select>
+	
 	<insert id="insert">
 		insert into member values(id=#{id}, password=#{password}, name=#{name}, group_name=#{group_name},
 		position=#{position}, contact=#{contact}, email=#{email})

@@ -21,6 +21,10 @@ public class ContactService {
 		return dao.selectAll();
 	}
 	
+	public List<ContactDTO> selectFavorite(String id) {
+		return dao.selectFavorite(id);
+	} 
+	
 	public int insert(MemberDTO dto) {
 		try {
 			dto.setPassword(Encryption.getSHA512(dto.getPassword()));

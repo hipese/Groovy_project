@@ -20,6 +20,10 @@ public class ContactDAO {
 		return db.selectList("Contact.selectAll");
 	}
 	
+	public List<ContactDTO> selectFavorite(String id) {
+		return db.selectList("Contact.selectFavorite", id);
+	}
+	
 	public int insert(MemberDTO dto) {
 		return db.insert("Contact.insert", dto);
 	}
