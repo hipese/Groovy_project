@@ -80,13 +80,13 @@ public class BoardController {
 		List<BoardDTO> Com = service.selectBoardAllCom();
 		return ResponseEntity.ok(Com);
 	}
-	
+
 	@GetMapping("/comfree")
 	public ResponseEntity<List<BoardDTO>> selectBoardAllComFree() {
 		List<BoardDTO> ComFree = service.selectBoardAllComFree();
 		return ResponseEntity.ok(ComFree);
 	}
-	
+
 	@GetMapping("/dept")
 	public ResponseEntity<List<BoardDTO>> selectBoardAllDept() {
 		List<BoardDTO> Dept = service.selectBoardAllDept();
@@ -102,6 +102,12 @@ public class BoardController {
 	@GetMapping("/{seq}")
 	public ResponseEntity <BoardDTO> selectBoardBySeq(@PathVariable Integer seq) {
 		BoardDTO message = service.selectBoardBySeq(seq);
+		// 게시물을 조회할 때마다 view_count를 증가
+		int view_count = message.getView_count() + 1;
+		message.setView_count(view_count);
+
+		// 변경된 view_count를 DB에 업데이트
+		service.updateViewCount(seq, view_count);
 		return ResponseEntity.ok(message);
 	}
 
@@ -110,8 +116,14 @@ public class BoardController {
 		service.deleteBoard(seq);
 		return ResponseEntity.ok("삭제 성공!");
 	}
+	
+	@GetMapping("/update/{seq}")
+	public ResponseEntity <BoardDTO> selectUPdateBoardBySeq(@PathVariable Integer seq) {
+		BoardDTO message = service.selectBoardBySeq(seq);
+		return ResponseEntity.ok(message);
+	}
 
-	@PutMapping("/{seq}")
+	@PutMapping("/update/{seq}")
 	public ResponseEntity<Void> updateBoard(@PathVariable Integer seq, @RequestBody BoardDTO dto) {
 		dto.setSeq(seq);
 		service.updateBoard(dto);

@@ -1,6 +1,8 @@
 package com.kdt.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,13 @@ public class BoardDAO {
 
 	public int deleteBoard(Integer seq) {
 		return db.delete("Boards.delete",seq);
+	}
+	
+	public int updateViewCount(Integer seq, Integer view_count) {
+	    Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("seq", seq);
+	    paramMap.put("view_count", view_count);
+	    return db.update("Boards.updateViewCount", paramMap);
 	}
 
 	public int updateBoard(BoardDTO dto) {

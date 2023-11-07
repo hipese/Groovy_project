@@ -21,6 +21,11 @@ public class BoardService {
 	public int deleteBoard(Integer seq) {
 		return this.dao.deleteBoard(seq);
 	}
+	
+	// ViewCount
+	public int updateViewCount(Integer seq, Integer view_count) {
+	    return this.dao.updateViewCount(seq, view_count);
+	}
 
 	// 게시물 수정
 	public int updateBoard(BoardDTO dto) {
