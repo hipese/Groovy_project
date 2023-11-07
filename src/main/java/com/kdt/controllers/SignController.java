@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -69,9 +71,36 @@ public class SignController {
 		return ResponseEntity.ok(list);
 	}
 	
+	@GetMapping("/complete")
+	public ResponseEntity<List<Sign_documentDTO>> selectComplete() {
+		String id = (String)session.getAttribute("loginID");
+		List<Sign_documentDTO> list = signservice.selectComplete(id);
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/wait")
+	public ResponseEntity<List<Sign_documentDTO>> selectWait() {
+		String id = (String)session.getAttribute("loginID");
+		List<Sign_documentDTO> list = signservice.selectWait(id);
+		return ResponseEntity.ok(list);
+	}
+	
 	@GetMapping("/{seq}")
 	public ResponseEntity<Sign_documentDTO> selectBySeq(@PathVariable Integer seq) {
 		Sign_documentDTO list = signservice.selectBySeq(seq);
 		return ResponseEntity.ok(list);
 	}
+	
+	@PutMapping("/accept/{seq}")
+	public ResponseEntity<Void> update(@PathVariable Integer seq) {
+		signservice.accept(seq);
+		return ResponseEntity.ok().build();
+	}
+	
+	@PutMapping("/reject/{seq}")
+	public ResponseEntity<Void> reject(@PathVariable Integer seq) {
+		signservice.reject(seq);
+		return ResponseEntity.ok().build();
+	}
+	
 }

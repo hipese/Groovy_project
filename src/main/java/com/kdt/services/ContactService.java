@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kdt.commons.Encryption;
 import com.kdt.dao.ContactDAO;
 import com.kdt.dto.ContactDTO;
+import com.kdt.dto.ExternalContactDTO;
 import com.kdt.dto.FavoriteDTO;
 import com.kdt.dto.MemberDTO;
 
@@ -23,6 +24,14 @@ public class ContactService {
 	
 	public List<ContactDTO> selectFavorite(String id) {
 		return dao.selectFavorite(id);
+	} 
+	
+	public List<ContactDTO> selectGroup(String id) {
+		return dao.selectGroup(id);
+	} 
+	
+	public List<ExternalContactDTO> selectExternal() {
+		return dao.selectExternal();
 	} 
 	
 	public int insert(MemberDTO dto) {
