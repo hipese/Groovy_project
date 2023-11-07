@@ -1,6 +1,7 @@
 package com.kdt.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kdt.dto.ProjectDTO;
 import com.kdt.dto.ProjectMemberDTO;
+import com.kdt.dto.ProjectProgressDTO;
 import com.kdt.dto.ProjectScheduleDTO;
 
 @Repository
@@ -32,7 +34,9 @@ public class ProjectDAO {
 		return db.selectList("Project.selectMember",seq);
 	}
 	
-	
+	public List<ProjectProgressDTO> selectProgress(int seq){
+		return db.selectList("Project.selectProgress",seq);
+	}
 	
 //	ProjectCreate
 

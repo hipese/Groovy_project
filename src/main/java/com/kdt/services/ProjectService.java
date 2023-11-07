@@ -1,6 +1,7 @@
 package com.kdt.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kdt.dao.ProjectDAO;
 import com.kdt.dto.ProjectDTO;
 import com.kdt.dto.ProjectMemberDTO;
+import com.kdt.dto.ProjectProgressDTO;
 import com.kdt.dto.ProjectScheduleDTO;
 
 @Service
@@ -26,6 +28,10 @@ public class ProjectService {
 	
 	public List<ProjectMemberDTO> selectMember(int seq){
 		return dao.selectMember(seq);
+	}
+	
+	public List<ProjectProgressDTO> selectProgress(int seq){
+		return dao.selectProgress(seq);
 	}
 
 }
