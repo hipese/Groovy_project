@@ -1,7 +1,6 @@
 package com.kdt.dto;
 
-public class favoriteDTO {
-	
+public class FavoriteDTO {
 	private String id;
 	private String target_id;
 	public String getId() {
@@ -16,14 +15,13 @@ public class favoriteDTO {
 	public void setTarget_id(String target_id) {
 		this.target_id = target_id;
 	}
-	public favoriteDTO() {
+	public FavoriteDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public favoriteDTO(String id, String target_id) {
+	public FavoriteDTO(String id, String target_id) {
 		super();
 		this.id = id;
 		this.target_id = target_id;
 	}
-	
 }

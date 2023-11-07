@@ -13,8 +13,16 @@
 		position=#{position}, contact=#{contact}, email=#{email})
 	</insert>
 	
-	<select id="favorite" resultType="list">
+	<select id="favorite" resultType="string">
 		select target_id from favorite where id=#{id}
 	</select>
+	
+	<insert id="setFavorite">
+		insert into favorite values(#{id}, #{target_id})
+	</insert>
+	
+	<delete id="delFavorite">
+		delete from favorite where id=#{id} and target_id=#{target_id}
+	</delete>
 	
 </mapper>
