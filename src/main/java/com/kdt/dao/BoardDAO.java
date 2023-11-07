@@ -10,7 +10,7 @@ import com.kdt.dto.BoardDTO;
 
 @Repository
 public class BoardDAO {
-	
+
 	@Autowired
 	private SqlSession db;
 
@@ -18,20 +18,36 @@ public class BoardDAO {
 		return db.insert("Boards.insert", dto);
 	}
 	
-	public List<BoardDTO>selectBoardAll(){ 
-		return db.selectList("Boards.selectAll");
-	}
-	
 	public BoardDTO selectBoardBySeq(int seq){ 
 		return db.selectOne("Boards.selectBySeq",seq);
 	}
 	
+	public List<BoardDTO>selectBoardRecent(){ 
+		return db.selectList("Boards.selectRecent");
+	}
+
+	public List<BoardDTO>selectBoardAllCom(){ 
+		return db.selectList("Boards.selectAllCom");
+	}
+	
+	public List<BoardDTO>selectBoardAllComFree(){ 
+		return db.selectList("Boards.selectAllComFree");
+	}
+	
+	public List<BoardDTO>selectBoardAllDept(){ 
+		return db.selectList("Boards.selectAllDept");
+	}
+
+	public List<BoardDTO>selectBoardAllDeptFree(){ 
+		return db.selectList("Boards.selectAllDeptFree");
+	}
+
 	public int deleteBoard(Integer seq) {
 		return db.delete("Boards.delete",seq);
 	}
-	
+
 	public int updateBoard(BoardDTO dto) {
 		return db.update("Board.update",dto);
 	}
-	
+
 }

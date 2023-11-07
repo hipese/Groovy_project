@@ -30,8 +30,8 @@ public class BoardController {
 	private BoardService service;
 
 	@PostMapping()
-	public ResponseEntity<String>post(@RequestParam String title, String writer, MultipartFile[] files, @RequestParam String contents) throws Exception{
-		System.out.println(title + " : " + writer+ " : " + contents);
+	public ResponseEntity<String>post(@RequestParam String title, String writer, @RequestParam(required = false) MultipartFile[] files, @RequestParam String contents, @RequestParam String category) throws Exception{
+		System.out.println(title + " : " + writer + " : " + contents + " : " + category);
 
 		String upload = "c:/uploads";
 		File uploadPath = new File(upload);
@@ -40,18 +40,22 @@ public class BoardController {
 			uploadPath.mkdir();
 		}
 
-		for(MultipartFile file:files) {
-			System.out.println(file.getOriginalFilename());
-			String oriName = file.getOriginalFilename();
-			String sysName = UUID.randomUUID()+"_"+oriName;
+		if (files != null && files.length > 0) {
+			for(MultipartFile file:files) {
+				System.out.println(file.getOriginalFilename());
+				String oriName = file.getOriginalFilename();
+				String sysName = UUID.randomUUID()+"_"+oriName;
 
-			file.transferTo(new File(uploadPath,sysName));
+				file.transferTo(new File(uploadPath,sysName));
+			}
+			// file db에 넣는 작업
 		}
-		
+
 		BoardDTO dto = new BoardDTO();
-	    dto.setTitle(title);
-	    dto.setWriter(writer);
-	    dto.setContents(contents);
+		dto.setTitle(title);
+		dto.setWriter(writer);
+		dto.setContents(contents);
+		dto.setCategory(category);
 
 		service.addBoard(dto);
 		System.out.println("DB 성공!");
@@ -65,10 +69,34 @@ public class BoardController {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 
-	@GetMapping
-	public ResponseEntity<List<BoardDTO>> selectBoardAll() {
-		List<BoardDTO> Board = service.selectBoardAll();
-		return ResponseEntity.ok(Board);
+	@GetMapping("/recent")
+	public ResponseEntity<List<BoardDTO>> selectBoardRecent() {
+		List<BoardDTO> recent = service.selectBoardRecent();
+		return ResponseEntity.ok(recent);
+	}
+
+	@GetMapping("/com")
+	public ResponseEntity<List<BoardDTO>> selectBoardAllCom() {
+		List<BoardDTO> Com = service.selectBoardAllCom();
+		return ResponseEntity.ok(Com);
+	}
+	
+	@GetMapping("/comfree")
+	public ResponseEntity<List<BoardDTO>> selectBoardAllComFree() {
+		List<BoardDTO> ComFree = service.selectBoardAllComFree();
+		return ResponseEntity.ok(ComFree);
+	}
+	
+	@GetMapping("/dept")
+	public ResponseEntity<List<BoardDTO>> selectBoardAllDept() {
+		List<BoardDTO> Dept = service.selectBoardAllDept();
+		return ResponseEntity.ok(Dept);
+	}
+
+	@GetMapping("/deptfree")
+	public ResponseEntity<List<BoardDTO>> selectBoardAllDeptFree() {
+		List<BoardDTO> DeptFree = service.selectBoardAllDeptFree();
+		return ResponseEntity.ok(DeptFree);
 	}
 
 	@GetMapping("/{seq}")
