@@ -22,4 +22,8 @@ public class Sign_documentDAO {
 		return db.selectList("Sign_document.selectProgress", id);
 	}
 	
+	public Sign_documentDTO selectBySeq(int seq) {
+		return db.selectOne("Sign_document.selectBySeq", seq);
+	}
+	
 }
