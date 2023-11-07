@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kdt.dto.ContactDTO;
+import com.kdt.dto.ExternalContactDTO;
 import com.kdt.dto.FavoriteDTO;
 import com.kdt.dto.MemberDTO;
 import com.kdt.services.ContactService;
@@ -32,6 +33,8 @@ public class ContactController {
 	
 	@GetMapping("selectAll")
 	public ResponseEntity<List<ContactDTO>> getContacts() {
+		if((String)session.getAttribute("loginID")==null)
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		return ResponseEntity.ok(service.selectAll());
 	}
 	
@@ -40,6 +43,22 @@ public class ContactController {
 		if((String)session.getAttribute("loginID")==null)
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		return ResponseEntity.ok(service.selectFavorite((String)session.getAttribute("loginID")));
+	}
+	
+	@GetMapping("selectGroup")
+	public ResponseEntity<List<ContactDTO>> getGroup() {
+		if((String)session.getAttribute("loginID")==null)
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		if((String)session.getAttribute("loginID")=="1000")
+			return ResponseEntity.ok().build();
+		return ResponseEntity.ok(service.selectGroup((String)session.getAttribute("loginID")));
+	}
+	
+	@GetMapping("selectExternal")
+	public ResponseEntity<List<ExternalContactDTO>> getExternal() {
+		if((String)session.getAttribute("loginID")==null)
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		return ResponseEntity.ok(service.selectExternal());
 	}
 	
 	@PostMapping("insert")

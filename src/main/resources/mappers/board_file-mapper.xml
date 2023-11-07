@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Board_file">
+
+	<insert id="insert">
+		insert into board_file values(null,#{parent_seq},#{ori_name},#{sys_name},0)
+	</insert>
+	
+	<select id="selectBySeq" resultType="com.kdt.dto.Board_FileDTO">
+		select * from board_file where parent_seq = #{parent_seq}
+	</select>
+
+</mapper>
