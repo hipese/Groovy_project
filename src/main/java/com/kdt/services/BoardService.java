@@ -13,8 +13,9 @@ public class BoardService {
 	private BoardDAO dao;
 
 	// 게시물 추가
-	public int addBoard(BoardDTO dto) {
-		return this.dao.insertBoard(dto);
+	public BoardDTO addBoard(BoardDTO dto) {
+		this.dao.insertBoard(dto);
+		return dto;
 	}
 
 	// 게시물 삭제

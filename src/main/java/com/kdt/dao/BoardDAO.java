@@ -56,7 +56,7 @@ public class BoardDAO {
 	}
 
 	public int updateBoard(BoardDTO dto) {
-		return db.update("Board.update",dto);
+		return db.update("Boards.update",dto);
 	}
 
 }

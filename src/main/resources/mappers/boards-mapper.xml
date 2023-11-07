@@ -6,7 +6,7 @@
 
 <mapper namespace="Boards">
 
-	<insert id="insert">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="seq">
 		INSERT INTO board VALUES(default,#{title} ,#{writer},
 		#{contents}, default, default, #{category});
 	</insert>
