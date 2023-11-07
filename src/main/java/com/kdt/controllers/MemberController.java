@@ -43,16 +43,14 @@ public class MemberController {
 
 	@PostMapping
 	public ResponseEntity<String> updateImage(@RequestParam("cfile") MultipartFile cfile) throws Exception {
-		
-		String id = (String) session.getAttribute("loginID");
-		System.out.println("변경할 이미지 뭐로옴?:" + cfile.getName());
-
-		mservice.updateImage(id, cfile.getName());
-		
-		
 		String fileName = StringUtils.cleanPath(cfile.getOriginalFilename());
+		String id = (String) session.getAttribute("loginID");
+		
+		System.out.println("변경할 이미지 뭐로옴?:" + fileName);
 
-		Path storageLocation = Paths.get("C:\\ReactWorkSpace\\groovy\\src\\assets");
+		mservice.updateImage(id, fileName);
+		
+		Path storageLocation = Paths.get("C:\\profiles");
 		
 		try {
 			if (cfile.isEmpty()) {
