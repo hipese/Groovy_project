@@ -35,6 +35,13 @@ public class ContactController {
 		return ResponseEntity.ok(service.selectAll());
 	}
 	
+	@GetMapping("selectFavorite")
+	public ResponseEntity<List<ContactDTO>> getFavoriteContacts() {
+		if((String)session.getAttribute("loginID")==null)
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		return ResponseEntity.ok(service.selectFavorite((String)session.getAttribute("loginID")));
+	}
+	
 	@PostMapping("insert")
 	public ResponseEntity<Void> post(MemberDTO dto) {
 		int result = service.insert(dto);
