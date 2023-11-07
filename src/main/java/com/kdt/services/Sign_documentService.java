@@ -31,7 +31,23 @@ public class Sign_documentService {
 		return sdao.selectProgress(id);
 	}
 	
+	public List<Sign_documentDTO> selectComplete(String id){
+		return sdao.selectComplete(id);
+	}
+	
+	public List<Sign_documentDTO> selectWait(String id){
+		return sdao.selectWait(id);
+	}
+	
 	public Sign_documentDTO selectBySeq(int seq) {
 		return sdao.selectBySeq(seq);
+	}
+	
+	public int accept(int seq) {
+		return sdao.accept(seq);
+	}
+	
+	public int reject(int seq) {
+		return sdao.reject(seq);
 	}
 }
