@@ -14,18 +14,21 @@
 		resultType="com.kdt.dto.Sign_documentDTO">
 		select * from sign_document where writer = #{value} and
 		accept = 1
+		ORDER BY seq DESC
 	</select>
 
 	<select id="selectComplete"
 		resultType="com.kdt.dto.Sign_documentDTO">
 		select * from sign_document where writer = #{value} and
 		(accept = 0 or accept = 2)
+		ORDER BY seq DESC
 	</select>
 
 	<select id="selectWait"
 		resultType="com.kdt.dto.Sign_documentDTO">
 		select * from sign_document where recipient = #{value} and
 		accept = 1
+		ORDER BY seq DESC
 	</select>
 
 	<select id="selectBySeq"
