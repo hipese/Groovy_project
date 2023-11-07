@@ -22,8 +22,24 @@ public class Sign_documentDAO {
 		return db.selectList("Sign_document.selectProgress", id);
 	}
 	
+	public List<Sign_documentDTO> selectComplete(String id) {
+		return db.selectList("Sign_document.selectComplete", id);
+	}
+	
+	public List<Sign_documentDTO> selectWait(String id) {
+		return db.selectList("Sign_document.selectWait", id);
+	}
+	
 	public Sign_documentDTO selectBySeq(int seq) {
 		return db.selectOne("Sign_document.selectBySeq", seq);
+	}
+	
+	public int accept(int seq) {
+		return db.update("Sign_document.accept", seq);
+	}
+	
+	public int reject(int seq) {
+		return db.update("Sign_document.reject", seq);
 	}
 	
 }
