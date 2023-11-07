@@ -12,6 +12,14 @@
 		select id, group_name, name, position, contact, email from member where id in(SELECT favorite.target_id from member join favorite on member.id = favorite.id where member.id=#{id});
 	</select>
 	
+	<select id="selectGroup" resultType="com.kdt.dto.ContactDTO">
+		select id, group_name, name, position, contact, email from member where group_name = (SELECT group_name from member where member.id=#{id});
+	</select>
+	
+	<select id="selectExternal" resultType="com.kdt.dto.ExternalContactDTO">
+		select * from external_contact
+	</select>
+	
 	<insert id="insert">
 		insert into member values(id=#{id}, password=#{password}, name=#{name}, group_name=#{group_name},
 		position=#{position}, contact=#{contact}, email=#{email})

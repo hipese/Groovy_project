@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kdt.dto.ContactDTO;
+import com.kdt.dto.ExternalContactDTO;
 import com.kdt.dto.FavoriteDTO;
 import com.kdt.dto.MemberDTO;
 
@@ -22,6 +23,14 @@ public class ContactDAO {
 	
 	public List<ContactDTO> selectFavorite(String id) {
 		return db.selectList("Contact.selectFavorite", id);
+	}
+	
+	public List<ContactDTO> selectGroup(String id) {
+		return db.selectList("Contact.selectGroup", id);
+	}
+	
+	public List<ExternalContactDTO> selectExternal() {
+		return db.selectList("Contact.selectExternal");
 	}
 	
 	public int insert(MemberDTO dto) {
