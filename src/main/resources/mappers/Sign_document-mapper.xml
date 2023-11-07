@@ -3,9 +3,45 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Sign_document">
-	<insert id="insert">
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="seq">
 		insert
 		into sign_document
 		values(null,#{writer},#{document_type},#{recipient},#{title},#{contents},#{accept},#{write_date},#{comment})
 	</insert>
+
+	<select id="selectProgress"
+		resultType="com.kdt.dto.Sign_documentDTO">
+		select * from sign_document where writer = #{value} and
+		accept = 1
+	</select>
+
+	<select id="selectComplete"
+		resultType="com.kdt.dto.Sign_documentDTO">
+		select * from sign_document where writer = #{value} and
+		(accept = 0 or accept = 2)
+	</select>
+
+	<select id="selectWait"
+		resultType="com.kdt.dto.Sign_documentDTO">
+		select * from sign_document where recipient = #{value} and
+		accept = 1
+	</select>
+
+	<select id="selectBySeq"
+		resultType="com.kdt.dto.Sign_documentDTO">
+		select * from sign_document where seq=#{value}
+	</select>
+
+	<update id="accept">
+		UPDATE sign_document
+		SET accept = 0 where seq=#{value}
+	</update>
+
+	<update id="reject">
+		UPDATE sign_document
+		SET accept = 2 where seq=#{value}
+	</update>
+
+
 </mapper>

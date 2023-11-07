@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,8 +30,8 @@ public class BoardController {
 	private BoardService service;
 
 	@PostMapping()
-	public ResponseEntity<String>post(String message, MultipartFile[] files) throws Exception{
-		System.out.println(message);
+	public ResponseEntity<String>post(@RequestParam String title, String writer, MultipartFile[] files, @RequestParam String contents) throws Exception{
+		System.out.println(title + " : " + writer+ " : " + contents);
 
 		String upload = "c:/uploads";
 		File uploadPath = new File(upload);
@@ -46,6 +47,15 @@ public class BoardController {
 
 			file.transferTo(new File(uploadPath,sysName));
 		}
+		
+		BoardDTO dto = new BoardDTO();
+	    dto.setTitle(title);
+	    dto.setWriter(writer);
+	    dto.setContents(contents);
+
+		service.addBoard(dto);
+		System.out.println("DB 성공!");
+
 		return ResponseEntity.ok("완전 성공!");
 	}
 
@@ -58,7 +68,6 @@ public class BoardController {
 	@GetMapping
 	public ResponseEntity<List<BoardDTO>> selectBoardAll() {
 		List<BoardDTO> Board = service.selectBoardAll();
-		System.out.println(Board);
 		return ResponseEntity.ok(Board);
 	}
 
@@ -79,7 +88,6 @@ public class BoardController {
 		dto.setSeq(seq);
 		service.updateBoard(dto);
 		return ResponseEntity.ok().build();
-		// 게시판같은 경우 많은 사람이 사용하니까 db에서 가져오고 어쩌고 복잡해짐
 	}
 
 }
