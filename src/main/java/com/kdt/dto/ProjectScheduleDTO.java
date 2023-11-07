@@ -6,15 +6,15 @@ public class ProjectScheduleDTO {
 	
 	private int pschedule_seq;
 	private int pseq;
-	private Timestamp pschedule_start;
-	private Timestamp pschedule_end;
+	private String pschedule_start;
+	private String pschedule_end;
 	private String pschedule_contents;
 	private String pschedule_importance;
 	private int pschedule_state;
 	public ProjectScheduleDTO() {
 		super();
 	}
-	public ProjectScheduleDTO(int pschedule_seq, int pseq, Timestamp pschedule_start, Timestamp pschedule_end,
+	public ProjectScheduleDTO(int pschedule_seq, int pseq, String pschedule_start, String pschedule_end,
 			String pschedule_contents, String pschedule_importance, int pschedule_state) {
 		super();
 		this.pschedule_seq = pschedule_seq;
@@ -37,16 +37,16 @@ public class ProjectScheduleDTO {
 	public void setPseq(int pseq) {
 		this.pseq = pseq;
 	}
-	public Timestamp getPschedule_start() {
+	public String getPschedule_start() {
 		return pschedule_start;
 	}
-	public void setPschedule_start(Timestamp pschedule_start) {
+	public void setPschedule_start(String pschedule_start) {
 		this.pschedule_start = pschedule_start;
 	}
-	public Timestamp getPschedule_end() {
+	public String getPschedule_end() {
 		return pschedule_end;
 	}
-	public void setPschedule_end(Timestamp pschedule_end) {
+	public void setPschedule_end(String pschedule_end) {
 		this.pschedule_end = pschedule_end;
 	}
 	public String getPschedule_contents() {

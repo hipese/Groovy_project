@@ -38,6 +38,10 @@ public class ProjectDAO {
 		return db.selectList("Project.selectProgress",seq);
 	}
 	
+	public int insertSchedule(ProjectScheduleDTO dto) {
+		return db.insert("Project.insertSchedule",dto);
+	}
+	
 //	ProjectCreate
 
 }

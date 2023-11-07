@@ -33,5 +33,9 @@ public class ProjectService {
 	public List<ProjectProgressDTO> selectProgress(int seq){
 		return dao.selectProgress(seq);
 	}
+	
+	public int insertSchedule(ProjectScheduleDTO dto) {
+		return dao.insertSchedule(dto);
+	}
 
 }
