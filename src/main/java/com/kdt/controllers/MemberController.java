@@ -3,7 +3,10 @@ package com.kdt.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kdt.dto.MemberDTO;
@@ -29,6 +32,15 @@ public class MemberController {
 		MemberDTO dto =mservice.getprofile(id);
 		System.out.println(dto.getContact()+" : "+dto.getGroup_name()+" : "+dto.getPosition());
 		return ResponseEntity.ok(dto);
+	}
+	
+	@PostMapping
+	public ResponseEntity<String> updateImage(@RequestBody String previewSrc){
+		String id = (String)session.getAttribute("loginID");
+		System.out.println("변경할 이미지 뭐로옴?:"+previewSrc);
+		
+		mservice.updateImage(id,previewSrc);
+		return ResponseEntity.ok("저장 성공");
 	}
 
 }
