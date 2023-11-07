@@ -22,6 +22,10 @@ public class ProjectService {
 		return dao.selectAll();
 	}
 	
+	public List<ProjectDTO> selectProject(String id){
+		return dao.selectProject(id);
+	}
+	
 	public List<ProjectScheduleDTO> selectTodo(int seq){
 		return dao.selectTodo(seq);
 	}

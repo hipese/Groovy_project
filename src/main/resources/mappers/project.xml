@@ -9,6 +9,10 @@
 		SELECT * FROM project;
 	</select>
 	
+	<select id="selectProject" resultType="com.kdt.dto.ProjectDTO">
+		SELECT * FROM project WHERE project.pseq IN (SELECT project_member.pseq FROM project_member WHERE project_member.name = #{value});
+	</select>
+	
 	<select id="selectTodo" resultType="com.kdt.dto.ProjectScheduleDTO">
 		select * from project_schedule where pseq = #{value}
 	</select>

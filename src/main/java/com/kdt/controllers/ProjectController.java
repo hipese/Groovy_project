@@ -27,9 +27,17 @@ public class ProjectController {
 	@Autowired
 	private ProjectService PService;
 	
+	
+	
 	@GetMapping
 	public ResponseEntity<List<ProjectDTO>> selectAll(){
 		List<ProjectDTO> list = PService.selectAll();
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<List<ProjectDTO>> selectProject(@PathVariable String id){
+		List<ProjectDTO> list = PService.selectProject(id);
 		return ResponseEntity.ok(list);
 	}
 	
