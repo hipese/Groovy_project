@@ -30,4 +30,8 @@ public class Sign_documentService {
 	public List<Sign_documentDTO> selectProgress(String id){
 		return sdao.selectProgress(id);
 	}
+	
+	public Sign_documentDTO selectBySeq(int seq) {
+		return sdao.selectBySeq(seq);
+	}
 }
