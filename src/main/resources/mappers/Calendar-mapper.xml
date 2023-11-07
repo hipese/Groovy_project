@@ -9,4 +9,7 @@
 	<select id="selectAll" resultType="com.kdt.dto.CalendarDTO">
 		select * from calendar where id = #{id}
 	</select>
+	<delete id="delete">
+		DELETE from calendar where seq = #{seq};
+	</delete>
 </mapper>

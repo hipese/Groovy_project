@@ -23,4 +23,7 @@ public class CalendarService {
 	public List<CalendarDTO> selectAll(String id) throws Exception {
 		return this.caldao.selectAll(id);
 	}
+	public int delete(int seq) throws Exception {
+		return this.caldao.delete(seq);
+	}
 }

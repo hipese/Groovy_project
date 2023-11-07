@@ -19,4 +19,7 @@ public class CalendarDAO {
 	public List<CalendarDTO> selectAll(String id) {
 		return ss.selectList("Calendar.selectAll", id);
 	}
+	public int delete(int seq) {
+		return ss.delete("Calendar.delete", seq);
+	}
 }

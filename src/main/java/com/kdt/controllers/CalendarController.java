@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +33,6 @@ public class CalendarController {
 	@PostMapping
 	public ResponseEntity<Integer> post(@RequestBody CalendarDTO dto) throws Exception {
 		dto.setId((String)session.getAttribute("loginID"));
-		System.out.println(dto.getTitle() + " : " +dto.getId()  +" : " + dto.getProject() + " : " + dto.getStarttime() + " : " + dto.getEndtime() + " : " + dto.getContents());
 		calservice.post(dto);
 		return ResponseEntity.ok().build();
 	}
@@ -39,5 +42,15 @@ public class CalendarController {
 		List<CalendarDTO> list = new ArrayList<>();
 		list = calservice.selectAll((String)session.getAttribute("loginID"));
 		return ResponseEntity.ok(list);
+	}
+	@DeleteMapping("/{seq}")
+	public ResponseEntity<Integer> delete(@PathVariable Integer seq) throws Exception {
+		calservice.delete(seq);
+		return ResponseEntity.ok().build();
+	}
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Void> errorHandler(Exception e){
+		e.printStackTrace();
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
 }
