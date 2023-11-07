@@ -10,5 +10,9 @@
 	<select id="selectTodo" resultType="com.kdt.dto.ProjectScheduleDTO">
 		select * from project_schedule where pseq = #{value}
 	</select>
+	
+	<select id="selectMember" resultType="com.kdt.dto.ProjectMemberDTO">
+		select * from project_member where pseq = #{value}
+	</select>
 
 </mapper>

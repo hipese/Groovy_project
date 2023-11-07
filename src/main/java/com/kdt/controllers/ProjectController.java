@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kdt.dto.ProjectDTO;
+import com.kdt.dto.ProjectMemberDTO;
 import com.kdt.dto.ProjectScheduleDTO;
 import com.kdt.services.ProjectService;
 
@@ -29,6 +30,12 @@ public class ProjectController {
 	@GetMapping("/todo/{seq}")
 	public ResponseEntity<List<ProjectScheduleDTO>> selectTodo(@PathVariable int seq){
 		List<ProjectScheduleDTO> list = PService.selectTodo(seq);
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/member/{seq}")
+	public ResponseEntity<List<ProjectMemberDTO>> selectMember(@PathVariable int seq){
+		List<ProjectMemberDTO> list = PService.selectMember(seq);
 		return ResponseEntity.ok(list);
 	}
 

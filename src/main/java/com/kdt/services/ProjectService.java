@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kdt.dao.ProjectDAO;
 import com.kdt.dto.ProjectDTO;
+import com.kdt.dto.ProjectMemberDTO;
 import com.kdt.dto.ProjectScheduleDTO;
 
 @Service
@@ -21,6 +22,10 @@ public class ProjectService {
 	
 	public List<ProjectScheduleDTO> selectTodo(int seq){
 		return dao.selectTodo(seq);
+	}
+	
+	public List<ProjectMemberDTO> selectMember(int seq){
+		return dao.selectMember(seq);
 	}
 
 }
