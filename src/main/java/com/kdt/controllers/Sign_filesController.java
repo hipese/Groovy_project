@@ -31,7 +31,7 @@ public class Sign_filesController {
     }
 
     @GetMapping("/download/{sys_name}")
-    public ResponseEntity<String> download(@PathVariable String sys_name) {
+    public ResponseEntity<Resource> download(@PathVariable String sys_name) {
         // 파일 경로를 설정합니다. 이 경로는 서버에서 파일을 찾을 경로여야 합니다.
     	System.out.println(sys_name);
         String filePath = "c:/uploads/" + sys_name;
@@ -47,6 +47,10 @@ public class Sign_filesController {
 
         ByteArrayResource resource = new ByteArrayResource(fileContent);
 
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok()
+                .contentType(org.springframework.http.MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(fileContent.length)
+                .body(resource);
+            
     }
 }
