@@ -1,6 +1,7 @@
 package com.kdt.services;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,5 +25,9 @@ public class Sign_documentService {
 		dto.setWriter(id);
 		dto.setWrite_date(date);
 		return sdao.insert(dto);
+	}
+	
+	public List<Sign_documentDTO> selectProgress(String id){
+		return sdao.selectProgress(id);
 	}
 }

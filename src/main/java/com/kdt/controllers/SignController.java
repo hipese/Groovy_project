@@ -1,10 +1,12 @@
 package com.kdt.controllers;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +17,8 @@ import com.kdt.dto.Sign_filesDTO;
 import com.kdt.services.Sign_documentService;
 import com.kdt.services.Sign_filesService;
 
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/api/signlist")
 public class SignController {
@@ -24,6 +28,9 @@ public class SignController {
 
 	@Autowired
 	Sign_filesService sfservice;
+	
+	@Autowired
+	private HttpSession session;
 
 	@PostMapping
 	public ResponseEntity<String> post(Sign_documentDTO dto, MultipartFile[] files) throws Exception {
@@ -52,5 +59,12 @@ public class SignController {
 		}
 
 		return ResponseEntity.ok("완전 성공!"); // 클라이언트에게 http 응답코드 200번대 반환
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Sign_documentDTO>> selectProgress() {
+		String id = (String)session.getAttribute("loginID");
+		List<Sign_documentDTO> list = signservice.selectProgress(id);
+		return ResponseEntity.ok(list);
 	}
 }
