@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,9 +27,17 @@ public class ProjectController {
 	@Autowired
 	private ProjectService PService;
 	
+	
+	
 	@GetMapping
 	public ResponseEntity<List<ProjectDTO>> selectAll(){
 		List<ProjectDTO> list = PService.selectAll();
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<List<ProjectDTO>> selectProject(@PathVariable String id){
+		List<ProjectDTO> list = PService.selectProject(id);
 		return ResponseEntity.ok(list);
 	}
 	
@@ -61,8 +71,17 @@ public class ProjectController {
 			data.add(map);
 		}
 		
-		System.out.println(list.get(1).toString());
 		return ResponseEntity.ok(data);
+	}
+	
+	@PostMapping("/addSchedule/{seq}")
+	public ResponseEntity<Integer> insertSchedule(@PathVariable int seq, @RequestBody ProjectScheduleDTO dto){
+		System.out.println(dto.getPschedule_importance());
+		dto.setPseq(seq);
+		
+		int result = PService.insertSchedule(dto);
+		
+		return ResponseEntity.ok(result);
 	}
 
 }

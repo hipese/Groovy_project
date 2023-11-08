@@ -24,6 +24,10 @@ public class ProjectDAO {
 		return db.selectList("Project.selectAll");
 	}
 	
+	public List<ProjectDTO> selectProject(String id){
+		return db.selectList("Project.selectProject",id);
+	}
+	
 	
 //	ProjectContent
 	public List<ProjectScheduleDTO> selectTodo(int seq){
@@ -36,6 +40,10 @@ public class ProjectDAO {
 	
 	public List<ProjectProgressDTO> selectProgress(int seq){
 		return db.selectList("Project.selectProgress",seq);
+	}
+	
+	public int insertSchedule(ProjectScheduleDTO dto) {
+		return db.insert("Project.insertSchedule",dto);
 	}
 	
 //	ProjectCreate
