@@ -67,6 +67,14 @@ public class MemberController {
 		return ResponseEntity.ok(dto);
 	}
 	
+	@GetMapping("/search/{searchText}")
+	public ResponseEntity<List> searchEmployee(@PathVariable String searchText){
+		
+		System.out.println("선택한놈 검색할려는 문자: "+ searchText);
+		List<SearchTermDTO> dto = mservice.searchEmployee(searchText);
+		return ResponseEntity.ok(dto);
+	}
+	
 	
 	@PutMapping("/{contact}")
 	public ResponseEntity<String> updateContact(@PathVariable String contact) {
@@ -80,8 +88,6 @@ public class MemberController {
 		String fileName = StringUtils.cleanPath(cfile.getOriginalFilename());
 		String id = (String) session.getAttribute("loginID");
 		
-		System.out.println("변경할 이미지 뭐로옴?:" + fileName);
-
 		mservice.updateImage(id, fileName);
 		
 		File uploadPath=new File("c:/profiles");

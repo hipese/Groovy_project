@@ -49,5 +49,9 @@ public class MemberService {
 	public SearchTermDTO selectApprover(String selectedRow) {
 		return dao.selectApprover(selectedRow);
 	}
+	
+	public List<SearchTermDTO> searchEmployee(String searchText){
+		return dao.searchEmployee(searchText);
+	}
 
 }
