@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kdt.dto.MemberDTO;
 import com.kdt.dto.ProjectDTO;
 import com.kdt.dto.ProjectMemberDTO;
 import com.kdt.dto.ProjectProgressDTO;
 import com.kdt.dto.ProjectScheduleDTO;
+import com.kdt.services.MemberService;
 import com.kdt.services.ProjectService;
 
 @RestController
@@ -27,7 +29,24 @@ public class ProjectController {
 	@Autowired
 	private ProjectService PService;
 	
+	@Autowired
+	private MemberService mService;
 	
+	@PostMapping("/create")
+	public ResponseEntity<Integer> newProject(@RequestBody ProjectDTO dto){
+		System.out.println(dto.getPmanager());
+		int pseq = PService.insertProject(dto);
+		System.out.println("pseq : "+pseq);
+		MemberDTO mdto = mService.getprofile(dto.getPmanager());
+		
+		ProjectMemberDTO pmdto = new ProjectMemberDTO();
+		pmdto.setPseq(pseq);
+		pmdto.setGroup_name(mdto.getGroup_name());
+		pmdto.setName(dto.getPmanager());
+		int result = PService.insertMember(pmdto);
+		
+		return ResponseEntity.ok(result);
+	}
 	
 	@GetMapping
 	public ResponseEntity<List<ProjectDTO>> selectAll(){

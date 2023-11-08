@@ -29,5 +29,13 @@
 		insert into project_schedule values(0,#{pseq},#{pschedule_start},#{pschedule_end},#{pschedule_contents},#{pschedule_importance},#{pschedule_state})
 	</insert>
 	
+	<insert id="insertProject" parameterType="com.kdt.dto.ProjectDTO" useGeneratedKeys="true" keyProperty="pseq">
+		insert into project values(0,#{pmanager},#{pname},#{pcontents},#{ptime_limit})
+	</insert>
+	
+	<insert id="insertProjectMember">
+		insert into project_member values(0,#{pseq},#{group_name},#{name})
+	</insert>
+	
 
 </mapper>

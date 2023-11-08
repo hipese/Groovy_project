@@ -47,5 +47,14 @@ public class ProjectDAO {
 	}
 	
 //	ProjectCreate
+	
+	public int insertProject(ProjectDTO dto) {
+		db.insert("Project.insertProject",dto);
+		return dto.getPseq();
+	}
+	
+	public int insertMember(ProjectMemberDTO dto) {
+		return db.insert("Project.insertProjectMember",dto);
+	}
 
 }
