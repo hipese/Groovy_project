@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kdt.dto.MailDTO;
+import com.kdt.dto.MailReceiptDTO;
 import com.kdt.dto.Mail_FileDTO;
 import com.kdt.services.MailService;
 import com.kdt.services.Mail_FileService;
 
 @RestController
-@RequestMapping("/api/Mails")		
+@RequestMapping("/api/mails")		
 public class MailController {
 
 	@Autowired
@@ -35,42 +35,121 @@ public class MailController {
 	private Mail_FileService fservice;
 
 	@PostMapping()
-	public ResponseEntity<String> post(@RequestParam String title, @RequestParam String sender, @RequestParam String receipt, @RequestParam(required = false) MultipartFile[] files, @RequestParam String contents) throws Exception {
-	    System.out.println(title + " : " + sender + " : " + contents + " : " + receipt);
+	public ResponseEntity<String> post(@RequestParam String title, @RequestParam String sender, @RequestParam String receipient, @RequestParam(required = false) MultipartFile[] files, @RequestParam String contents) throws Exception {
+		System.out.println(title + " : " + sender + " : " + contents + " : " + receipient);
 
-	    MailDTO dto = new MailDTO();
-	    dto.setSender(sender);
-	    dto.setReceipient(receipt);
-	    dto.setTitle(title);
-	    dto.setContents(contents);
+		MailDTO dto = new MailDTO();
+		dto.setSender(sender);
+		dto.setReceipient(receipient);
+		dto.setTitle(title);
+		dto.setContents(contents);
+		dto = service.addMail(dto);
 
-	    dto = service.addMail(dto);
-	    int seq = dto.getSeq();
+		int seq = dto.getSeq();
 
-	    String upload = "c:/uploads";
-	    File uploadPath = new File(upload);
+		MailReceiptDTO Rdto = new MailReceiptDTO();
+		Rdto.setSender(receipient);
+		Rdto.setReceipient(sender);
+		Rdto.setParent_seq(seq);
 
-	    if (!uploadPath.exists()) {
-	        uploadPath.mkdirs();
-	    }
+		Rdto = service.insertReceipt(Rdto);
 
-	    if (files != null && files.length > 0) {
-	        for (MultipartFile file : files) {
-	            System.out.println(file.getOriginalFilename());
-	            String oriName = file.getOriginalFilename();
-	            String sysName = UUID.randomUUID() + "_" + oriName;
+		String upload = "c:/uploads";
+		File uploadPath = new File(upload);
 
-	            file.transferTo(new File(uploadPath, sysName));
+		if (!uploadPath.exists()) {
+			uploadPath.mkdirs();
+		}
 
-	            Mail_FileDTO fdto = new Mail_FileDTO();
-	            fdto.setOri_name(oriName);
-	            fdto.setSys_name(sysName);
-	            fdto.setParent_seq(seq);
-	            fservice.insert(fdto);
-	        }
-	    }
+		if (files != null && files.length > 0) {
+			for (MultipartFile file : files) {
+				System.out.println(file.getOriginalFilename());
+				String oriName = file.getOriginalFilename();
+				String sysName = UUID.randomUUID() + "_" + oriName;
 
-	    return ResponseEntity.ok("");
+				file.transferTo(new File(uploadPath, sysName));
+
+				Mail_FileDTO fdto = new Mail_FileDTO();
+				fdto.setOri_name(oriName);
+				fdto.setSys_name(sysName);
+				fdto.setParent_seq(seq);
+				fservice.insert(fdto);
+			}
+		}
+
+		return ResponseEntity.ok("");
+	}
+
+	@GetMapping("/{seq}")
+	public ResponseEntity <MailDTO> selectMailBySeq(@PathVariable Integer seq) {
+		MailDTO mail = service.selectBySeq(seq);
+		return ResponseEntity.ok(mail);
+	}
+
+	@GetMapping("/waste/inbox")
+	public ResponseEntity<List<MailDTO>> selectDelInbox() {
+		List<MailDTO> inbox = service.selectDelInbox();
+		return ResponseEntity.ok(inbox);
+	}
+
+	@GetMapping("/waste/send")
+	public ResponseEntity<List<MailReceiptDTO>> selectDelSent() {
+		List<MailReceiptDTO> send = service.selectDelSent();
+		return ResponseEntity.ok(send);
+	}
+
+	@GetMapping("/inbox")
+	public ResponseEntity<List<MailDTO>> selectMailAll() {
+		List<MailDTO> inbox = service.selectAll();
+		return ResponseEntity.ok(inbox);
+	}
+
+	@GetMapping("/send")
+	public ResponseEntity<List<MailDTO>> selectAllSend() {
+		List<MailDTO> Send = service.selectAllSend();
+		return ResponseEntity.ok(Send);
+	}
+
+	@GetMapping("/temp")
+	public ResponseEntity<List<MailDTO>> selectAllTemp() {
+		List<MailDTO> Temp = service.selectAllTemp();
+		return ResponseEntity.ok(Temp);
+	}
+
+	@GetMapping("/spam")
+	public ResponseEntity<List<MailDTO>> selectAllSpam() {
+		List<MailDTO> Spam = service.selectAllSpam();
+		return ResponseEntity.ok(Spam);
+	}
+
+	@GetMapping("/tome")
+	public ResponseEntity<List<MailDTO>> selectAllToMe() {
+		List<MailDTO> ToMe = service.selectAllToMe();
+		return ResponseEntity.ok(ToMe);
+	}
+
+	@PutMapping("/inbox/{seq}")
+	public ResponseEntity<String> updateInbox(@PathVariable Integer seq) {
+		service.updateInbox(seq);
+		return ResponseEntity.ok("");
+	}
+
+	@PutMapping("/inbox/{seq}")
+	public ResponseEntity<String> updateSent(@PathVariable Integer seq) {
+		service.updateSent(seq);
+		return ResponseEntity.ok("");
+	}
+
+	@DeleteMapping("/inbox/{seq}")
+	public ResponseEntity<String> deleteInbox(@PathVariable Integer seq) {
+		service.deleteInbox(seq);
+		return ResponseEntity.ok("");
+	}
+
+	@DeleteMapping("/sent/{seq}")
+	public ResponseEntity<String> deleteSent(@PathVariable Integer seq) {
+		service.deleteSent(seq);
+		return ResponseEntity.ok("");
 	}
 
 	@ExceptionHandler(Exception.class)
@@ -78,96 +157,5 @@ public class MailController {
 		e.printStackTrace();
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	}
-
-	@GetMapping("/inbox")
-	public ResponseEntity<List<MailDTO>> selectMailAll() {
-		List<MailDTO> recent = service.selectAll();
-		return ResponseEntity.ok(recent);
-	}
-
-	@GetMapping("/send")
-	public ResponseEntity<List<MailDTO>> selectAllSend() {
-		List<MailDTO> Com = service.selectAllSend();
-		return ResponseEntity.ok(Com);
-	}
-
-	@GetMapping("/temp")
-	public ResponseEntity<List<MailDTO>> selectAllTemp() {
-		List<MailDTO> ComFree = service.selectAllTemp();
-		return ResponseEntity.ok(ComFree);
-	}
-
-	@GetMapping("/spam")
-	public ResponseEntity<List<MailDTO>> selectAllSpam() {
-		List<MailDTO> Dept = service.selectAllSpam();
-		return ResponseEntity.ok(Dept);
-	}
-
-	@GetMapping("/tome")
-	public ResponseEntity<List<MailDTO>> selectAllToMe() {
-		List<MailDTO> DeptFree = service.selectAllToMe();
-		return ResponseEntity.ok(DeptFree);
-	}
-
-	@GetMapping("/{seq}")
-	public ResponseEntity <MailDTO> selectMailBySeq(@PathVariable Integer seq) {
-		MailDTO message = service.selectBySeq(seq);
-		return ResponseEntity.ok(message);
-	}
-
-	@DeleteMapping("/{seq}")
-	public ResponseEntity<String> deleteInbox(@PathVariable Integer seq) {
-		service.deleteInbox(seq);
-		return ResponseEntity.ok("삭제 성공!");
-	}
-	
-	@DeleteMapping("/{seq}")
-	public ResponseEntity<String> deleteSent(@PathVariable Integer seq) {
-		service.deleteSent(seq);
-		return ResponseEntity.ok("삭제 성공!");
-	}
-
-	@GetMapping("/update/{seq}")
-	public ResponseEntity <MailDTO> selectUPdateMailBySeq(@PathVariable Integer seq) {
-		MailDTO message = service.selectBySeq(seq);
-		return ResponseEntity.ok(message);
-	}
-
-	@PutMapping("/update/{seq}")
-	public ResponseEntity<Void> updateMail(@PathVariable Integer seq,@RequestPart("title") String title,@RequestPart("contents") String contents,@RequestPart("category") String category,@RequestPart(value = "files", required = false) MultipartFile[] files) throws Exception{
-
-		MailDTO dto = new MailDTO();
-		dto.setSeq(seq);
-		dto.setTitle(title);
-		dto.setContents(contents);
-
-		service.updateMail(dto);
-
-	    String upload = "c:/uploads";
-	    File uploadPath = new File(upload);
-
-	    if (!uploadPath.exists()) {
-	        uploadPath.mkdirs();
-	    }
-
-	    if (files != null && files.length > 0) {
-	        for (MultipartFile file : files) {
-	            System.out.println(file.getOriginalFilename());
-	            String oriName = file.getOriginalFilename();
-	            String sysName = UUID.randomUUID() + "_" + oriName;
-
-	            file.transferTo(new File(uploadPath, sysName));
-
-	            Mail_FileDTO fdto = new Mail_FileDTO();
-	            fdto.setOri_name(oriName);
-	            fdto.setSys_name(sysName);
-	            fdto.setParent_seq(seq); // 게시물의 seq를 parent_seq로 설정
-	            fservice.insert(fdto);
-	        }
-	    }
-
-		return ResponseEntity.ok().build();
-	}
-
 
 }

@@ -7,57 +7,76 @@ import org.springframework.stereotype.Service;
 
 import com.kdt.dao.MailDAO;
 import com.kdt.dto.MailDTO;
+import com.kdt.dto.MailReceiptDTO;
 
 @Service
 public class MailService {
 
 	@Autowired
 	private MailDAO dao;
-	
-	// 게시물 추가
-		public MailDTO addMail(MailDTO dto) {
-			this.dao.insertMail(dto);
-			return dto;
-		}
 
-		// 게시물 삭제
-		public int deleteInbox(Integer seq) {
-			return this.dao.deleteInbox(seq);
-		}
-		
-		// 게시물 삭제
-		public int deleteSent(Integer seq) {
-			return this.dao.deleteSent(seq);
-		}
+	// 추가
+	public MailDTO addMail(MailDTO dto) {
+		this.dao.insertMail(dto);
+		return dto;
+	}
 
-		// 게시물 수정
-		public int updateMail(MailDTO dto) {
-			return this.dao.update(dto);
-		}
+	public MailReceiptDTO insertReceipt(MailReceiptDTO dto) {
+		this.dao.insertReceipt(dto);
+		return dto;
+	}
 
-		// 모든 게시물 조회
-		public List<MailDTO> selectAll() {
-			return this.dao.selectAll();
-		}
+	// 특정 조회
+	public MailDTO selectBySeq(Integer seq) {
+		return this.dao.selectBySeq(seq);
+	}
 
-		public List<MailDTO> selectAllSend() {
-			return this.dao.selectAllSend();
-		}
-		
-		public List<MailDTO> selectAllTemp() {
-			return this.dao.selectAllTemp();
-		}
-		
-		public List<MailDTO> selectAllSpam() {
-			return this.dao.selectAllSpam();
-		}
+	// 조회
+	public List<MailDTO> selectDelInbox() {
+		return this.dao.selectDelInbox();
+	}
 
-		public List<MailDTO> selectAllToMe() {
-			return this.dao.selectAllToMe();
-		}
+	public List<MailReceiptDTO> selectDelSent() {
+		return this.dao.selectDelSent();
+	}
 
-		// 특정 게시물 조회
-		public MailDTO selectBySeq(Integer seq) {
-			return this.dao.selectBySeq(seq);
-		}
+	public List<MailDTO> selectAll() {
+		return this.dao.selectAll();
+	}
+
+	public List<MailDTO> selectAllSend() {
+		return this.dao.selectAllSend();
+	}
+
+	public List<MailDTO> selectAllTemp() {
+		return this.dao.selectAllTemp();
+	}
+
+	public List<MailDTO> selectAllSpam() {
+		return this.dao.selectAllSpam();
+	}
+
+	public List<MailDTO> selectAllToMe() {
+		return this.dao.selectAllToMe();
+	}
+
+	// 휴지통으로
+
+	public int updateInbox(Integer seq) {
+		return this.dao.updateInbox(seq);
+	}
+
+	public int updateSent(Integer seq) {
+		return this.dao.updateSent(seq);
+	}
+
+	// 완전 삭제
+	public int deleteInbox(Integer seq) {
+		return this.dao.deleteInbox(seq);
+	}
+
+	public int deleteSent(Integer seq) {
+		return this.dao.deleteSent(seq);
+	}
+
 }

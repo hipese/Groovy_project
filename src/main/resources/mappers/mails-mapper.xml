@@ -7,51 +7,60 @@
 <mapper namespace="Mails">
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="seq">
-		INSERT INTO Mail VALUES(default,#{title} ,#{writer},
-		#{contents}, default, default, #{category});
+		INSERT INTO sender_mail VALUES(default, #{sender}, #{receipient}, #{title} ,
+		#{contents}, default, default, default);
+	</insert>
+	
+	<insert id="insertReceipt">
+		INSERT INTO receipient_mail VALUES(default, #{parent_seq},#{receipient}, #{sender}, default, default, default);
 	</insert>
 
 	<select id="selectBySeq" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM Mail WHERE
-		SEQ=#{seq};
+		SELECT * FROM sender_mail WHERE SEQ=#{seq};
+	</select>
+	
+	<select id="selectDelInbox" resultType="com.kdt.dto.MailDTO">
+		SELECT * FROM sender_mail WHERE is_delete=true order by seq desc; 
+	</select>
+	
+	<select id="selectDelSent" resultType="com.kdt.dto.MailReceiptDTO">
+		SELECT * FROM receipient_mail WHERE is_delete=true order by seq desc;
 	</select>
 
 	<select id="selectAll" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM Mail order
-		by seq desc;
+		SELECT * FROM sender_mail order by seq desc;
 	</select>
 
 	<select id="selectAllSend" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM Mail WHERE
-		CATEGORY='전사 공지' order by seq desc;
+		SELECT * FROM sender_mail order by seq desc;
 	</select>
 
 	<select id="selectAllTemp" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM Mail
-		WHERE CATEGORY='전사 자유' order by seq desc;
+	
 	</select>
 
 	<select id="selectAllSpam" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM Mail WHERE
-		CATEGORY='부서 공지' order by seq desc;
+	
 	</select>
 
 	<select id="selectAllToMe" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM Mail
-		WHERE CATEGORY='부서 자유' order by seq desc;;
+		SELECT * FROM sender_mail WHERE sender=receipient order by seq desc;
 	</select>
 
+	<update id="updateInbox">
+		UPDATE sender_mail SET is_delete=true WHERE seq=#{seq};
+	</update>
+	
+	<update id="updateSent">
+		UPDATE receipient_mail SET is_delete=true WHERE seq=#{seq};
+	</update>
+	
 	<delete id="deleteInbox">
-		DELETE FROM Mail WHERE seq=#{seq};
+	    DELETE FROM sender_mail WHERE seq=#{seq};
 	</delete>
 	
 	<delete id="deleteSent">
-		DELETE FROM Mail WHERE seq=#{seq};
+	    DELETE FROM receipient_mail WHERE seq=#{seq};
 	</delete>
-
-	<update id="update">
-		UPDATE Mail SET title=#{title},
-		contents=#{contents}, category=#{category} WHERE seq=#{seq};
-	</update>
 
 </mapper>

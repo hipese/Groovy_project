@@ -1,14 +1,13 @@
 package com.kdt.dao;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kdt.dto.MailDTO;
+import com.kdt.dto.MailReceiptDTO;
 
 @Repository
 public class MailDAO {
@@ -20,8 +19,20 @@ public class MailDAO {
 		return db.insert("Mails.insert", dto);
 	}
 	
+	public int insertReceipt(MailReceiptDTO dto) {
+		return db.insert("Mails.insertReceipt", dto);
+	}
+	
 	public MailDTO selectBySeq(int seq){ 
 		return db.selectOne("Mails.selectBySeq",seq);
+	}	
+	
+	public List<MailDTO>selectDelInbox(){ 
+		return db.selectList("Mails.selectDelInbox");
+	}
+	
+	public List<MailReceiptDTO>selectDelSent(){ 
+		return db.selectList("Mails.selectDelSent");
 	}
 	
 	public List<MailDTO>selectAll(){ 
@@ -43,6 +54,14 @@ public class MailDAO {
 	public List<MailDTO>selectAllToMe(){ 
 		return db.selectList("Mails.selectAllToMe");
 	}
+	
+	public int updateInbox(Integer seq) {
+		return db.update("Mails.updateInbox",seq);
+	}
+	
+	public int updateSent(Integer seq) {
+		return db.update("Mails.updateSent",seq);
+	}
 
 	public int deleteInbox(Integer seq) {
 		return db.delete("Mails.deleteInbox",seq);
@@ -52,7 +71,4 @@ public class MailDAO {
 		return db.delete("Mails.deleteSent",seq);
 	}
 
-	public int update(MailDTO dto) {
-		return db.update("Mails.update",dto);
-	}
 }
