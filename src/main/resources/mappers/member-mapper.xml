@@ -16,5 +16,14 @@
 	<update id="updateContact">
 		update member set contact=#{contact} where id=#{id}
 	</update>
-
+	
+	<select id="departmentAll" resultType="com.kdt.dto.DepartmentDTO">
+		select * from department
+	</select>
+	
+	
+	
+	<select id="selectedEmployeeAll" resultType="com.kdt.dto.SearchTermDTO">
+		select name,position,group_name,id from member 
+	</select>
 </mapper>

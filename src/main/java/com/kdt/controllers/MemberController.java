@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +15,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kdt.dto.DepartmentDTO;
 import com.kdt.dto.MemberDTO;
+import com.kdt.dto.SearchTermDTO;
 import com.kdt.services.MemberService;
 
 import jakarta.servlet.http.HttpSession;
@@ -38,20 +40,30 @@ public class MemberController {
 	@GetMapping
 	public ResponseEntity<MemberDTO> memberProfile() {
 		String id = (String) session.getAttribute("loginID");
-		System.out.println("로그인 한놈은 누구인가?" + id);
-
 		MemberDTO dto = mservice.getprofile(id);
-		System.out.println(dto.getContact() + " : " + dto.getGroup_name() + " : " + dto.getPosition());
+		
 		return ResponseEntity.ok(dto);
 	}
+	
+	@GetMapping("/department")
+	public ResponseEntity<List> departmentAll(){
+		
+		 List<DepartmentDTO> dto = mservice.departmentAll();
+		 return ResponseEntity.ok(dto);
+	}
+	
+	@GetMapping("/selectedEmployee")
+	public ResponseEntity<List> selectedEmployee(){
+		
+		 List<SearchTermDTO> dto = mservice.selectedEmployee();
+		 return ResponseEntity.ok(dto);
+	}
+	
 	
 	@PutMapping("/{contact}")
 	public ResponseEntity<String> updateContact(@PathVariable String contact) {
 	    String id = (String) session.getAttribute("loginID");
-	    
-	    System.out.println("전화번호 교체");
 	    mservice.updateContact(id, contact); // 서비스 메소드에 id와 contact 값을 전달합니다.
-
 	    return ResponseEntity.ok("변경 완료");
 	}
 
