@@ -24,6 +24,15 @@ public class MemberService {
 		params.put("id", id);
 		params.put("changeImage", changeImage);
 
-		return dao.updateImage(id, params);
+		return dao.updateImage(params);
 	}
+	
+	public int updateContact(String id, String contact) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		params.put("contact", contact);
+		
+		return dao.updateContact(params);
+	}
+	
 }

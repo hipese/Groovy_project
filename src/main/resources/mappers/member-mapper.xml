@@ -12,5 +12,9 @@
 	<update id="ImageChange">
 		update member set profile_image=#{changeImage} where id=#{id}
 	</update>
+	
+	<update id="updateContact">
+		update member set contact=#{contact} where id=#{id}
+	</update>
 
 </mapper>
