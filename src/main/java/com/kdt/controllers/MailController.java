@@ -1,6 +1,7 @@
 package com.kdt.controllers;
 
 import java.io.File;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,19 +39,25 @@ public class MailController {
 	public ResponseEntity<String> post(@RequestParam String title, @RequestParam String sender, @RequestParam String receipient, @RequestParam(required = false) MultipartFile[] files, @RequestParam String contents) throws Exception {
 		System.out.println(title + " : " + sender + " : " + contents + " : " + receipient);
 
+		Timestamp now = new Timestamp(System.currentTimeMillis());
+
 		MailDTO dto = new MailDTO();
 		dto.setSender(sender);
 		dto.setReceipient(receipient);
 		dto.setTitle(title);
 		dto.setContents(contents);
+		dto.setWrite_date(now);
 		dto = service.addMail(dto);
 
 		int seq = dto.getSeq();
 
 		MailReceiptDTO Rdto = new MailReceiptDTO();
-		Rdto.setSender(receipient);
-		Rdto.setReceipient(sender);
+		Rdto.setSender(sender);
+		Rdto.setReceipient(receipient);
+		Rdto.setTitle(title);
+		Rdto.setContents(contents);
 		Rdto.setParent_seq(seq);
+		Rdto.setWrite_date(now);
 
 		Rdto = service.insertReceipt(Rdto);
 
@@ -98,15 +105,15 @@ public class MailController {
 		return ResponseEntity.ok(send);
 	}
 
-	@GetMapping("/inbox")
-	public ResponseEntity<List<MailDTO>> selectMailAll() {
-		List<MailDTO> inbox = service.selectAll();
+	@GetMapping("/inbox/{receipient}")
+	public ResponseEntity<List<MailReceiptDTO>> selectMailAll(@PathVariable String receipient) {
+		List<MailReceiptDTO> inbox = service.selectAll(receipient);
 		return ResponseEntity.ok(inbox);
 	}
 
-	@GetMapping("/send")
-	public ResponseEntity<List<MailDTO>> selectAllSend() {
-		List<MailDTO> Send = service.selectAllSend();
+	@GetMapping("/send/{sender}")
+	public ResponseEntity<List<MailDTO>> selectAllSend(@PathVariable String sender) {
+		List<MailDTO> Send = service.selectAllSend(sender);
 		return ResponseEntity.ok(Send);
 	}
 
@@ -131,13 +138,19 @@ public class MailController {
 	@PutMapping("/inbox/{seq}")
 	public ResponseEntity<String> updateInbox(@PathVariable Integer seq) {
 		service.updateInbox(seq);
-		return ResponseEntity.ok("");
+		return ResponseEntity.ok("성공이랄까");
 	}
 
-	@PutMapping("/inbox/{seq}")
+	@PutMapping("/sent/{seq}")
 	public ResponseEntity<String> updateSent(@PathVariable Integer seq) {
 		service.updateSent(seq);
-		return ResponseEntity.ok("");
+		return ResponseEntity.ok("성공이랄까");
+	}
+
+	@PutMapping("/read/{seq}")
+	public ResponseEntity<String> isRead(@PathVariable Integer seq) {
+		service.isRead(seq);
+		return ResponseEntity.ok("성공이랄까");
 	}
 
 	@DeleteMapping("/inbox/{seq}")

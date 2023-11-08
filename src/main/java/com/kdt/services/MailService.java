@@ -40,12 +40,12 @@ public class MailService {
 		return this.dao.selectDelSent();
 	}
 
-	public List<MailDTO> selectAll() {
-		return this.dao.selectAll();
+	public List<MailReceiptDTO> selectAll(String receipient) {
+		return this.dao.selectAll(receipient);
 	}
 
-	public List<MailDTO> selectAllSend() {
-		return this.dao.selectAllSend();
+	public List<MailDTO> selectAllSend(String sender) {
+		return this.dao.selectAllSend(sender);
 	}
 
 	public List<MailDTO> selectAllTemp() {
@@ -68,6 +68,12 @@ public class MailService {
 
 	public int updateSent(Integer seq) {
 		return this.dao.updateSent(seq);
+	}
+	
+	// 읽음 표시
+	
+	public int isRead(Integer seq) {
+		return this.dao.isRead(seq);
 	}
 
 	// 완전 삭제

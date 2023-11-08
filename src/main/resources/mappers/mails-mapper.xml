@@ -8,11 +8,12 @@
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="seq">
 		INSERT INTO sender_mail VALUES(default, #{sender}, #{receipient}, #{title} ,
-		#{contents}, default, default, default);
+		#{contents}, #{write_date}, default, default);
 	</insert>
 	
 	<insert id="insertReceipt">
-		INSERT INTO receipient_mail VALUES(default, #{parent_seq},#{receipient}, #{sender}, default, default, default);
+		INSERT INTO receipient_mail VALUES(default, #{parent_seq}, #{sender}, #{receipient}, #{title} ,
+		#{contents}, #{write_date}, default, default, default);
 	</insert>
 
 	<select id="selectBySeq" resultType="com.kdt.dto.MailDTO">
@@ -27,12 +28,12 @@
 		SELECT * FROM receipient_mail WHERE is_delete=true order by seq desc;
 	</select>
 
-	<select id="selectAll" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM sender_mail order by seq desc;
+	<select id="selectAll" resultType="com.kdt.dto.MailReceiptDTO">
+	    SELECT * FROM receipient_mail WHERE receipient=#{receipient} And is_delete=false order by seq desc;
 	</select>
 
 	<select id="selectAllSend" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM sender_mail order by seq desc;
+		SELECT * FROM sender_mail WHERE sender=#{sender} And is_delete=false order by seq desc;
 	</select>
 
 	<select id="selectAllTemp" resultType="com.kdt.dto.MailDTO">
@@ -44,15 +45,19 @@
 	</select>
 
 	<select id="selectAllToMe" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM sender_mail WHERE sender=receipient order by seq desc;
+		SELECT * FROM sender_mail WHERE sender=receipient And is_delete=false order by seq desc;
 	</select>
 
 	<update id="updateInbox">
-		UPDATE sender_mail SET is_delete=true WHERE seq=#{seq};
+		UPDATE receipient_mail SET is_delete=true WHERE seq=#{seq};
 	</update>
 	
 	<update id="updateSent">
-		UPDATE receipient_mail SET is_delete=true WHERE seq=#{seq};
+		UPDATE sender_mail SET is_delete=true WHERE seq=#{seq};
+	</update>
+	
+	<update id="isRead">
+		UPDATE receipient_mail SET is_read=true WHERE seq=#{seq};
 	</update>
 	
 	<delete id="deleteInbox">

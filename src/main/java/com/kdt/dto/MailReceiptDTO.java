@@ -1,22 +1,30 @@
 package com.kdt.dto;
 
+import java.sql.Timestamp;
+
 public class MailReceiptDTO {
 
 	private int seq;
 	private int parent_seq;
 	private String sender;
 	private String receipient;
+	private String title;
+	private String contents;
+	private Timestamp write_date;
 	private boolean is_read;
 	private boolean is_delete;
 	private boolean is_mark;
 
-	public MailReceiptDTO(int seq, int parent_seq, String sender, String receipient, boolean is_read, boolean is_delete,
-			boolean is_mark) {
+	public MailReceiptDTO(int seq, int parent_seq, String sender, String receipient, String title, String contents,
+			Timestamp write_date, boolean is_read, boolean is_delete, boolean is_mark) {
 		super();
 		this.seq = seq;
 		this.parent_seq = parent_seq;
 		this.sender = sender;
 		this.receipient = receipient;
+		this.title = title;
+		this.contents = contents;
+		this.write_date = write_date;
 		this.is_read = is_read;
 		this.is_delete = is_delete;
 		this.is_mark = is_mark;
@@ -52,6 +60,30 @@ public class MailReceiptDTO {
 
 	public void setReceipient(String receipient) {
 		this.receipient = receipient;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContents() {
+		return contents;
+	}
+
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+
+	public Timestamp getWrite_date() {
+		return write_date;
+	}
+
+	public void setWrite_date(Timestamp write_date) {
+		this.write_date = write_date;
 	}
 
 	public boolean isIs_read() {

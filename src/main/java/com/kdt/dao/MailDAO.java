@@ -35,12 +35,12 @@ public class MailDAO {
 		return db.selectList("Mails.selectDelSent");
 	}
 	
-	public List<MailDTO>selectAll(){ 
-		return db.selectList("Mails.selectAll");
+	public List<MailReceiptDTO>selectAll(String receipient){ 
+		return db.selectList("Mails.selectAll", receipient);
 	}
 
-	public List<MailDTO>selectAllSend(){ 
-		return db.selectList("Mails.selectAllSend");
+	public List<MailDTO>selectAllSend(String sender){ 
+		return db.selectList("Mails.selectAllSend", sender);
 	}
 	
 	public List<MailDTO>selectAllTemp(){ 
@@ -61,6 +61,10 @@ public class MailDAO {
 	
 	public int updateSent(Integer seq) {
 		return db.update("Mails.updateSent",seq);
+	}
+	
+	public int isRead(Integer seq) {
+		return db.update("Mails.isRead",seq);
 	}
 
 	public int deleteInbox(Integer seq) {
