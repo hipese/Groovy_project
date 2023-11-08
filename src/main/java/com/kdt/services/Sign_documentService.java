@@ -43,11 +43,11 @@ public class Sign_documentService {
 		return sdao.selectBySeq(seq);
 	}
 	
-	public int accept(int seq) {
-		return sdao.accept(seq);
+	public int accept(Sign_documentDTO dto) {
+	    return sdao.accept(dto);
 	}
 	
-	public int reject(int seq) {
-		return sdao.reject(seq);
+	public int reject(Sign_documentDTO dto) {
+		return sdao.reject(dto);
 	}
 }
