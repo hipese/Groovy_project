@@ -84,6 +84,20 @@ public class SignController {
 		List<Sign_documentDTO> list = signservice.selectWait(id);
 		return ResponseEntity.ok(list);
 	}
+	
+	@GetMapping("/vacation_complete")	
+	public ResponseEntity<List<Sign_documentDTO>> selectVacationComplete() {
+		String id = (String) session.getAttribute("loginID");
+		List<Sign_documentDTO> list = signservice.selectVacationComplete(id);
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/vacation_wait")	
+	public ResponseEntity<List<Sign_documentDTO>> selectVacationWait() {
+		String id = (String) session.getAttribute("loginID");
+		List<Sign_documentDTO> list = signservice.selectVacationWait(id);
+		return ResponseEntity.ok(list);
+	}
 
 	@GetMapping("/{seq}")
 	public ResponseEntity<Sign_documentDTO> selectBySeq(@PathVariable Integer seq) {
