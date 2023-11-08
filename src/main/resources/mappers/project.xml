@@ -9,6 +9,10 @@
 		SELECT * FROM project;
 	</select>
 	
+	<select id="selectProject" resultType="com.kdt.dto.ProjectDTO">
+		SELECT * FROM project WHERE project.pseq IN (SELECT project_member.pseq FROM project_member WHERE project_member.name = #{value});
+	</select>
+	
 	<select id="selectTodo" resultType="com.kdt.dto.ProjectScheduleDTO">
 		select * from project_schedule where pseq = #{value}
 	</select>
@@ -21,6 +25,9 @@
 		SELECT pschedule_state as state, COUNT(*) as count FROM project_schedule WHERE pschedule_state IN (0, 1, 2) and pseq = #{value} GROUP BY pschedule_state;
 	</select>
 	
+	<insert id="insertSchedule">
+		insert into project_schedule values(0,#{pseq},#{pschedule_start},#{pschedule_end},#{pschedule_contents},#{pschedule_importance},#{pschedule_state})
+	</insert>
 	
 
 </mapper>
