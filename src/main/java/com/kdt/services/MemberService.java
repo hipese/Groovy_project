@@ -41,8 +41,13 @@ public class MemberService {
 	public List<DepartmentDTO> departmentAll() {
 		return dao.departmentAll();
 	}
+	
 	public List<SearchTermDTO> selectedEmployee() {
 		return dao.selectedEmployee();
+	}
+	
+	public SearchTermDTO selectApprover(String selectedRow) {
+		return dao.selectApprover(selectedRow);
 	}
 
 }

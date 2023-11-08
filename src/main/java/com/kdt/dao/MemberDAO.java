@@ -39,4 +39,8 @@ public class MemberDAO {
 		return db.selectList("Member.selectedEmployeeAll");
 	}
 	
+	public SearchTermDTO selectApprover(String selectedRow) {
+		return db.selectOne("Member.selectApprover",selectedRow);
+	}
+	
 }

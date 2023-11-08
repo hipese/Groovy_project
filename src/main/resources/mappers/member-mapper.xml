@@ -26,4 +26,9 @@
 	<select id="selectedEmployeeAll" resultType="com.kdt.dto.SearchTermDTO">
 		select name,position,group_name,id from member 
 	</select>
+	
+	<select id="selectApprover" resultType="com.kdt.dto.SearchTermDTO">
+		select name,position,group_name,id from member where id=#{selectedRow}
+	</select>
+	
 </mapper>
