@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Mails">
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="seq">
+		INSERT INTO sender_mail VALUES(default, #{sender}, #{receipient}, #{title} ,
+		#{contents}, #{write_date}, default, default);
+	</insert>
+	
+	<insert id="insertReceipt">
+		INSERT INTO receipient_mail VALUES(default, #{parent_seq}, #{sender}, #{receipient}, #{title} ,
+		#{contents}, #{write_date}, default, default, default);
+	</insert>
+
+	<select id="selectBySeq" resultType="com.kdt.dto.MailDTO">
+		SELECT * FROM sender_mail WHERE SEQ=#{seq};
+	</select>
+	
+	<select id="selectDelInbox" resultType="com.kdt.dto.MailDTO">
+		SELECT * FROM sender_mail WHERE is_delete=true order by seq desc; 
+	</select>
+	
+	<select id="selectDelSent" resultType="com.kdt.dto.MailReceiptDTO">
+		SELECT * FROM receipient_mail WHERE is_delete=true order by seq desc;
+	</select>
+
+	<select id="selectAll" resultType="com.kdt.dto.MailReceiptDTO">
+	    SELECT * FROM receipient_mail WHERE receipient=#{receipient} And is_delete=false order by seq desc;
+	</select>
+
+	<select id="selectAllSend" resultType="com.kdt.dto.MailDTO">
+		SELECT * FROM sender_mail WHERE sender=#{sender} And is_delete=false order by seq desc;
+	</select>
+
+	<select id="selectAllTemp" resultType="com.kdt.dto.MailDTO">
+	
+	</select>
+
+	<select id="selectAllSpam" resultType="com.kdt.dto.MailDTO">
+	
+	</select>
+
+	<select id="selectAllToMe" resultType="com.kdt.dto.MailDTO">
+		SELECT * FROM sender_mail WHERE sender=receipient And is_delete=false order by seq desc;
+	</select>
+
+	<update id="updateInbox">
+		UPDATE receipient_mail SET is_delete=true WHERE seq=#{seq};
+	</update>
+	
+	<update id="updateSent">
+		UPDATE sender_mail SET is_delete=true WHERE seq=#{seq};
+	</update>
+	
+	<update id="isRead">
+		UPDATE receipient_mail SET is_read=true WHERE seq=#{seq};
+	</update>
+	
+	<delete id="deleteInbox">
+	    DELETE FROM sender_mail WHERE seq=#{seq};
+	</delete>
+	
+	<delete id="deleteSent">
+	    DELETE FROM receipient_mail WHERE seq=#{seq};
+	</delete>
+
+</mapper>
