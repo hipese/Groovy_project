@@ -31,7 +31,7 @@ public class SignController {
 
 	@Autowired
 	Sign_filesService sfservice;
-	
+
 	@Autowired
 	private HttpSession session;
 
@@ -63,44 +63,45 @@ public class SignController {
 
 		return ResponseEntity.ok("완전 성공!"); // 클라이언트에게 http 응답코드 200번대 반환
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<List<Sign_documentDTO>> selectProgress() {
-		String id = (String)session.getAttribute("loginID");
+		String id = (String) session.getAttribute("loginID");
 		List<Sign_documentDTO> list = signservice.selectProgress(id);
 		return ResponseEntity.ok(list);
 	}
-	
+
 	@GetMapping("/complete")
 	public ResponseEntity<List<Sign_documentDTO>> selectComplete() {
-		String id = (String)session.getAttribute("loginID");
+		String id = (String) session.getAttribute("loginID");
 		List<Sign_documentDTO> list = signservice.selectComplete(id);
 		return ResponseEntity.ok(list);
 	}
-	
+
 	@GetMapping("/wait")
 	public ResponseEntity<List<Sign_documentDTO>> selectWait() {
-		String id = (String)session.getAttribute("loginID");
+		String id = (String) session.getAttribute("loginID");
 		List<Sign_documentDTO> list = signservice.selectWait(id);
 		return ResponseEntity.ok(list);
 	}
-	
+
 	@GetMapping("/{seq}")
 	public ResponseEntity<Sign_documentDTO> selectBySeq(@PathVariable Integer seq) {
 		Sign_documentDTO list = signservice.selectBySeq(seq);
 		return ResponseEntity.ok(list);
 	}
-	
+
 	@PutMapping("/accept/{seq}")
-	public ResponseEntity<Void> update(@PathVariable Integer seq) {
-		signservice.accept(seq);
+	public ResponseEntity<Void> update(@PathVariable Integer seq, @RequestBody Sign_documentDTO dto) {
+		dto.setSeq(seq);
+		signservice.accept(dto);
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@PutMapping("/reject/{seq}")
-	public ResponseEntity<Void> reject(@PathVariable Integer seq) {
-		signservice.reject(seq);
+	public ResponseEntity<Void> reject(@PathVariable Integer seq, @RequestBody Sign_documentDTO dto) {
+		signservice.reject(dto);
 		return ResponseEntity.ok().build();
 	}
-	
+
 }
