@@ -18,8 +18,13 @@ public class MemberDAO {
 		return db.selectOne("Member.selectprofile",id);
 	}
 	
-	public int updateImage(String id, Map<String, Object> params) {
+	public int updateImage(Map<String, Object> params) {
 		System.out.println(params);
 		return db.update("Member.ImageChange",params);
+	}
+	
+	public int updateContact(Map<String, Object> params) {
+		System.out.println(params);
+		return db.update("Member.updateContact",params);
 	}
 }
