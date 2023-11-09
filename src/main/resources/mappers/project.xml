@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="selectProject" resultType="com.kdt.dto.ProjectDTO">
-		SELECT * FROM project WHERE project.pseq IN (SELECT project_member.pseq FROM project_member WHERE project_member.name = #{value});
+		SELECT * FROM project WHERE project.pseq IN (SELECT project_member.pseq FROM project_member WHERE project_member.id = #{value});
 	</select>
 	
 	<select id="selectTodo" resultType="com.kdt.dto.ProjectScheduleDTO">
@@ -34,7 +34,7 @@
 	</insert>
 	
 	<insert id="insertProjectMember">
-		insert into project_member values(0,#{pseq},#{group_name},#{name})
+		insert into project_member values(0,#{pseq},#{group_name},#{id})
 	</insert>
 	
 	<update id="updateState">
