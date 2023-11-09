@@ -11,6 +11,7 @@ import com.kdt.dao.MemberDAO;
 import com.kdt.dto.DepartmentDTO;
 import com.kdt.dto.MemberDTO;
 import com.kdt.dto.SearchTermDTO;
+import com.kdt.dto.Sign_MembersIDDTO;
 
 @Service
 public class MemberService {
@@ -52,6 +53,14 @@ public class MemberService {
 	
 	public List<SearchTermDTO> searchEmployee(String searchText){
 		return dao.searchEmployee(searchText);
+	}
+	
+	public  SearchTermDTO sign_WriterInfo(String signWriterInfo) {
+		return dao.sign_WriterInfo(signWriterInfo);
+	}
+	
+	public  SearchTermDTO sign_ReceiverInfo(String signReceiverInfo) {
+		return dao.sign_ReceiverInfo(signReceiverInfo);
 	}
 
 }
