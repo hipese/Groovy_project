@@ -48,5 +48,9 @@ public class ProjectService {
 	public int insertMember(ProjectMemberDTO dto) {
 		return dao.insertMember(dto);
 	}
+	
+	public int updateState(Map<String,Object> data) {
+		return dao.updateState(data);		
+	}
 
 }

@@ -18,7 +18,7 @@
 	</select>
 	
 	<select id="selectMember" resultType="com.kdt.dto.ProjectMemberDTO">
-		select * from project_member where pseq = #{value}
+		select * from project_member_view where pseq = #{value}
 	</select>
 			
 	<select id="selectProgress" resultType="com.kdt.dto.ProjectProgressDTO">
@@ -37,5 +37,8 @@
 		insert into project_member values(0,#{pseq},#{group_name},#{name})
 	</insert>
 	
+	<update id="updateState">
+		update project_schedule set pschedule_state = ${pschedule_state} where pschedule_seq = ${pschedule_seq}
+	</update>
 
 </mapper>

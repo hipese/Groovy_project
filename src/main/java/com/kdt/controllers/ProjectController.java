@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +45,16 @@ public class ProjectController {
 		pmdto.setGroup_name(mdto.getGroup_name());
 		pmdto.setName(dto.getPmanager());
 		int result = PService.insertMember(pmdto);
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping("/addSchedule/{seq}")
+	public ResponseEntity<Integer> insertSchedule(@PathVariable int seq, @RequestBody ProjectScheduleDTO dto){
+		System.out.println(dto.getPschedule_importance());
+		dto.setPseq(seq);
+		
+		int result = PService.insertSchedule(dto);
 		
 		return ResponseEntity.ok(result);
 	}
@@ -100,14 +111,15 @@ public class ProjectController {
 		return ResponseEntity.ok(data);
 	}
 	
-	@PostMapping("/addSchedule/{seq}")
-	public ResponseEntity<Integer> insertSchedule(@PathVariable int seq, @RequestBody ProjectScheduleDTO dto){
-		System.out.println(dto.getPschedule_importance());
-		dto.setPseq(seq);
-		
-		int result = PService.insertSchedule(dto);
+	@PutMapping("/update/state")
+	public ResponseEntity<Integer> updateState(@RequestBody Map<String,Object> data){
+		System.out.println(data.get("pschedule_seq"));
+		System.out.println(data.get("pschedule_state"));
+		int result = PService.updateState(data);
 		
 		return ResponseEntity.ok(result);
 	}
+	
+	
 
 }
