@@ -2,8 +2,7 @@ package com.kdt.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ClientRoutingController {
@@ -18,8 +17,13 @@ public class ClientRoutingController {
 //		
 //		return ""; 
 //	}
+//	@ResponseBody
+//	@RequestMapping("/ws-message/**")
+//	public void abc() { 
+//	}
 	
-	@RequestMapping({ "/", "/{path:[^\\.]*}", "/**/{path:[^\\.]*}" })
+
+	@RequestMapping({ "/", "/{path:^(ws-message$|ws-message/.*|\\.[^.]*$)[^\\.]*}", "/**/{path:^(ws-message$|ws-message/.*|\\.[^.]*$)[^\\.]*}" })
 	public String forwardToIndex() {
 		System.out.println("ClientRoutingController Activated");
 		return "forward:/index.html";
