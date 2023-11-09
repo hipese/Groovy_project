@@ -17,7 +17,10 @@ public class ClientRoutingController {
 //		
 //		return ""; 
 //	}
-
+//	@ResponseBody
+//	@RequestMapping("/ws-message/**")
+//	public void abc() { 
+//	}
 	
 
 	@RequestMapping({ "/", "/{path:^(ws-message$|ws-message/.*|\\.[^.]*$)[^\\.]*}", "/**/{path:^(ws-message$|ws-message/.*|\\.[^.]*$)[^\\.]*}" })
