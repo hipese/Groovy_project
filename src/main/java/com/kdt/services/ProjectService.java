@@ -41,5 +41,16 @@ public class ProjectService {
 	public int insertSchedule(ProjectScheduleDTO dto) {
 		return dao.insertSchedule(dto);
 	}
+	
+	public int insertProject(ProjectDTO dto) {
+		return dao.insertProject(dto);
+	}
+	public int insertMember(ProjectMemberDTO dto) {
+		return dao.insertMember(dto);
+	}
+	
+	public int updateState(Map<String,Object> data) {
+		return dao.updateState(data);		
+	}
 
 }
