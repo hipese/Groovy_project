@@ -1,13 +1,16 @@
 package com.kdt.services;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kdt.dao.MemberDAO;
+import com.kdt.dto.DepartmentDTO;
 import com.kdt.dto.MemberDTO;
+import com.kdt.dto.SearchTermDTO;
 
 @Service
 public class MemberService {
@@ -35,4 +38,20 @@ public class MemberService {
 		return dao.updateContact(params);
 	}
 	
+	public List<DepartmentDTO> departmentAll() {
+		return dao.departmentAll();
+	}
+	
+	public List<SearchTermDTO> selectedEmployee() {
+		return dao.selectedEmployee();
+	}
+	
+	public SearchTermDTO selectApprover(String selectedRow) {
+		return dao.selectApprover(selectedRow);
+	}
+	
+	public List<SearchTermDTO> searchEmployee(String searchText){
+		return dao.searchEmployee(searchText);
+	}
+
 }

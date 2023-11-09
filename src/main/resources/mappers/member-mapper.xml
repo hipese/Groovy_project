@@ -2,19 +2,45 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="Member">
+
+<mapper namespace="Member">
 
 	<select id="selectprofile" resultType="com.kdt.dto.MemberDTO">
-		select * from member where id = #{id}
+		select * from member where
+		id = #{id}
 	</select>
-	
+
 	<update id="ImageChange">
-		update member set profile_image=#{changeImage} where id=#{id}
+		update member set profile_image=#{changeImage} where
+		id=#{id}
 	</update>
-	
+
 	<update id="updateContact">
 		update member set contact=#{contact} where id=#{id}
 	</update>
+
+	<select id="departmentAll"
+		resultType="com.kdt.dto.DepartmentDTO">
+		select * from department
+	</select>
+
+	<select id="selectedEmployeeAll"
+		resultType="com.kdt.dto.SearchTermDTO">
+		select name,position,group_name,id from member
+	</select>
+
+	<select id="selectApprover"
+		resultType="com.kdt.dto.SearchTermDTO">
+		select name,position,group_name,id from member where
+		id=#{selectedRow}
+	</select>
+
+	<select id="searchEmployee"
+		resultType="com.kdt.dto.SearchTermDTO">
+		select name, position, group_name, id
+		from member
+		where name LIKE CONCAT('%', #{searchText}, '%') or group_name LIKE
+		CONCAT('%', #{searchText}, '%')
+	</select>
 
 </mapper>
