@@ -6,6 +6,8 @@ public class ProjectMemberDTO {
 	private int pseq;
 	private String group_name;
 	private String name;
+	private String id;
+	
 	public ProjectMemberDTO() {
 		super();
 	}
@@ -15,6 +17,14 @@ public class ProjectMemberDTO {
 		this.pseq = pseq;
 		this.group_name = group_name;
 		this.name = name;
+	}
+	
+	public ProjectMemberDTO(int pseq, String group_name, String name, String id) {
+		super();
+		this.pseq = pseq;
+		this.group_name = group_name;
+		this.name = name;
+		this.id = id;
 	}
 	public int getPmember_seq() {
 		return pmember_seq;
@@ -40,6 +50,13 @@ public class ProjectMemberDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	
 	
 

@@ -10,14 +10,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kdt.dto.MemberDTO;
 import com.kdt.dto.ProjectDTO;
 import com.kdt.dto.ProjectMemberDTO;
 import com.kdt.dto.ProjectProgressDTO;
 import com.kdt.dto.ProjectScheduleDTO;
+import com.kdt.services.MemberService;
 import com.kdt.services.ProjectService;
 
 @RestController
@@ -27,7 +30,41 @@ public class ProjectController {
 	@Autowired
 	private ProjectService PService;
 	
+	@Autowired
+	private MemberService mService;
 	
+	@PostMapping("/create")
+	public ResponseEntity<Integer> newProject(@RequestBody ProjectDTO dto){
+		System.out.println(dto.getPmanager());
+		int pseq = PService.insertProject(dto);
+		System.out.println("pseq : "+pseq);
+		MemberDTO mdto = mService.getprofile(dto.getPmanager());
+		
+		ProjectMemberDTO pmdto = new ProjectMemberDTO();
+		pmdto.setPseq(pseq);
+		pmdto.setGroup_name(mdto.getGroup_name());
+		pmdto.setName(dto.getPmanager());
+		int result = PService.insertMember(pmdto);
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping("/addSchedule/{seq}")
+	public ResponseEntity<Integer> insertSchedule(@PathVariable int seq, @RequestBody ProjectScheduleDTO dto){
+		System.out.println(dto.getPschedule_importance());
+		dto.setPseq(seq);
+		
+		int result = PService.insertSchedule(dto);
+		
+		return ResponseEntity.ok(result);
+	}
+	
+	@PostMapping("/addMember/{seq}")
+	public ResponseEntity<Integer> insertMember(@PathVariable int seq, @RequestBody ProjectMemberDTO dto){
+		dto.setPseq(seq);
+		int result = PService.insertMember(dto);
+		return ResponseEntity.ok(result);
+	}
 	
 	@GetMapping
 	public ResponseEntity<List<ProjectDTO>> selectAll(){
@@ -74,14 +111,15 @@ public class ProjectController {
 		return ResponseEntity.ok(data);
 	}
 	
-	@PostMapping("/addSchedule/{seq}")
-	public ResponseEntity<Integer> insertSchedule(@PathVariable int seq, @RequestBody ProjectScheduleDTO dto){
-		System.out.println(dto.getPschedule_importance());
-		dto.setPseq(seq);
-		
-		int result = PService.insertSchedule(dto);
+	@PutMapping("/update/state")
+	public ResponseEntity<Integer> updateState(@RequestBody Map<String,Object> data){
+		System.out.println(data.get("pschedule_seq"));
+		System.out.println(data.get("pschedule_state"));
+		int result = PService.updateState(data);
 		
 		return ResponseEntity.ok(result);
 	}
+	
+	
 
 }
