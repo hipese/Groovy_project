@@ -34,6 +34,14 @@
 		select name,position,group_name,id from member where
 		id=#{selectedRow}
 	</select>
+	
+	<select id="signWriterInfo"  resultType="com.kdt.dto.SearchTermDTO">
+		select name,position,group_name,id from member where id=#{signWriterInfo}
+	</select>
+	
+	<select id="signReceiverInfo"  resultType="com.kdt.dto.SearchTermDTO">
+		select name,position,group_name,id from member where id=#{signReceiverInfo}
+	</select>
 
 	<select id="searchEmployee"
 		resultType="com.kdt.dto.SearchTermDTO">
