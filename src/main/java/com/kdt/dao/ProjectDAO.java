@@ -46,6 +46,19 @@ public class ProjectDAO {
 		return db.insert("Project.insertSchedule",dto);
 	}
 	
+	public int updateState(Map<String,Object> data) {
+		return db.update("Project.updateState",data);
+	}
+	
 //	ProjectCreate
+	
+	public int insertProject(ProjectDTO dto) {
+		db.insert("Project.insertProject",dto);
+		return dto.getPseq();
+	}
+	
+	public int insertMember(ProjectMemberDTO dto) {
+		return db.insert("Project.insertProjectMember",dto);
+	}
 
 }
