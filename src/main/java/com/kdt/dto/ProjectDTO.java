@@ -8,11 +8,11 @@ public class ProjectDTO {
 	private String pmanager;
 	private String pname;
 	private String pcontents;
-	private Timestamp ptime_limit;
+	private String ptime_limit;
 	public ProjectDTO() {
 		super();
 	}
-	public ProjectDTO(int pseq, String pmanager, String pname, String pcontents, Timestamp ptime_limit) {
+	public ProjectDTO(int pseq, String pmanager, String pname, String pcontents, String ptime_limit) {
 		super();
 		this.pseq = pseq;
 		this.pmanager = pmanager;
@@ -44,13 +44,11 @@ public class ProjectDTO {
 	public void setPcontents(String pcontents) {
 		this.pcontents = pcontents;
 	}
-	public Timestamp getPtime_limit() {
+	public String getPtime_limit() {
 		return ptime_limit;
 	}
-	public void setPtime_limit(Timestamp ptime_limit) {
+	public void setPtime_limit(String ptime_limit) {
 		this.ptime_limit = ptime_limit;
 	}
 	
-	
-
 }
