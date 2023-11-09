@@ -31,6 +31,26 @@
 		ORDER BY seq DESC
 	</select>
 
+	<select id="selectVacationComplete"
+		resultType="com.kdt.dto.Sign_documentDTO">
+		SELECT *
+		FROM sign_document
+		WHERE writer = #{value} AND
+		accept = 0
+		AND document_type = '휴가신청서'
+		ORDER BY seq DESC
+	</select>
+
+	<select id="selectVacationWait"
+		resultType="com.kdt.dto.Sign_documentDTO">
+		SELECT *
+		FROM sign_document
+		WHERE writer = #{value} AND
+		accept = 1
+		AND document_type = '휴가신청서'
+		ORDER BY seq DESC
+	</select>
+
 	<select id="selectBySeq"
 		resultType="com.kdt.dto.Sign_documentDTO">
 		select * from sign_document where seq=#{value}
@@ -38,13 +58,15 @@
 
 	<update id="accept">
 		UPDATE sign_document
-		SET accept = 0, comment = #{comment}
+		SET accept = 0, comment =
+		#{comment}
 		WHERE seq = #{seq}
 	</update>
 
 	<update id="reject">
 		UPDATE sign_document
-		SET accept = 2, comment = #{comment}
+		SET accept = 2, comment =
+		#{comment}
 		WHERE seq = #{seq}
 	</update>
 
