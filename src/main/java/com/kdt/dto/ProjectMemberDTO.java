@@ -11,12 +11,12 @@ public class ProjectMemberDTO {
 	public ProjectMemberDTO() {
 		super();
 	}
-	public ProjectMemberDTO(int pmember_seq, int pseq, String group_name, String name) {
+	public ProjectMemberDTO(int pmember_seq, int pseq, String group_name, String id) {
 		super();
 		this.pmember_seq = pmember_seq;
 		this.pseq = pseq;
 		this.group_name = group_name;
-		this.name = name;
+		this.id = id;
 	}
 	
 	public ProjectMemberDTO(int pseq, String group_name, String name, String id) {

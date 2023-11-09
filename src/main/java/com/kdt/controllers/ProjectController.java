@@ -62,6 +62,7 @@ public class ProjectController {
 	@PostMapping("/addMember/{seq}")
 	public ResponseEntity<Integer> insertMember(@PathVariable int seq, @RequestBody ProjectMemberDTO dto){
 		dto.setPseq(seq);
+		System.out.println("s - "+dto.getPseq()+" "+dto.getId()+" "+dto.getName());
 		int result = PService.insertMember(dto);
 		return ResponseEntity.ok(result);
 	}
