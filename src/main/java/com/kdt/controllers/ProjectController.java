@@ -48,6 +48,13 @@ public class ProjectController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@PostMapping("/addMember/{seq}")
+	public ResponseEntity<Integer> insertMember(@PathVariable int seq, @RequestBody ProjectMemberDTO dto){
+		dto.setPseq(seq);
+		int result = PService.insertMember(dto);
+		return ResponseEntity.ok(result);
+	}
+	
 	@GetMapping
 	public ResponseEntity<List<ProjectDTO>> selectAll(){
 		List<ProjectDTO> list = PService.selectAll();
