@@ -40,7 +40,7 @@ public class AuthController {
 	public ResponseEntity<String> logout() {
 		String id = (String) session.getAttribute("loginID");
 		if (id != null && !id.isEmpty()) {
-//			session.removeAttribute("loginID"); 
+			session.removeAttribute("loginID"); 
 			return ResponseEntity.ok("로그아웃 되었습니다.");
 		}
 		return ResponseEntity.badRequest().body("로그인되어 있지 않습니다.");
