@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kdt.dto.DepartmentDTO;
 import com.kdt.dto.MemberDTO;
 import com.kdt.dto.SearchTermDTO;
+import com.kdt.dto.Sign_MembersIDDTO;
 
 @Repository
 public class MemberDAO {
@@ -46,5 +47,14 @@ public class MemberDAO {
 	public List<SearchTermDTO> searchEmployee(String searchText){
 		return db.selectList("Member.searchEmployee", searchText);
 	}
+	
+	public  SearchTermDTO sign_WriterInfo(String signWriterInfo) {
+		return db.selectOne("Member.signWriterInfo", signWriterInfo);
+	}
+	
+	public  SearchTermDTO sign_ReceiverInfo(String signReceiverInfo) {
+		return db.selectOne("Member.signReceiverInfo", signReceiverInfo);
+	}
+
 	
 }

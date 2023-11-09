@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kdt.dto.DepartmentDTO;
 import com.kdt.dto.MemberDTO;
 import com.kdt.dto.SearchTermDTO;
+import com.kdt.dto.Sign_MembersIDDTO;
 import com.kdt.services.MemberService;
 
 import jakarta.servlet.http.HttpSession;
@@ -75,6 +77,22 @@ public class MemberController {
 		return ResponseEntity.ok(dto);
 	}
 	
+	@GetMapping("/signWriterInfo/{signWriterInfo}")
+	public ResponseEntity<SearchTermDTO> sign_WriterInfo(@PathVariable String signWriterInfo){
+	    System.out.println("작성자 아이디 : "+ signWriterInfo);
+	    SearchTermDTO writerInfo = mservice.sign_WriterInfo(signWriterInfo);
+	    return ResponseEntity.ok(writerInfo);
+	}
+	
+	@GetMapping("/signReceiverInfo/{signReceiverInfo}")
+	public ResponseEntity<SearchTermDTO> sign_ReceiverInfo(@PathVariable String signReceiverInfo){
+	    System.out.println("받는놈 아이디 : "+ signReceiverInfo);
+	    SearchTermDTO receiverInfo = mservice.sign_ReceiverInfo(signReceiverInfo);
+	    return ResponseEntity.ok(receiverInfo);
+	}
+	
+	
+	 
 	
 	@PutMapping("/{contact}")
 	public ResponseEntity<String> updateContact(@PathVariable String contact) {
