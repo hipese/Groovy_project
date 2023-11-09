@@ -1,5 +1,7 @@
 package com.kdt.controllers;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +18,12 @@ public class WebSocketController {
     	SimpMessagingTemplate template;
 	
 	@MessageMapping("/user")
-	public ResponseEntity<Void> sendMessage(@RequestBody String id) {
-		System.out.println(id);
-		template.convertAndSend("/topic/a", id);
+	public ResponseEntity<Void> sendMessage(@RequestBody Map<String, String> messageObject) {
+		String message = messageObject.get("message");
+		String recipient = messageObject.get("recipient");
+		System.out.println(message);
+		System.out.println(recipient);
+		template.convertAndSend("/topic/" + recipient, messageObject);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
-
 }
