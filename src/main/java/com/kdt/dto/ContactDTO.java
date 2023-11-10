@@ -8,6 +8,7 @@ public class ContactDTO {
 	private String position;
 	private String contact;
 	private String email;
+	private String profile_image;
 	public String getId() {
 		return id;
 	}
@@ -44,7 +45,14 @@ public class ContactDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public ContactDTO(String id, String group_name, String name, String position, String contact, String email) {
+	public String getProfile_image() {
+		return profile_image;
+	}
+	public void setProfile_image(String profile_image) {
+		this.profile_image = profile_image;
+	}
+	public ContactDTO(String id, String group_name, String name, String position, String contact, String email,
+			String profile_image) {
 		super();
 		this.id = id;
 		this.group_name = group_name;
@@ -52,12 +60,11 @@ public class ContactDTO {
 		this.position = position;
 		this.contact = contact;
 		this.email = email;
+		this.profile_image = profile_image;
 	}
 	public ContactDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	
 	
 }
