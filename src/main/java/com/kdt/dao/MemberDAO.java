@@ -32,6 +32,11 @@ public class MemberDAO {
 		return db.update("Member.updateContact",params);
 	}
 	
+	public int updateEmail(Map<String, Object> params) {
+		System.out.println(params);
+		return db.update("Member.updateEmail",params);
+	}
+	
 	public List<DepartmentDTO> departmentAll() {
 		return db.selectList("Member.departmentAll");
 	}
