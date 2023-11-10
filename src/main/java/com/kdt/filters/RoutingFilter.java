@@ -21,7 +21,6 @@ public class RoutingFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         String requestURI = req.getRequestURI();
-        System.out.println(requestURI);
         
         if(requestURI.startsWith("/ws-message")) {
             chain.doFilter(request, response);
