@@ -94,10 +94,19 @@ public class MemberController {
 	
 	 
 	
-	@PutMapping("/{contact}")
+	@PutMapping("/ContactUpdate/{contact}")
 	public ResponseEntity<String> updateContact(@PathVariable String contact) {
+		System.out.println("전화번호변경 요청임");
 	    String id = (String) session.getAttribute("loginID");
 	    mservice.updateContact(id, contact); // 서비스 메소드에 id와 contact 값을 전달합니다.
+	    return ResponseEntity.ok("변경 완료");
+	}
+	
+	@PutMapping("/emailUpdate/{email}")
+	public ResponseEntity<String> updateEmail(@PathVariable String email) {
+		System.out.println("email변경 요청임");
+	    String id = (String) session.getAttribute("loginID");
+	    mservice.updateEmail(id, email); // 서비스 메소드에 id와 contact 값을 전달합니다.
 	    return ResponseEntity.ok("변경 완료");
 	}
 
