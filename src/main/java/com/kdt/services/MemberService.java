@@ -39,6 +39,14 @@ public class MemberService {
 		return dao.updateContact(params);
 	}
 	
+	public int updateEmail(String id, String email) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", id);
+		params.put("email", email);
+		
+		return dao.updateEmail(params);
+	}
+	
 	public List<DepartmentDTO> departmentAll() {
 		return dao.departmentAll();
 	}
