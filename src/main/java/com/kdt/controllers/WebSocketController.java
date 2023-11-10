@@ -30,7 +30,7 @@ public class WebSocketController {
 		String recipient = messageObject.get("recipient");
 		System.out.println(message);
 		System.out.println(recipient);
-		template.convertAndSend("/topic/" + recipient, "알림요청");
+		template.convertAndSend("/topic/" + recipient, messageObject);
 		rservice.insert(message, recipient);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
