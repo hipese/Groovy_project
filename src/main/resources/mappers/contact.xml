@@ -5,7 +5,7 @@
 <mapper namespace="Contact">
 
 	<select id="selectAll" resultType="com.kdt.dto.ContactDTO">
-		select id, group_name, name, position, contact, email from member
+		select id, group_name, name, position, contact, email, profile_image from member
 	</select>
 	
 	<select id="selectFavorite" resultType="com.kdt.dto.ContactDTO">

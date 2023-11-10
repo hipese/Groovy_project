@@ -37,12 +37,11 @@ public class RoutingFilter implements Filter {
             return;
         }
         
-
         if(requestURI.startsWith("/profiles")) {
             chain.doFilter(request, response);
             return;
         }
-      
+
         // all requests not api or static will be forwarded to index page. 
         request.getRequestDispatcher("/").forward(request, response);
     }
