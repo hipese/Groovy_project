@@ -17,7 +17,7 @@ public class WebSocketController {
 	@Autowired
     	SimpMessagingTemplate template;
 	
-	@MessageMapping("/user")
+	@MessageMapping("/notice")
 	public ResponseEntity<Void> sendMessage(@RequestBody Map<String, String> messageObject) {
 		String message = messageObject.get("message");
 		String recipient = messageObject.get("recipient");
