@@ -15,7 +15,6 @@ public class Realtime_NotificationsDAO {
 	
 	public int insert(Realtime_NotificationsDTO dto) {
 		return db.insert("Realtime.insert", dto);
-		
 	}
 	
 	public List<Realtime_NotificationsDTO> selectUnreadNotifications(String id) {

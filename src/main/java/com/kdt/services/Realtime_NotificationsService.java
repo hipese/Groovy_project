@@ -15,8 +15,6 @@ import jakarta.servlet.http.HttpSession;
 public class Realtime_NotificationsService {
 	@Autowired
 	private Realtime_NotificationsDAO rdao;
-	@Autowired
-	private HttpSession session;
 	
 	public int insert(String message, String recipient) {
 		Realtime_NotificationsDTO dto = new Realtime_NotificationsDTO();
