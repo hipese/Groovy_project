@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Admins">
+
+	<insert id="insert">
+		INSERT INTO member VALUES(#{id},#{password} ,#{name},
+		#{group_name}, #{position}, #{contact}, #{email}, null);
+	</insert>
+
+	<insert id="insertDept">
+		INSERT INTO department VALUES(#{dept_name});
+	</insert>
+
+	<insert id="insertPosition">
+		INSERT INTO position VALUES(#{position});
+	</insert>
+	
+	<select id="isMember" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM member WHERE id = #{id};
+	</select>
+
+	<select id="selectAllUser" resultType="com.kdt.dto.MemberDTO">
+		SELECT * FROM member;
+	</select>
+
+	<select id="selectAllInactive" resultType="com.kdt.dto.MemberDTO">
+		SELECT * FROM member WHERE group_name='휴직';
+	</select>
+
+	<select id="selectAllDept" resultType="com.kdt.dto.DepartmentDTO">
+		SELECT * FROM department;
+	</select>
+
+	<select id="selectAllPosition" resultType="com.kdt.dto.PositionDTO">
+		SELECT * FROM position;
+	</select>
+
+	<delete id="delete">
+		DELETE FROM member WHERE id=#{id};
+	</delete>
+	
+	<delete id="deleteDept">
+		DELETE FROM department WHERE dept_name=#{dept_name};
+	</delete>
+	
+	<delete id="deletePosition">
+		DELETE FROM position WHERE position=#{position};
+	</delete>
+
+	<update id="update">
+		UPDATE member SET name=#{name},
+		group_name=#{group_name}, position=#{position} WHERE id=#{id};
+	</update>
+
+	<update id="updateInactive">
+		UPDATE member SET group_name='휴직' WHERE id=#{id};
+	</update>
+	
+    <update id="updatePassword" parameterType="java.util.Map">
+		UPDATE member SET password=#{password} WHERE id=#{id};
+	</update>
+
+</mapper>
