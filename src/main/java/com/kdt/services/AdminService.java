@@ -31,9 +31,12 @@ public class AdminService {
 		return dto;
 	}
 
-	public boolean isMember(String id) {
-		int count = dao.isMember(id);
-		return count > 0;
+	public int countMember() {
+		return dao.countMember();
+	}
+	
+	public int countInactive() {
+		return dao.countInactive();
 	}
 
 	public List<MemberDTO> selectAllUser() {
@@ -67,12 +70,12 @@ public class AdminService {
 	public int update(MemberDTO dto) {
 		return this.dao.update(dto);
 	}
-
-	public int updateInactive(MemberDTO dto) {
-		return this.dao.updateInactive(dto);
-	}
 	
 	public int updatePassword(String password, String id) {
 		return this.dao.updatePassword(password, id);
+	}
+
+	public int updateInactive(String id) {
+		return this.dao.updateInactive(id);
 	}
 }

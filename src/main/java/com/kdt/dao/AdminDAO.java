@@ -30,8 +30,12 @@ public class AdminDAO {
 		return db.insert("Admins.insertPosition", dto);
 	}
 
-	public int isMember(String id) {
-		return db.selectOne("Admins.isMember", id);
+	public int countMember() {
+		return db.selectOne("Admins.countMember");
+	}
+	
+	public int countInactive() {
+		return db.selectOne("Admins.countInactive");
 	}
 
 	public List<MemberDTO>selectAllUser(){ 
@@ -65,16 +69,16 @@ public class AdminDAO {
 	public int update(MemberDTO dto) {
 		return db.update("Admins.update",dto);
 	}
-
-	public int updateInactive(MemberDTO dto) {
-		return db.update("Admins.updateInactive",dto);
-	}
-
+	
 	public int updatePassword(String password, String id) {
 		Map<String, String> paramMap = new HashMap<>();
 		paramMap.put("password", password);
 		paramMap.put("id", id);
 		return db.update("Admins.updatePassword",paramMap);
+	}
+
+	public int updateInactive(String id) {
+		return db.update("Admins.updateInactive",id);
 	}
 
 }

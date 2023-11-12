@@ -18,10 +18,14 @@
 		INSERT INTO position VALUES(#{position});
 	</insert>
 	
-	<select id="isMember" resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM member WHERE id = #{id};
+	<select id="countMember" resultType="java.lang.Integer">
+	    SELECT COUNT(*) FROM member WHERE (group_name IS NULL OR NOT group_name = '휴직');
 	</select>
 
+    <select id="countInactive" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM member WHERE group_name = '휴직';
+	</select>
+	
 	<select id="selectAllUser" resultType="com.kdt.dto.MemberDTO">
 		SELECT * FROM member;
 	</select>
@@ -54,13 +58,13 @@
 		UPDATE member SET name=#{name},
 		group_name=#{group_name}, position=#{position} WHERE id=#{id};
 	</update>
-
-	<update id="updateInactive">
-		UPDATE member SET group_name='휴직' WHERE id=#{id};
-	</update>
 	
     <update id="updatePassword" parameterType="java.util.Map">
 		UPDATE member SET password=#{password} WHERE id=#{id};
+	</update>
+
+	<update id="updateInactive">
+		UPDATE member SET group_name='휴직' WHERE id=#{id};
 	</update>
 
 </mapper>
