@@ -24,14 +24,16 @@ public class WebSocketController {
 	Realtime_NotificationsService rservice;
 	
 	@MessageMapping("/notice")
-	public ResponseEntity<Void> sendMessage(@RequestBody Map<String, String> messageObject) {
+	public ResponseEntity<Void> sendMessage(@RequestBody Map<String, Object> messageObject) {
 		Realtime_NotificationsDTO dto = new Realtime_NotificationsDTO();
-		String message = messageObject.get("message");
-		String recipient = messageObject.get("recipient");
+		String message = (String)messageObject.get("message");
+		String recipient = (String)messageObject.get("recipient");
+		Integer parent_seq = (Integer) messageObject.get("parent_seq");
 		System.out.println(message);
 		System.out.println(recipient);
+		System.out.println(parent_seq);
 		template.convertAndSend("/topic/" + recipient, messageObject);
-		rservice.insert(message, recipient);
+		rservice.insert(message, recipient, parent_seq);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
