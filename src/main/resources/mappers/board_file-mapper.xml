@@ -5,11 +5,19 @@
 <mapper namespace="Board_file">
 
 	<insert id="insert">
-		insert into board_file values(null,#{parent_seq},#{ori_name},#{sys_name},0)
+		insert into com_board_file values(null,#{parent_seq},#{ori_name},#{sys_name},0)
+	</insert>
+	
+	<insert id="insertDept">
+		insert into dept_board_file values(null,#{parent_seq},#{ori_name},#{sys_name},0)
 	</insert>
 	
 	<select id="selectBySeq" resultType="com.kdt.dto.Board_FileDTO">
-		select * from board_file where parent_seq = #{parent_seq}
+		select * from com_board_file where parent_seq = #{parent_seq}
+	</select>
+	
+	<select id="selectDeptBySeq" resultType="com.kdt.dto.DeptBoard_FileDTO">
+		select * from dept_board_file where parent_seq = #{parent_seq}
 	</select>
 
 </mapper>
