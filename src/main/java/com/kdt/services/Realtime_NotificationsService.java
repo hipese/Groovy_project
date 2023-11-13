@@ -30,8 +30,8 @@ public class Realtime_NotificationsService {
 		return rdao.selectUnreadNotifications(id);
 	}
 	
-	public int updateReadStatus(String id) {
-		return rdao.updateReadStatus(id);
+	public int updateReadStatus(Realtime_NotificationsDTO dto) {
+		return rdao.updateReadStatus(dto);
 	}
 	
 }

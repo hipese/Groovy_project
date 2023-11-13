@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,11 +31,14 @@ public class Realtime_NotificationsController {
 		return ResponseEntity.ok(list);
 	}
 	
-	@PutMapping
-	public ResponseEntity<Void> updateReadStatus(){
-		String id = (String) session.getAttribute("loginID");
-		rservice.updateReadStatus(id);
-		return ResponseEntity.ok().build();
+	@PutMapping("/{parent_seq}")
+	public ResponseEntity<Void> updateReadStatus(@PathVariable int parent_seq){
+		Realtime_NotificationsDTO dto = new Realtime_NotificationsDTO();
+	    String recipient = (String) session.getAttribute("loginID");
+	    dto.setRecipient(recipient);
+	    dto.setParent_seq(parent_seq);
+	    rservice.updateReadStatus(dto);
+	    return ResponseEntity.ok().build();
 	}
 	
 }
