@@ -36,7 +36,7 @@ public class SignController {
 	private HttpSession session;
 
 	@PostMapping
-	public ResponseEntity<String> post(Sign_documentDTO dto, MultipartFile[] files) throws Exception {
+	public ResponseEntity<Integer> post(Sign_documentDTO dto, MultipartFile[] files) throws Exception {
 
 		String upload = "c:/uploads";
 		File uploadPath = new File(upload);
@@ -61,7 +61,7 @@ public class SignController {
 			}
 		}
 
-		return ResponseEntity.ok("완전 성공!"); // 클라이언트에게 http 응답코드 200번대 반환
+		return ResponseEntity.ok(parent_seq); // 클라이언트에게 http 응답코드 200번대 반환
 	}
 
 	@GetMapping
@@ -106,16 +106,16 @@ public class SignController {
 	}
 
 	@PutMapping("/accept/{seq}")
-	public ResponseEntity<Void> update(@PathVariable Integer seq, @RequestBody Sign_documentDTO dto) {
+	public ResponseEntity<Integer> update(@PathVariable Integer seq, @RequestBody Sign_documentDTO dto) {
 		dto.setSeq(seq);
 		signservice.accept(dto);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(seq);
 	}
 
 	@PutMapping("/reject/{seq}")
-	public ResponseEntity<Void> reject(@PathVariable Integer seq, @RequestBody Sign_documentDTO dto) {
+	public ResponseEntity<Integer> reject(@PathVariable Integer seq, @RequestBody Sign_documentDTO dto) {
 		signservice.reject(dto);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(seq);
 	}
 
 }
