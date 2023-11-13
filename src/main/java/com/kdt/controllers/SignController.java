@@ -106,16 +106,16 @@ public class SignController {
 	}
 
 	@PutMapping("/accept/{seq}")
-	public ResponseEntity<Void> update(@PathVariable Integer seq, @RequestBody Sign_documentDTO dto) {
+	public ResponseEntity<Integer> update(@PathVariable Integer seq, @RequestBody Sign_documentDTO dto) {
 		dto.setSeq(seq);
 		signservice.accept(dto);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(seq);
 	}
 
 	@PutMapping("/reject/{seq}")
-	public ResponseEntity<Void> reject(@PathVariable Integer seq, @RequestBody Sign_documentDTO dto) {
+	public ResponseEntity<Integer> reject(@PathVariable Integer seq, @RequestBody Sign_documentDTO dto) {
 		signservice.reject(dto);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(seq);
 	}
 
 }
