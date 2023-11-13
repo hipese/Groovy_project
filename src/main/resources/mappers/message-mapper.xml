@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Message">
+
+	<insert id="createRoom" useGeneratedKeys="true" keyProperty="seq" keyColumn="seq">
+		insert into chattingroom values(null, #{room_name})
+	</insert>
+	
+	<insert id="setParticipants">
+		insert into participant values(${room_seq}, #{user_id}, default)
+	</insert>
+	
+	<insert id="initRoom">
+		insert into message values(null, #{id}, #{room_seq}, #{contents}, default, default);
+	</insert>
+	
+	<select id="selectRoomInfo" resultType="com.kdt.dto.RoomInfoDTO">
+		select seq, room_name, is_read from chattingroom join participant on seq = room_seq where user_id = #{id};
+	</select>
+	
+	<select id="selectJoinedRoom" resultType="_int">
+		select room_seq from participant where user_id = #{id};
+	</select>
+	
+	<select id="selectProfiles" resultType="com.kdt.dto.RoomProfileDTO">
+		select room_seq, profile_image from member join participant on id = user_id where id != #{id};
+	</select>
+	
+	<select id="recentMessage" resultType="com.kdt.dto.MessageDTO">
+		SELECT *
+FROM message
+WHERE room_seq IN (SELECT room_seq FROM participant WHERE user_id = #{id})
+  AND (room_seq, write_time) IN (
+    SELECT room_seq, MAX(write_time) AS max_write_time
+    FROM message
+    GROUP BY room_seq
+  )
+ORDER BY write_time DESC;
+	</select>
+
+</mapper>

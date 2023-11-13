@@ -23,7 +23,8 @@ public class ClientRoutingController {
 //	}
 	
 
-	@RequestMapping({ "/", "/{path:^(ws-message$|ws-message/.*|\\.[^.]*$)[^\\.]*}", "/**/{path:^(ws-message$|ws-message/.*|\\.[^.]*$)[^\\.]*}" })
+	//@RequestMapping({ "/", "/{path:^(ws-message$|ws-message/.*|\\.[^.]*$)[^\\.]*}", "/**/{path:^(ws-message$|ws-message/.*|\\.[^.]*$)[^\\.]*}" })
+	@RequestMapping({"/",""})
 	public String forwardToIndex() {
 		System.out.println("ClientRoutingController Activated");
 		return "forward:/index.html";
