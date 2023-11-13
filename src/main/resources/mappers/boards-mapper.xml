@@ -7,52 +7,77 @@
 <mapper namespace="Boards">
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="seq">
-		INSERT INTO board VALUES(default,#{title} ,#{writer},
+		INSERT INTO com_board VALUES(default,#{title} ,#{writer},
 		#{contents}, default, default, #{category});
+	</insert>
+	
+	<insert id="insertDept" useGeneratedKeys="true" keyProperty="seq">
+		INSERT INTO dept_board VALUES(default,#{title} ,#{writer},
+		#{contents}, default, default, #{category}, #{dept});
 	</insert>
 
 	<select id="selectBySeq" resultType="com.kdt.dto.BoardDTO">
-		SELECT * FROM board WHERE
-		SEQ=#{seq};
+		SELECT * FROM com_board WHERE SEQ=#{seq};
+	</select>
+	
+	<select id="selectDeptBySeq" resultType="com.kdt.dto.DeptBoardDTO">
+		SELECT * FROM dept_board WHERE SEQ=#{seq};
 	</select>
 
 	<select id="selectRecent" resultType="com.kdt.dto.BoardDTO">
-		SELECT * FROM board order
-		by seq desc;
+		SELECT * FROM com_board order by seq desc;
+	</select>
+	
+	<select id="selectDeptRecent" resultType="com.kdt.dto.DeptBoardDTO">
+		SELECT * FROM dept_board order by seq desc;
 	</select>
 
 	<select id="selectAllCom" resultType="com.kdt.dto.BoardDTO">
-		SELECT * FROM board WHERE
-		CATEGORY='전사 공지' order by seq desc;
+		SELECT * FROM com_board WHERE
+		CATEGORY='공지' order by seq desc;
 	</select>
 
 	<select id="selectAllComFree" resultType="com.kdt.dto.BoardDTO">
-		SELECT * FROM board
-		WHERE CATEGORY='전사 자유' order by seq desc;
+		SELECT * FROM com_board
+		WHERE CATEGORY='자유' order by seq desc;
 	</select>
 
-	<select id="selectAllDept" resultType="com.kdt.dto.BoardDTO">
-		SELECT * FROM board WHERE
-		CATEGORY='부서 공지' order by seq desc;
+	<select id="selectAllDept" resultType="com.kdt.dto.DeptBoardDTO">
+		SELECT * FROM dept_board WHERE
+		CATEGORY='공지' and dept=#{dept} order by seq desc;
 	</select>
 
-	<select id="selectAllDeptFree" resultType="com.kdt.dto.BoardDTO">
-		SELECT * FROM board
-		WHERE CATEGORY='부서 자유' order by seq desc;;
+	<select id="selectAllDeptFree" resultType="com.kdt.dto.DeptBoardDTO">
+		SELECT * FROM dept_board
+		WHERE CATEGORY='자유' and dept=#{dept} order by seq desc;;
 	</select>
 
 	<delete id="delete">
-		DELETE FROM board WHERE seq=#{seq};
+		DELETE FROM com_board WHERE seq=#{seq};
+	</delete>
+	
+	<delete id="deleteDept">
+		DELETE FROM dept_board WHERE seq=#{seq};
 	</delete>
 
 	<update id="update">
-		UPDATE board SET title=#{title},
+		UPDATE com_board SET title=#{title},
+		contents=#{contents}, category=#{category} WHERE seq=#{seq};
+	</update>
+	
+	<update id="updateDept">
+		UPDATE dept_board SET title=#{title},
 		contents=#{contents}, category=#{category} WHERE seq=#{seq};
 	</update>
 
 	<update id="updateViewCount" parameterType="map">
-		UPDATE board SET
-		view_count = #{view_count} WHERE seq = #{seq}
+		UPDATE com_board SET
+		view_count = #{view_count} WHERE seq = #{seq};
+	</update>
+
+	<update id="updateDeptViewCount" parameterType="map">
+		UPDATE dept_board SET
+		view_count = #{view_count} WHERE seq = #{seq};
 	</update>
 
 

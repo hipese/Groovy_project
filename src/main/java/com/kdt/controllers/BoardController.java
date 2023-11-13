@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kdt.dto.BoardDTO;
 import com.kdt.dto.Board_FileDTO;
+import com.kdt.dto.DeptBoardDTO;
+import com.kdt.dto.DeptBoard_FileDTO;
 import com.kdt.services.BoardService;
 import com.kdt.services.Board_FileService;
 
@@ -35,7 +37,7 @@ public class BoardController {
 	private Board_FileService fservice;
 
 	@PostMapping()
-	public ResponseEntity<String> post(@RequestParam String title, @RequestParam String writer, @RequestParam(required = false) MultipartFile[] files, @RequestParam String contents, @RequestParam String category) throws Exception {
+	public ResponseEntity<String> insert(@RequestParam String title, @RequestParam String writer, @RequestParam(required = false) MultipartFile[] files, @RequestParam String contents, @RequestParam String category) throws Exception {
 	    System.out.println(title + " : " + writer + " : " + contents + " : " + category);
 
 	    BoardDTO dto = new BoardDTO();
@@ -44,9 +46,8 @@ public class BoardController {
 	    dto.setContents(contents);
 	    dto.setCategory(category);
 
-	    // 게시물을 추가하고 반환된 게시물 객체를 받음
-	    dto = service.addBoard(dto);
-	    int seq = dto.getSeq(); // 게시물이 추가되고 반환된 seq를 얻음
+	    dto = service.insert(dto);
+	    int seq = dto.getSeq();
 
 	    String upload = "c:/uploads";
 	    File uploadPath = new File(upload);
@@ -73,16 +74,77 @@ public class BoardController {
 
 	    return ResponseEntity.ok("");
 	}
+	
+	@PostMapping("/dept")
+	public ResponseEntity<String> insertDept(@RequestParam String title, @RequestParam String writer, @RequestParam(required = false) MultipartFile[] files, @RequestParam String contents, @RequestParam String category, @RequestParam String dept) throws Exception {
+	    System.out.println(title + " : " + writer + " : " + contents + " : " + category + " : " + dept);
 
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<Void> errorHandler(Exception e){
-		e.printStackTrace();
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	    DeptBoardDTO dto = new DeptBoardDTO();
+	    dto.setTitle(title);
+	    dto.setWriter(writer);
+	    dto.setContents(contents);
+	    dto.setCategory(category);
+	    dto.setDept(dept);
+
+	    dto = service.insertDept(dto);
+	    int seq = dto.getSeq();
+
+	    String upload = "c:/uploads";
+	    File uploadPath = new File(upload);
+
+	    if (!uploadPath.exists()) {
+	        uploadPath.mkdirs();
+	    }
+
+	    if (files != null && files.length > 0) {
+	        for (MultipartFile file : files) {
+	            System.out.println(file.getOriginalFilename());
+	            String oriName = file.getOriginalFilename();
+	            String sysName = UUID.randomUUID() + "_" + oriName;
+
+	            file.transferTo(new File(uploadPath, sysName));
+
+	            DeptBoard_FileDTO fdto = new DeptBoard_FileDTO();
+	            fdto.setOri_name(oriName);
+	            fdto.setSys_name(sysName);
+	            fdto.setParent_seq(seq);
+	            fservice.insertDept(fdto);
+	        }
+	    }
+
+	    return ResponseEntity.ok("");
+	}
+
+	@GetMapping("/com/{seq}")
+	public ResponseEntity <BoardDTO> selectBoardBySeq(@PathVariable Integer seq) {
+		BoardDTO message = service.selectBoardBySeq(seq);
+		int view_count = message.getView_count() + 1;
+		message.setView_count(view_count);
+
+		service.updateViewCount(seq, view_count);
+		return ResponseEntity.ok(message);
+	}
+
+	// 부서 소식 detail
+	@GetMapping("/dept/{seq}")
+	public ResponseEntity <DeptBoardDTO> selectDeptBySeq(@PathVariable Integer seq) {
+		DeptBoardDTO dept = service.selectDeptBySeq(seq);
+		int view_count = dept.getView_count() + 1;
+		dept.setView_count(view_count);
+
+		service.updateDeptViewCount(seq, view_count);
+		return ResponseEntity.ok(dept);
 	}
 
 	@GetMapping("/recent")
 	public ResponseEntity<List<BoardDTO>> selectBoardRecent() {
 		List<BoardDTO> recent = service.selectBoardRecent();
+		return ResponseEntity.ok(recent);
+	}
+	
+	@GetMapping("/recentDept")
+	public ResponseEntity<List<DeptBoardDTO>> selectDeptRecent() {
+		List<DeptBoardDTO> recent = service.selectDeptRecent();
 		return ResponseEntity.ok(recent);
 	}
 
@@ -98,39 +160,40 @@ public class BoardController {
 		return ResponseEntity.ok(ComFree);
 	}
 
-	@GetMapping("/dept")
-	public ResponseEntity<List<BoardDTO>> selectBoardAllDept() {
-		List<BoardDTO> Dept = service.selectBoardAllDept();
+	// 부서 내 소식 - 부서 공지
+	@GetMapping("/deptCom/{dept}")
+	public ResponseEntity<List<DeptBoardDTO>> selectBoardAllDept(@PathVariable String dept) {
+		List<DeptBoardDTO> Dept = service.selectBoardAllDept(dept);
 		return ResponseEntity.ok(Dept);
 	}
 
-	@GetMapping("/deptfree")
-	public ResponseEntity<List<BoardDTO>> selectBoardAllDeptFree() {
-		List<BoardDTO> DeptFree = service.selectBoardAllDeptFree();
+	@GetMapping("/deptfree/{dept}")
+	public ResponseEntity<List<DeptBoardDTO>> selectBoardAllDeptFree(@PathVariable String dept) {
+		List<DeptBoardDTO> DeptFree = service.selectBoardAllDeptFree(dept);
 		return ResponseEntity.ok(DeptFree);
 	}
 
-	@GetMapping("/{seq}")
-	public ResponseEntity <BoardDTO> selectBoardBySeq(@PathVariable Integer seq) {
-		BoardDTO message = service.selectBoardBySeq(seq);
-		// 게시물을 조회할 때마다 view_count를 증가
-		int view_count = message.getView_count() + 1;
-		message.setView_count(view_count);
-
-		// 변경된 view_count를 DB에 업데이트
-		service.updateViewCount(seq, view_count);
-		return ResponseEntity.ok(message);
-	}
-
-	@DeleteMapping("/{seq}")
+	@DeleteMapping("/com/{seq}")
 	public ResponseEntity<String> deleteBoard(@PathVariable Integer seq) {
 		service.deleteBoard(seq);
+		return ResponseEntity.ok("삭제 성공!");
+	}
+	
+	@DeleteMapping("/dept/{seq}")
+	public ResponseEntity<String> deleteDept(@PathVariable Integer seq) {
+		service.deleteDept(seq);
 		return ResponseEntity.ok("삭제 성공!");
 	}
 
 	@GetMapping("/update/{seq}")
 	public ResponseEntity <BoardDTO> selectUPdateBoardBySeq(@PathVariable Integer seq) {
 		BoardDTO message = service.selectBoardBySeq(seq);
+		return ResponseEntity.ok(message);
+	}
+	
+	@GetMapping("/updateDept/{seq}")
+	public ResponseEntity <DeptBoardDTO> selectUpdateDeptBySeq(@PathVariable Integer seq) {
+		DeptBoardDTO message = service.selectDeptBySeq(seq);
 		return ResponseEntity.ok(message);
 	}
 
@@ -163,7 +226,7 @@ public class BoardController {
 	            Board_FileDTO fdto = new Board_FileDTO();
 	            fdto.setOri_name(oriName);
 	            fdto.setSys_name(sysName);
-	            fdto.setParent_seq(seq); // 게시물의 seq를 parent_seq로 설정
+	            fdto.setParent_seq(seq);
 	            fservice.insert(fdto);
 	        }
 	    }
@@ -171,5 +234,47 @@ public class BoardController {
 		return ResponseEntity.ok().build();
 	}
 
+	@PutMapping("/updateDept/{seq}")
+	public ResponseEntity<Void> updateDept(@PathVariable Integer seq,@RequestPart("title") String title,@RequestPart("contents") String contents,@RequestPart("category") String category,@RequestPart(value = "files", required = false) MultipartFile[] files) throws Exception{
+
+		DeptBoardDTO dto = new DeptBoardDTO();
+		dto.setSeq(seq);
+		dto.setTitle(title);
+		dto.setContents(contents);
+		dto.setCategory(category);
+
+		service.updateDept(dto);
+
+	    String upload = "c:/uploads";
+	    File uploadPath = new File(upload);
+
+	    if (!uploadPath.exists()) {
+	        uploadPath.mkdirs();
+	    }
+
+	    if (files != null && files.length > 0) {
+	        for (MultipartFile file : files) {
+	            System.out.println(file.getOriginalFilename());
+	            String oriName = file.getOriginalFilename();
+	            String sysName = UUID.randomUUID() + "_" + oriName;
+
+	            file.transferTo(new File(uploadPath, sysName));
+
+	            DeptBoard_FileDTO fdto = new DeptBoard_FileDTO();
+	            fdto.setOri_name(oriName);
+	            fdto.setSys_name(sysName);
+	            fdto.setParent_seq(seq);
+	            fservice.insertDept(fdto);
+	        }
+	    }
+
+		return ResponseEntity.ok().build();
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Void> errorHandler(Exception e){
+		e.printStackTrace();
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	}
 
 }
