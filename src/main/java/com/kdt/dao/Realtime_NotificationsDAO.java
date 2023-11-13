@@ -22,7 +22,7 @@ public class Realtime_NotificationsDAO {
 		
 	}
 	
-	public int updateReadStatus(String id) {
-		return db.update("Realtime.updateReadStatus", id);	
+	public int updateReadStatus(Realtime_NotificationsDTO dto) {
+		return db.update("Realtime.updateReadStatus", dto);	
 	}
 }

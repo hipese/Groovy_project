@@ -14,7 +14,7 @@
 		UPDATE
 		realtime_notifications
 		SET read_status = true
-		WHERE recipient = #{id}
+		WHERE recipient = #{recipient} AND parent_seq = #{parent_seq}
 	</update>
 
 	<select id="selectUnreadNotifications"
