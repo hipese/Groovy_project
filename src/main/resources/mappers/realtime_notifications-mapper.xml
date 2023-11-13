@@ -7,7 +7,7 @@
 	<insert id="insert" useGeneratedKeys="true" keyProperty="seq">
 		insert
 		into realtime_notifications
-		values(null,#{recipient},#{contents},#{write_date},#{read_status})
+		values(null,#{recipient},#{contents},#{write_date},#{read_status},#{parent_seq})
 	</insert>
 
 	<update id="updateReadStatus">
