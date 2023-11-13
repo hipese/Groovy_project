@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Survey">
+	
+	<select id="selectAll" resultType="com.kdt.dto.SurveyDTO">
+		SELECT * FROM survey;
+	</select>
+		
+	<insert id="insertSurvey" parameterType="com.kdt.dto.SurveyDTO" useGeneratedKeys="true" keyProperty="surseq">
+		insert into survey values(0,#{surtitle},#{surwriter},#{surcontents},now(),0)
+	</insert>
+	
+	<insert id="insertShort" parameterType="com.kdt.dto.SurveyShortDTO">
+		insert into survey_question_short values(0,#{surseq},#{short_contents})
+	</insert>
+	
+	<insert id="insertMulti" parameterType="com.kdt.dto.SurveyMultiDTO">
+		insert into survey_question_multi values(0,#{surseq},#{multi_answer_0},#{multi_answer_1},#{multi_answer_2},#{multi_answer_3},#{multi_answer_4})
+	</insert>
+	
+	<select id="selectOne" resultType="com.kdt.dto.SurveyDTO">
+		select * from survey where surseq = #{value};
+	</select>
+	
+	<select id="selectShort" resultType="com.kdt.dto.SurveyShortDTO">
+		select * from survey_question_short where surseq = #{value};
+	</select>
+	
+	<select id="selectMulti" resultType="com.kdt.dto.SurveyMultiDTO">
+		select * from survey_question_multi where surseq = #{value};
+	</select>
+	
+	<insert id="insertShortRes" parameterType="com.kdt.dto.SurveyShortResponseDTO">
+		insert into survey_response_short values(0,#{surseq},#{short_seq},#{short_res_contents},#{short_res_writer});
+	</insert>
+	
+	<insert id="insertMultiRes" parameterType="com.kdt.dto.SurveyMultiResponseDTO">
+		insert into survey_response_multi values(0,#{surseq},#{multi_seq},#{multi_res_contents},#{multi_res_writer});
+	</insert>
+
+</mapper>
