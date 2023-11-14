@@ -67,6 +67,12 @@ public class MemberController {
 		return ResponseEntity.ok(dto);
 	}
 	
+	@GetMapping("/detail/{selectedRow}")
+	public ResponseEntity<MemberDTO> selectDetail(@PathVariable String selectedRow){
+		MemberDTO dto = mservice.selectDetail(selectedRow);
+		return ResponseEntity.ok(dto);
+	}
+	
 	@GetMapping("/search/{searchText}")
 	public ResponseEntity<List> searchEmployee(@PathVariable String searchText){
 		

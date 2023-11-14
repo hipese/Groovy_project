@@ -39,6 +39,12 @@
 		id=#{selectedRow}
 	</select>
 	
+	<select id="selectDetail"
+		resultType="com.kdt.dto.MemberDTO">
+		select * from member where
+		id=#{selectedRow}
+	</select>
+	
 	<select id="signWriterInfo"  resultType="com.kdt.dto.SearchTermDTO">
 		select name,position,group_name,id from member where id=#{signWriterInfo}
 	</select>
@@ -52,7 +58,7 @@
 		select name, position, group_name, id
 		from member
 		where name LIKE CONCAT('%', #{searchText}, '%') or group_name LIKE
-		CONCAT('%', #{searchText}, '%')
+		CONCAT('%', #{searchText}, '%') or position LIKE CONCAT('%', #{searchText}, '%')
 	</select>
 
 </mapper>
