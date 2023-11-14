@@ -30,7 +30,7 @@ public class MessageService {
 			pdto.setUser_id(user_id);
 			dao.addParticipants(pdto);
 		}
-		dao.initRoom(new MessageDTO(0,list.get(list.size()-1),dto.getSeq(),"",null,false));
+		dao.initRoom(new MessageDTO(0,"System",dto.getSeq(), dao.getName(list.get(list.size()-1)) +  "님이 채팅방을 생성했습니다.",null,false));
 	}
 	
 	public List<RoomInfoDTO> getRoomInfo(String id) {
@@ -46,5 +46,7 @@ public class MessageService {
 		return dao.getRecentMessage(id);
 	}
 	
-	
+	public List<MessageDTO> getMessagesByRoomSeq(String room_seq) {
+		return dao.getMessagesByRoomSeq(room_seq);
+	}
 }

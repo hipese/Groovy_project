@@ -63,9 +63,13 @@ public class MemberController {
 	
 	@GetMapping("/{selectedRow}")
 	public ResponseEntity<SearchTermDTO> selectApprover(@PathVariable String selectedRow){
-		
-		System.out.println("선택한놈 아이디: "+ selectedRow);
 		SearchTermDTO dto = mservice.selectApprover(selectedRow);
+		return ResponseEntity.ok(dto);
+	}
+	
+	@GetMapping("/detail/{selectedRow}")
+	public ResponseEntity<MemberDTO> selectDetail(@PathVariable String selectedRow){
+		MemberDTO dto = mservice.selectDetail(selectedRow);
 		return ResponseEntity.ok(dto);
 	}
 	
