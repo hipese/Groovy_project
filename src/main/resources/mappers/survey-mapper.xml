@@ -43,5 +43,9 @@
 	<select id="selectMultiResult" resultType="com.kdt.dto.SurveyResultDTO">
 		SELECT multi_seq, multi_res_contents, COUNT(*) AS multi_count FROM survey_response_multi where surseq = ${value} GROUP BY multi_seq, multi_res_contents order by multi_seq;
 	</select>
+	
+	<update id="updateState">
+		update survey set surstate = 1 where surseq = #{value};
+	</update>
 
 </mapper>

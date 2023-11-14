@@ -60,5 +60,9 @@ public class SurveyDAO {
 	public List<SurveyResultDTO> selectMultiResult(int seq){
 		return db.selectList("Survey.selectMultiResult",seq);
 	}
+	
+	public int updateState(int seq) {
+		return db.update("Survey.updateState",seq);
+	}
 
 }

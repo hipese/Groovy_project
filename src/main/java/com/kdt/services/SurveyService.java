@@ -60,5 +60,9 @@ public class SurveyService {
 		return dao.selectMultiResult(seq);
 	}
 	
+	public int updateState(int seq) {
+		return dao.updateState(seq);
+	}
+	
 
 }
