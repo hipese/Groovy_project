@@ -32,7 +32,7 @@ public class WebSocketController {
 		System.out.println(message);
 		System.out.println(recipient);
 		System.out.println(parent_seq);
-		template.convertAndSend("/topic/" + recipient, messageObject);
+		template.convertAndSend("/queue/" + recipient, messageObject);
 		rservice.insert(message, recipient, parent_seq);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
