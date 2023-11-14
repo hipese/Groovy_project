@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kdt.dto.SurveyDTO;
 import com.kdt.dto.SurveyMultiDTO;
 import com.kdt.dto.SurveyMultiResponseDTO;
+import com.kdt.dto.SurveyResultDTO;
 import com.kdt.dto.SurveyShortDTO;
 import com.kdt.dto.SurveyShortResponseDTO;
 
@@ -54,6 +55,14 @@ public class SurveyDAO {
 	
 	public int insertMultiRes(SurveyMultiResponseDTO dto){
 		return db.insert("Survey.insertMultiRes",dto);
+	}
+	
+	public List<SurveyResultDTO> selectMultiResult(int seq){
+		return db.selectList("Survey.selectMultiResult",seq);
+	}
+	
+	public int updateState(int seq) {
+		return db.update("Survey.updateState",seq);
 	}
 
 }
