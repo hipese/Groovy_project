@@ -39,5 +39,9 @@
 	<insert id="insertMultiRes" parameterType="com.kdt.dto.SurveyMultiResponseDTO">
 		insert into survey_response_multi values(0,#{surseq},#{multi_seq},#{multi_res_contents},#{multi_res_writer});
 	</insert>
+	
+	<select id="selectMultiResult" resultType="com.kdt.dto.SurveyResultDTO">
+		SELECT multi_seq, multi_res_contents, COUNT(*) AS multi_count FROM survey_response_multi where surseq = ${value} GROUP BY multi_seq, multi_res_contents order by multi_seq;
+	</select>
 
 </mapper>

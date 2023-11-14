@@ -10,6 +10,7 @@ import com.kdt.dao.SurveyDAO;
 import com.kdt.dto.SurveyDTO;
 import com.kdt.dto.SurveyMultiDTO;
 import com.kdt.dto.SurveyMultiResponseDTO;
+import com.kdt.dto.SurveyResultDTO;
 import com.kdt.dto.SurveyShortDTO;
 import com.kdt.dto.SurveyShortResponseDTO;
 
@@ -54,5 +55,10 @@ public class SurveyService {
 	public int insertMultiRes(SurveyMultiResponseDTO dto) {
 		return dao.insertMultiRes(dto);
 	}
+	
+	public List<SurveyResultDTO> selectMultiResult(int seq){
+		return dao.selectMultiResult(seq);
+	}
+	
 
 }

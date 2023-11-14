@@ -18,6 +18,7 @@ import com.kdt.dto.ProjectProgressDTO;
 import com.kdt.dto.SurveyDTO;
 import com.kdt.dto.SurveyMultiDTO;
 import com.kdt.dto.SurveyMultiResponseDTO;
+import com.kdt.dto.SurveyResultDTO;
 import com.kdt.dto.SurveyShortDTO;
 import com.kdt.dto.SurveyShortResponseDTO;
 import com.kdt.services.SurveyService;
@@ -169,6 +170,13 @@ public class SurveyConrtoller {
 	public ResponseEntity<List<SurveyDTO>> selectList(){
 		
 		List<SurveyDTO> list = SService.selectList();		
+		
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/result/{seq}")
+	public ResponseEntity<List<SurveyResultDTO>> getResult(@PathVariable int seq){
+		List<SurveyResultDTO> list = SService.selectMultiResult(seq);
 		
 		return ResponseEntity.ok(list);
 	}
