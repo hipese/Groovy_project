@@ -48,4 +48,12 @@ public class MessageDAO {
 	public List<MessageDTO> getRecentMessage(String id) {
 		return db.selectList("Message.recentMessage", id);
 	}
+	
+	public List<MessageDTO> getMessagesByRoomSeq(String room_seq) {
+		return db.selectList("Message.selectByRoomSeq", room_seq);
+	}
+	
+	public String getName(String id) {
+		return db.selectOne("Member.selectName", id);
+	}
 }

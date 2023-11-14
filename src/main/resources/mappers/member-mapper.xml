@@ -9,6 +9,10 @@
 		select * from member where
 		id = #{id}
 	</select>
+	
+	<select id="selectName" resultType="string">
+		select name from member where id = #{id}
+	</select>
 
 	<update id="ImageChange">
 		update member set profile_image=#{changeImage} where
