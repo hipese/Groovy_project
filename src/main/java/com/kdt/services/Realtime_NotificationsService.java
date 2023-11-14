@@ -16,12 +16,13 @@ public class Realtime_NotificationsService {
 	@Autowired
 	private Realtime_NotificationsDAO rdao;
 	
-	public int insert(String message, String recipient) {
+	public int insert(String message, String recipient, int parent_seq) {
 		Realtime_NotificationsDTO dto = new Realtime_NotificationsDTO();
 		Timestamp date = new Timestamp(System.currentTimeMillis());
 		dto.setWrite_date(date);
 		dto.setContents(message);
 		dto.setRecipient(recipient);
+		dto.setParent_seq(parent_seq);
 		return rdao.insert(dto);
 	}
 	
@@ -29,8 +30,8 @@ public class Realtime_NotificationsService {
 		return rdao.selectUnreadNotifications(id);
 	}
 	
-	public int updateReadStatus(String id) {
-		return rdao.updateReadStatus(id);
+	public int updateReadStatus(Realtime_NotificationsDTO dto) {
+		return rdao.updateReadStatus(dto);
 	}
 	
 }

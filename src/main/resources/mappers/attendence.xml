@@ -12,7 +12,7 @@
 	</select>
 	
 	<update id="updateWorkEnd">
-		update attendence set workend = #{workend} where id = #{id}
+		update attendence set workend = #{workend} where DATE(workstart) = CURDATE() and id = #{id}
 	</update>
 	
 	<select id="selectByID" resultType="com.kdt.dto.AttendenceDTO">
