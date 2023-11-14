@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="selectProfiles" resultType="com.kdt.dto.RoomProfileDTO">
-		select room_seq, profile_image from member join participant on id = user_id where id != #{id};
+		select room_seq, id, name, profile_image from participant left join member on user_id = id where id != #{id} and room_seq in (select room_seq from participant as p where user_id = #{id} );
 	</select>
 	
 	<select id="recentMessage" resultType="com.kdt.dto.MessageDTO">
@@ -38,6 +38,10 @@ WHERE room_seq IN (SELECT room_seq FROM participant WHERE user_id = #{id})
     GROUP BY room_seq
   )
 ORDER BY write_time DESC;
+	</select>
+	
+	<select id="selectByRoomSeq" resultType="com.kdt.dto.MessageDTO">
+		select * from message where room_seq = #{room_seq}
 	</select>
 
 </mapper>
