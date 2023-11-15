@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import com.kdt.dto.ProjectProgressDTO;
 import com.kdt.dto.SurveyDTO;
 import com.kdt.dto.SurveyMultiDTO;
 import com.kdt.dto.SurveyMultiResponseDTO;
+import com.kdt.dto.SurveyResultDTO;
 import com.kdt.dto.SurveyShortDTO;
 import com.kdt.dto.SurveyShortResponseDTO;
 import com.kdt.services.SurveyService;
@@ -171,6 +173,21 @@ public class SurveyConrtoller {
 		List<SurveyDTO> list = SService.selectList();		
 		
 		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/result/{seq}")
+	public ResponseEntity<List<SurveyResultDTO>> getResult(@PathVariable int seq){
+		List<SurveyResultDTO> list = SService.selectMultiResult(seq);
+		
+		return ResponseEntity.ok(list);
+	}
+	
+	@PutMapping("/close/{seq}")
+	public ResponseEntity<Integer> updateState(@PathVariable int seq){
+		
+		int result = SService.updateState(seq);
+		
+		return ResponseEntity.ok(result);
 	}
 
 }
