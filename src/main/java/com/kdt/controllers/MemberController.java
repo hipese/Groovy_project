@@ -47,6 +47,7 @@ public class MemberController {
 		return ResponseEntity.ok(dto);
 	}
 	
+
 	@GetMapping("/department")
 	public ResponseEntity<List> departmentAll(){
 		
@@ -90,7 +91,6 @@ public class MemberController {
 	
 	@GetMapping("/signReceiverInfo/{signReceiverInfo}")
 	public ResponseEntity<SearchTermDTO> sign_ReceiverInfo(@PathVariable String signReceiverInfo){
-	    System.out.println("받는놈 아이디 : "+ signReceiverInfo);
 	    SearchTermDTO receiverInfo = mservice.sign_ReceiverInfo(signReceiverInfo);
 	    return ResponseEntity.ok(receiverInfo);
 	}
@@ -108,7 +108,6 @@ public class MemberController {
 	
 	@PutMapping("/emailUpdate/{email}")
 	public ResponseEntity<String> updateEmail(@PathVariable String email) {
-		System.out.println("email변경 요청임");
 	    String id = (String) session.getAttribute("loginID");
 	    mservice.updateEmail(id, email); // 서비스 메소드에 id와 contact 값을 전달합니다.
 	    return ResponseEntity.ok("변경 완료");

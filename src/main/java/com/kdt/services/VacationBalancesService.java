@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kdt.dao.VacationBalancesDAO;
 import com.kdt.dto.VacationBalancesDTO;
+import com.kdt.dto.VacationRequsetDTO;
 
 @Service
 public class VacationBalancesService {
@@ -18,4 +19,11 @@ public class VacationBalancesService {
 		return dao.allVacationList();
 	}
 	
+	public int addVacation(VacationRequsetDTO vRequset) {
+		return dao.addVacation(vRequset);
+	}
+	
+	public int subtractVacation(VacationRequsetDTO vRequest) {
+		return dao.subtractVacation(vRequest);
+	}
 }
