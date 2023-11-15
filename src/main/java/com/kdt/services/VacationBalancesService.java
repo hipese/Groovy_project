@@ -19,11 +19,15 @@ public class VacationBalancesService {
 		return dao.allVacationList();
 	}
 	
-	public int addVacation(VacationRequsetDTO vRequset) {
+	public VacationBalancesDTO myVacation(String memberID) {
+		return dao.myVacation(memberID);
+	}
+	
+	public VacationBalancesDTO addVacation(VacationRequsetDTO vRequset) {
 		return dao.addVacation(vRequset);
 	}
 	
-	public int subtractVacation(VacationRequsetDTO vRequest) {
+	public VacationBalancesDTO subtractVacation(VacationRequsetDTO vRequest) {
 		return dao.subtractVacation(vRequest);
 	}
 }

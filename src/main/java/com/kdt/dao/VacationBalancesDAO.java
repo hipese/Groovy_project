@@ -19,12 +19,18 @@ public class VacationBalancesDAO {
 		return db.selectList("VacationBalance.selectAll");
 	}
 	
-	public int addVacation(VacationRequsetDTO vRequset) {
-		return db.update("VacationBalance.addVacation", vRequset);
+	public VacationBalancesDTO myVacation(String memberID) {
+		return db.selectOne("VacationBalance.selectVacationByMemberID", memberID);
 	}
 	
-	public int subtractVacation(VacationRequsetDTO vRequset) {
-		return db.update("VacationBalance.subtractVacation", vRequset);
+	public VacationBalancesDTO addVacation(VacationRequsetDTO vRequset) {
+		db.update("VacationBalance.addVacation", vRequset);
+		return db.selectOne("VacationBalance.selectVacationByMemberID", vRequset.getMemberID());
+	}
+	
+	public VacationBalancesDTO subtractVacation(VacationRequsetDTO vRequset) {
+		db.update("VacationBalance.subtractVacation", vRequset);
+		return db.selectOne("VacationBalance.selectVacationByMemberID", vRequset.getMemberID());
 	}
 	
 }

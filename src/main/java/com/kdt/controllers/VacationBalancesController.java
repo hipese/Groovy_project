@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,16 +28,22 @@ public class VacationBalancesController {
 		return ResponseEntity.ok(dto);
 	}
 	
+	@GetMapping("/myVacation/{memberID}")
+	public ResponseEntity<VacationBalancesDTO> myVacation(@PathVariable String memberID){
+		VacationBalancesDTO dto= vservice.myVacation(memberID);
+		 return ResponseEntity.ok(dto);
+	}
+	
 	@PostMapping("/add")
-	public ResponseEntity<String> addVacation(@RequestBody VacationRequsetDTO vRequest){
-		vservice.addVacation(vRequest);
-		return ResponseEntity.ok("성공!");
+	public ResponseEntity<VacationBalancesDTO> addVacation(@RequestBody VacationRequsetDTO vRequest){
+		VacationBalancesDTO dto=vservice.addVacation(vRequest);
+		return ResponseEntity.ok(dto);
 	}
 	
 	@PostMapping("/subtract")
-	public ResponseEntity<String> subtractVacation(@RequestBody VacationRequsetDTO vRequest){
-		vservice.subtractVacation(vRequest);
-		return ResponseEntity.ok("성공!");
+	public ResponseEntity<VacationBalancesDTO> subtractVacation(@RequestBody VacationRequsetDTO vRequest){
+		VacationBalancesDTO dto=vservice.subtractVacation(vRequest);
+		return ResponseEntity.ok(dto);
 	}
 	
 }

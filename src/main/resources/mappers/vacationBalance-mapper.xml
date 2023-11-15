@@ -9,6 +9,13 @@
 		select * from VacationBalanceView
 	</select>
 
+	<select id="selectVacationByMemberID"
+		resultType="com.kdt.dto.VacationBalancesDTO">
+		SELECT * FROM VacationBalanceView
+		WHERE MemberID = #{memberID};
+	</select>
+
+
 	<update id="addVacation">
 		update VacationBalances set TotalAnnualEntitlement =
 		TotalAnnualEntitlement+#{amount} where MemberID=#{memberID}
