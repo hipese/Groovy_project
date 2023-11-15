@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="VacationBalance">
+
+	<select id="selectAll"
+		resultType="com.kdt.dto.VacationBalancesDTO">
+		select * from VacationBalanceView
+	</select>
+
+	<select id="selectVacationByMemberID"
+		resultType="com.kdt.dto.VacationBalancesDTO">
+		SELECT * FROM VacationBalanceView
+		WHERE MemberID = #{memberID};
+	</select>
+
+
+	<update id="addVacation">
+		update VacationBalances set TotalAnnualEntitlement =
+		TotalAnnualEntitlement+#{amount} where MemberID=#{memberID}
+	</update>
+
+	<update id="subtractVacation">
+		update VacationBalances set UsedDays =
+		UsedDays+#{amount} where MemberID=#{memberID}
+	</update>
+</mapper>
