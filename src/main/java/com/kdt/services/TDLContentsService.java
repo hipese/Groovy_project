@@ -25,4 +25,7 @@ public class TDLContentsService {
 	public int delete(int seq) {
 		return this.tdlcdao.delete(seq);
 	}
+	public int swcontents(TDLContentsDTO dto) {
+		return this.tdlcdao.swcontents(dto);
+	}
 }

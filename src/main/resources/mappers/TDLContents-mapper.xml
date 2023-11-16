@@ -4,7 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="TDLContents">
 	<insert id="insert">
-		insert into tdlcontents values(null,#{id},#{contents},#{parent_seq})
+		insert into tdlcontents values(null,#{id},#{contents},#{order},#{parent_seq})
 	</insert>
 	<select id="selectAll" resultType="com.kdt.dto.TDLContentsDTO">
 		select * from tdlcontents where parent_seq=#{parent_seq}
@@ -15,4 +15,7 @@
 	<delete id="delete">
 		delete from tdlcontents where seq=#{seq}
 	</delete>
+	<update id="switch" parameterType="map">
+		update tdlcontents set `order`=#{order} where seq=#{seq}
+	</update>
 </mapper>

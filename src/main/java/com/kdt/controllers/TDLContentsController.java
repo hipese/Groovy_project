@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +27,7 @@ public class TDLContentsController {
 	
 	@PostMapping
 	public ResponseEntity<Integer> post(@RequestBody TDLContentsDTO dto) throws Exception {
-		System.out.println(dto.getContents() + " : " + dto.getParent_seq());
+		System.out.println(dto.getContents() + " : " + dto.getOrder() + " : " + dto.getParent_seq() );
 		tdlcservice.post(dto);
 		return ResponseEntity.ok().build();
 	}
@@ -34,7 +36,6 @@ public class TDLContentsController {
 	public ResponseEntity<List<TDLContentsDTO>> selectAll(int parent_seq) throws Exception {
 		List<TDLContentsDTO> list = new ArrayList<>();
 		list = tdlcservice.selectAll(parent_seq);
-		System.out.println(list);
 		return ResponseEntity.ok(list);
 	}
 	@DeleteMapping("/{parent_seq}")
@@ -45,6 +46,13 @@ public class TDLContentsController {
 	@DeleteMapping
 	public ResponseEntity<Integer> delete(int seq) throws Exception {
 		tdlcservice.delete(seq);
+		return ResponseEntity.ok().build();
+	}
+	@PutMapping("/order")
+	public ResponseEntity<Integer> swcontents(@RequestBody List<TDLContentsDTO> dtos) {
+		for (TDLContentsDTO dto : dtos) {
+	        tdlcservice.swcontents(dto);
+	    }
 		return ResponseEntity.ok().build();
 	}
 	@ExceptionHandler(Exception.class)
