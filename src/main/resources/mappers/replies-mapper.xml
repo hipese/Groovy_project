@@ -43,5 +43,13 @@
 	<delete id="deleteDept">
 		DELETE FROM dept_reply WHERE seq=#{seq};
 	</delete>
+	
+	<delete id="deleteAll">
+		DELETE FROM reply WHERE parent_seq=#{parent_seq};
+	</delete>
+
+	<delete id="deleteDeptAll">
+		DELETE FROM dept_reply WHERE parent_seq=#{parent_seq};
+	</delete>
 
 </mapper>
