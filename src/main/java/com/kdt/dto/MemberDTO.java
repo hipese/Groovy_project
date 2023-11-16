@@ -10,12 +10,6 @@ public class MemberDTO {
 	private String email;
 	private String profile_image;
 	
-	
-	public MemberDTO() {
-		super();
-		
-	}
-
 	public MemberDTO(String id, String password, String name, String group_name, String position, String contact,
 			String email, String profile_image) {
 		super();
@@ -27,6 +21,11 @@ public class MemberDTO {
 		this.contact = contact;
 		this.email = email;
 		this.profile_image = profile_image;
+	}
+
+	public MemberDTO() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 	public String getId() {
@@ -77,7 +76,6 @@ public class MemberDTO {
 	public void setProfile_image(String profile_image) {
 		this.profile_image = profile_image;
 	}
-	
 	
 
 }
