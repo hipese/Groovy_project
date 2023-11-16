@@ -60,5 +60,13 @@ public class ProjectDAO {
 	public int insertMember(ProjectMemberDTO dto) {
 		return db.insert("Project.insertProjectMember",dto);
 	}
+	
+	public String selectManager(int seq) {
+		return db.selectOne("Project.selectManager",seq);
+	}
+	
+	public int deleteProject(int seq) {
+		return db.delete("Project.deleteProject",seq);
+	}
 
 }

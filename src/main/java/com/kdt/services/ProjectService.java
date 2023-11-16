@@ -52,5 +52,12 @@ public class ProjectService {
 	public int updateState(Map<String,Object> data) {
 		return dao.updateState(data);		
 	}
-
+	
+	public String selectManager(int seq) {
+		return dao.selectManager(seq);
+	}
+	
+	public int deleteProject(int seq) {
+		return dao.deleteProject(seq);
+	}
 }
