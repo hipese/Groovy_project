@@ -41,9 +41,9 @@ public class ProjectController {
 		MemberDTO mdto = mService.getprofile(dto.getPmanager());
 		
 		ProjectMemberDTO pmdto = new ProjectMemberDTO();
+		pmdto.setId(dto.getPmanager());
 		pmdto.setPseq(pseq);
 		pmdto.setGroup_name(mdto.getGroup_name());
-		pmdto.setName(dto.getPmanager());
 		int result = PService.insertMember(pmdto);
 		
 		return ResponseEntity.ok(result);

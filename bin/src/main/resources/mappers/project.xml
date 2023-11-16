@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Project">
+	
+	
+	<select id="selectAll" resultType="com.kdt.dto.ProjectDTO">
+		SELECT * FROM project;
+	</select>
+	
+	<select id="selectProject" resultType="com.kdt.dto.ProjectDTO">
+		SELECT * FROM project WHERE project.pseq IN (SELECT project_member.pseq FROM project_member WHERE project_member.id = #{value});
+	</select>
+	
+	<select id="selectTodo" resultType="com.kdt.dto.ProjectScheduleDTO">
+		select * from project_schedule where pseq = #{value}
+	</select>
+	
+	<select id="selectMember" resultType="com.kdt.dto.ProjectMemberDTO">
+		select * from project_member_view where pseq = #{value}
+	</select>
+			
+	<select id="selectProgress" resultType="com.kdt.dto.ProjectProgressDTO">
+		SELECT pschedule_state as state, COUNT(*) as count FROM project_schedule WHERE pschedule_state IN (0, 1, 2) and pseq = #{value} GROUP BY pschedule_state;
+	</select>
+	
+	<insert id="insertSchedule">
+		insert into project_schedule values(0,#{pseq},#{pschedule_start},#{pschedule_end},#{pschedule_contents},#{pschedule_importance},#{pschedule_state})
+	</insert>
+	
+	<insert id="insertProject" parameterType="com.kdt.dto.ProjectDTO" useGeneratedKeys="true" keyProperty="pseq">
+		insert into project values(0,#{pmanager},#{pname},#{pcontents},#{ptime_limit})
+	</insert>
+	
+	<insert id="insertProjectMember">
+		insert into project_member values(0,#{pseq},#{group_name},#{id})
+	</insert>
+	
+	<update id="updateState">
+		update project_schedule set pschedule_state = ${pschedule_state} where pschedule_seq = ${pschedule_seq}
+	</update>
+
+</mapper>
