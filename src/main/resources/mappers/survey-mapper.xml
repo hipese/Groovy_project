@@ -5,7 +5,7 @@
 <mapper namespace="Survey">
 	
 	<select id="selectAll" resultType="com.kdt.dto.SurveyDTO">
-		SELECT * FROM survey;
+		SELECT * FROM survey order by surseq desc;
 	</select>
 		
 	<insert id="insertSurvey" parameterType="com.kdt.dto.SurveyDTO" useGeneratedKeys="true" keyProperty="surseq">
@@ -17,7 +17,7 @@
 	</insert>
 	
 	<insert id="insertMulti" parameterType="com.kdt.dto.SurveyMultiDTO">
-		insert into survey_question_multi values(0,#{surseq},#{multi_answer_0},#{multi_answer_1},#{multi_answer_2},#{multi_answer_3},#{multi_answer_4})
+		insert into survey_question_multi values(0,#{surseq},#{multi_answer_0},#{multi_answer_1},#{multi_answer_2},#{multi_answer_3},#{multi_answer_4},#{multi_contents})
 	</insert>
 	
 	<select id="selectOne" resultType="com.kdt.dto.SurveyDTO">
@@ -43,9 +43,17 @@
 	<select id="selectMultiResult" resultType="com.kdt.dto.SurveyResultDTO">
 		SELECT multi_seq, multi_res_contents, COUNT(*) AS multi_count FROM survey_response_multi where surseq = ${value} GROUP BY multi_seq, multi_res_contents order by multi_seq;
 	</select>
-	
+	<select id="selectShortResult" resultType="java.util.HashMap">
+		select short_seq, short_res_contents from survey_response_short where surseq = #{value} order by short_seq;
+	</select>
 	<update id="updateState">
 		update survey set surstate = 1 where surseq = #{value};
 	</update>
+	
+	<select id="selectResult" resultType="com.kdt.dto.SurveyDTO">
+		select * from survey where surwriter = #{value} and surstate = 1;
+	</select>
+	
+	
 
 </mapper>

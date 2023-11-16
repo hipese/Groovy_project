@@ -9,11 +9,12 @@ public class SurveyMultiDTO {
 	private String multi_answer_2;
 	private String multi_answer_3;
 	private String multi_answer_4;
+	private String multi_contents;
 	public SurveyMultiDTO() {
 		super();
 	}
 	public SurveyMultiDTO(int multi_seq, int surseq, String multi_answer_0, String multi_answer_1,
-			String multi_answer_2, String multi_answer_3, String multi_answer_4) {
+			String multi_answer_2, String multi_answer_3, String multi_answer_4, String multi_contents) {
 		super();
 		this.multi_seq = multi_seq;
 		this.surseq = surseq;
@@ -22,6 +23,7 @@ public class SurveyMultiDTO {
 		this.multi_answer_2 = multi_answer_2;
 		this.multi_answer_3 = multi_answer_3;
 		this.multi_answer_4 = multi_answer_4;
+		this.multi_contents = multi_contents;
 	}
 	public int getMulti_seq() {
 		return multi_seq;
@@ -64,6 +66,12 @@ public class SurveyMultiDTO {
 	}
 	public void setMulti_answer_4(String multi_answer_4) {
 		this.multi_answer_4 = multi_answer_4;
+	}
+	public String getMulti_contents() {
+		return multi_contents;
+	}
+	public void setMulti_contents(String multi_contents) {
+		this.multi_contents = multi_contents;
 	}
 	
 	

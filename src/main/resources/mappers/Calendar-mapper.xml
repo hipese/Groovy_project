@@ -12,4 +12,7 @@
 	<delete id="delete">
 		DELETE from calendar where seq = #{seq};
 	</delete>
+	<select id="selectOne" resultType="com.kdt.dto.CalendarDTO">
+		select * from calendar where id = #{value};
+	</select>
 </mapper>
