@@ -34,10 +34,10 @@ public class SurveyConrtoller {
 	@PostMapping
 	public ResponseEntity<String> insertSurvey(@RequestBody List<HashMap<String, Object>> param){
 		
-		SurveyShortDTO sdto = new SurveyShortDTO();
-		SurveyMultiDTO mdto = new SurveyMultiDTO();
 		int result = 0;
 		for(HashMap<String,Object> data : param) {
+			SurveyShortDTO sdto = new SurveyShortDTO();
+			SurveyMultiDTO mdto = new SurveyMultiDTO();
 			
 			if(data.containsKey("surtitle")) {
 				SurveyDTO dto = new SurveyDTO();
@@ -59,22 +59,33 @@ public class SurveyConrtoller {
 					for(int i=0; i < questions.size(); i++) {
 						switch (i) {
 					        case 0:
-					            mdto.setMulti_answer_0(questions.get(i).toString());
+					        	if(questions.get(i).toString() != null) {
+					        		mdto.setMulti_answer_0(questions.get(i).toString());
+					        	}
 					            break;
 					        case 1:
-					        	mdto.setMulti_answer_1(questions.get(i).toString());
+					        	if(questions.get(i).toString() != null) {
+					        		mdto.setMulti_answer_1(questions.get(i).toString());
+					        	}
 					            break;
 					        case 2:
-					        	mdto.setMulti_answer_2(questions.get(i).toString());
+					        	if(questions.get(i).toString() != null) {
+					        		mdto.setMulti_answer_2(questions.get(i).toString());
+					        	}
 					            break;
 					        case 3:
-					        	mdto.setMulti_answer_3(questions.get(i).toString());
+					        	if(questions.get(i).toString() != null) {
+					        		mdto.setMulti_answer_3(questions.get(i).toString());
+					        	}
 					            break;
 					        case 4:
-					        	mdto.setMulti_answer_4(questions.get(i).toString());
+					        	if(questions.get(i).toString() != null) {
+					        		mdto.setMulti_answer_4(questions.get(i).toString());
+					        	}
 					            break;
 						}
 					}
+					mdto.setMulti_contents(data.get("contents").toString());
 					SService.insertMulti(mdto);
 				}
 			}
@@ -133,6 +144,7 @@ public class SurveyConrtoller {
 				question_data.add(data.getMulti_answer_4());
 			}
 			multi_data.put("questions", question_data);
+			multi_data.put("multi_contents", data.getMulti_contents());
 			parseData.add(multi_data);					
 		}
 		
@@ -175,9 +187,16 @@ public class SurveyConrtoller {
 		return ResponseEntity.ok(list);
 	}
 	
-	@GetMapping("/result/{seq}")
-	public ResponseEntity<List<SurveyResultDTO>> getResult(@PathVariable int seq){
+	@GetMapping("/multiResult/{seq}")
+	public ResponseEntity<List<SurveyResultDTO>> getMultiResult(@PathVariable int seq){
 		List<SurveyResultDTO> list = SService.selectMultiResult(seq);
+		
+		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/shortResult/{seq}")
+	public ResponseEntity<List<HashMap<String, Object>>> getShortResult(@PathVariable int seq){
+		List<HashMap<String, Object>> list = SService.selectShortResult(seq);
 		
 		return ResponseEntity.ok(list);
 	}
@@ -189,6 +208,15 @@ public class SurveyConrtoller {
 		
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping("/resultList/{id}")
+	public ResponseEntity<List<SurveyDTO>> selectResultList(@PathVariable String id){
+		
+		List<SurveyDTO> list = SService.selectResultList(id);		
+		
+		return ResponseEntity.ok(list);
+	}
+	
 
 }
 

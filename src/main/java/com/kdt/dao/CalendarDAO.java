@@ -22,4 +22,8 @@ public class CalendarDAO {
 	public int delete(int seq) {
 		return ss.delete("Calendar.delete", seq);
 	}
+	
+	public List<CalendarDTO> selectOne(String id){
+		return ss.selectList("Calendar.selectOne",id);
+	}
 }
