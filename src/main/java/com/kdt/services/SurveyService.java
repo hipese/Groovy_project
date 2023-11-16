@@ -1,5 +1,6 @@
 package com.kdt.services;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,12 @@ public class SurveyService {
 		return dao.updateState(seq);
 	}
 	
+	public List<SurveyDTO> selectResultList(String id){
+		return dao.selectReulstList(id);
+	}
+	
+	public List<HashMap<String, Object>> selectShortResult(int seq){
+		return dao.selectShortResult(seq);
+	}
 
 }

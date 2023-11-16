@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ToDoListBookMark">
+	<insert id="insert">
+		insert into tdlbookmark values(null,#{id},#{parent_seq})
+	</insert>
+	<select id="selectAll" resultType="com.kdt.dto.ToDoListBookMarkDTO">
+		select * from tdlbookmark where id=#{id}
+	</select>
+	<delete id="delete">
+		delete from tdlbookmark where parent_seq=#{parent_seq}
+	</delete>
+</mapper>
