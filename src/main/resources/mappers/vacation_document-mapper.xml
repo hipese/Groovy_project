@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Vacation_document">
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="seq">
+		insert
+		into vacation_document
+		values(null,#{writer},#{document_type},#{recipient},#{title},#{contents},#{accept},#{write_date},#{comment},#{startDate},#{endDate},#{total_date})
+	</insert>
+
+	<select id="selectVacationComplete"
+		resultType="com.kdt.dto.Vacation_documentDTO">
+		SELECT *
+		FROM vacation_document
+		WHERE writer = #{value} AND
+		accept = 0
+		ORDER BY seq DESC
+	</select>
+
+	<select id="selectVacationProgress"
+		resultType="com.kdt.dto.Vacation_documentDTO">
+		SELECT *
+		FROM vacation_document
+		WHERE writer = #{value} AND
+		accept = 1
+		ORDER BY seq DESC
+	</select>
+
+	<select id="selectVacationWait"
+		resultType="com.kdt.dto.Vacation_documentDTO">
+		select * from vacation_document where recipient = #{value}
+		and
+		accept = 1
+		ORDER BY seq DESC
+	</select>
+
+	<select id="selectBySeq"
+		resultType="com.kdt.dto.Vacation_documentDTO">
+		select * from vacation_document where seq=#{value}
+	</select>
+
+	<update id="accept">
+		UPDATE vacation_document
+		SET accept = 0, comment =
+		#{comment}
+		WHERE seq = #{seq}
+	</update>
+
+	<update id="reject">
+		UPDATE vacation_document
+		SET accept = 2, comment =
+		#{comment}
+		WHERE seq = #{seq}
+	</update>
+</mapper>
+
