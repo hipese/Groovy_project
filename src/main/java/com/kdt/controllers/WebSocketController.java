@@ -18,10 +18,10 @@ import com.kdt.services.Realtime_NotificationsService;
 public class WebSocketController {
 	
 	@Autowired
-    	SimpMessagingTemplate template;
+    private	SimpMessagingTemplate template;
 	
 	@Autowired
-	Realtime_NotificationsService rservice;
+	private Realtime_NotificationsService rservice;
 	
 	@MessageMapping("/notice")
 	public ResponseEntity<Void> sendMessage(@RequestBody Map<String, Object> messageObject) {
