@@ -4,14 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kdt.dto.MessageDTO;
+import com.kdt.dto.ParticipantDTO;
 import com.kdt.dto.RoomInfoDTO;
 import com.kdt.dto.RoomProfileDTO;
 import com.kdt.services.MessageService;
@@ -52,8 +55,12 @@ public class MessageController {
 	
 	@GetMapping("selectByRoomSeq")
 	public ResponseEntity<List<MessageDTO>> getMessagesByRoomSeq(String room_seq) {
-		System.out.println(room_seq);
 		return ResponseEntity.ok(service.getMessagesByRoomSeq(room_seq));
+	}
+	
+	@PutMapping("readMessage")
+	public ResponseEntity<Integer> readMessage(String room_seq) {
+		return ResponseEntity.ok(service.readMessage(new ParticipantDTO(Integer.parseInt(room_seq), (String)session.getAttribute("loginID"), true)));
 	}
 	
 }
