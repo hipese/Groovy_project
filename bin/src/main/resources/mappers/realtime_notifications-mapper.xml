@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Realtime">
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="seq">
+		insert
+		into realtime_notifications
+		values(null,#{recipient},#{contents},#{write_date},#{read_status},#{parent_seq})
+	</insert>
+
+	<update id="updateReadStatus">
+		UPDATE
+		realtime_notifications
+		SET read_status = true
+		WHERE recipient = #{recipient} AND parent_seq = #{parent_seq}
+	</update>
+
+	<select id="selectUnreadNotifications"
+		resultType="com.kdt.dto.Realtime_NotificationsDTO">
+		SELECT *
+		FROM realtime_notifications
+		WHERE read_status = false
+		AND recipient = #{id}
+	</select>
+
+</mapper>

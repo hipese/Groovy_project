@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Survey">
+	
+	<select id="selectAll" resultType="com.kdt.dto.SurveyDTO">
+		SELECT * FROM survey order by surseq desc;
+	</select>
+		
+	<insert id="insertSurvey" parameterType="com.kdt.dto.SurveyDTO" useGeneratedKeys="true" keyProperty="surseq">
+		insert into survey values(0,#{surtitle},#{surwriter},#{surcontents},now(),0)
+	</insert>
+	
+	<insert id="insertShort" parameterType="com.kdt.dto.SurveyShortDTO">
+		insert into survey_question_short values(0,#{surseq},#{short_contents})
+	</insert>
+	
+	<insert id="insertMulti" parameterType="com.kdt.dto.SurveyMultiDTO">
+		insert into survey_question_multi values(0,#{surseq},#{multi_answer_0},#{multi_answer_1},#{multi_answer_2},#{multi_answer_3},#{multi_answer_4},#{multi_contents})
+	</insert>
+	
+	<select id="selectOne" resultType="com.kdt.dto.SurveyDTO">
+		select * from survey where surseq = #{value};
+	</select>
+	
+	<select id="selectShort" resultType="com.kdt.dto.SurveyShortDTO">
+		select * from survey_question_short where surseq = #{value};
+	</select>
+	
+	<select id="selectMulti" resultType="com.kdt.dto.SurveyMultiDTO">
+		select * from survey_question_multi where surseq = #{value};
+	</select>
+	
+	<insert id="insertShortRes" parameterType="com.kdt.dto.SurveyShortResponseDTO">
+		insert into survey_response_short values(0,#{surseq},#{short_seq},#{short_res_contents},#{short_res_writer});
+	</insert>
+	
+	<insert id="insertMultiRes" parameterType="com.kdt.dto.SurveyMultiResponseDTO">
+		insert into survey_response_multi values(0,#{surseq},#{multi_seq},#{multi_res_contents},#{multi_res_writer});
+	</insert>
+	
+	<select id="selectMultiResult" resultType="com.kdt.dto.SurveyResultDTO">
+		SELECT multi_seq, multi_res_contents, COUNT(*) AS multi_count FROM survey_response_multi where surseq = ${value} GROUP BY multi_seq, multi_res_contents order by multi_seq;
+	</select>
+	<select id="selectShortResult" resultType="java.util.HashMap">
+		select short_seq, short_res_contents from survey_response_short where surseq = #{value} order by short_seq;
+	</select>
+	<update id="updateState">
+		update survey set surstate = 1 where surseq = #{value};
+	</update>
+	
+	<select id="selectResult" resultType="com.kdt.dto.SurveyDTO">
+		select * from survey where surwriter = #{value} and surstate = 1;
+	</select>
+	
+	
+
+</mapper>

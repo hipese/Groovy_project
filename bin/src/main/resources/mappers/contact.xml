@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Contact">
+
+	<select id="selectAll" resultType="com.kdt.dto.ContactDTO">
+		select id, group_name, name, position, contact, email, profile_image from member
+	</select>
+	
+	<select id="selectFavorite" resultType="com.kdt.dto.ContactDTO">
+		select id, group_name, name, position, contact, email from member where id in(SELECT favorite.target_id from member join favorite on member.id = favorite.id where member.id=#{id});
+	</select>
+	
+	<select id="selectGroup" resultType="com.kdt.dto.ContactDTO">
+		select id, group_name, name, position, contact, email from member where group_name = (SELECT group_name from member where member.id=#{id});
+	</select>
+	
+	<select id="selectExternal" resultType="com.kdt.dto.ExternalContactDTO">
+		select * from external_contact
+	</select>
+	
+	<insert id="insert">
+		insert into member values(id=#{id}, password=#{password}, name=#{name}, group_name=#{group_name},
+		position=#{position}, contact=#{contact}, email=#{email})
+	</insert>
+	
+	<select id="favorite" resultType="string">
+		select target_id from favorite where id=#{id}
+	</select>
+	
+	<insert id="setFavorite">
+		insert into favorite values(#{id}, #{target_id})
+	</insert>
+	
+	<delete id="delFavorite">
+		delete from favorite where id=#{id} and target_id=#{target_id}
+	</delete>
+	
+</mapper>
