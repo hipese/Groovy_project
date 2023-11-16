@@ -1,5 +1,6 @@
 package com.kdt.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -64,5 +65,12 @@ public class SurveyDAO {
 	public int updateState(int seq) {
 		return db.update("Survey.updateState",seq);
 	}
-
+	
+	public List<SurveyDTO> selectReulstList(String id){
+		return db.selectList("Survey.selectResult",id);
+	}
+	
+	public List<HashMap<String, Object>> selectShortResult(int seq){
+		return db.selectList("Survey.selectShortResult",seq);
+	}
 }

@@ -29,6 +29,12 @@ public class Sign_filesController {
         List<Sign_filesDTO> files = sfservice.selectBySeq(seq);
         return ResponseEntity.ok(files);
     }
+    
+    @GetMapping("documentInto_files/{seq}")
+    public ResponseEntity<List<Sign_filesDTO>> documentInto_filesBySeq(@PathVariable Integer seq) {
+        List<Sign_filesDTO> files = sfservice.documentInto_filesBySeq(seq);
+        return ResponseEntity.ok(files);
+    }
 
     @GetMapping("/download/{sys_name}")
     public ResponseEntity<Resource> download(@PathVariable String sys_name) {

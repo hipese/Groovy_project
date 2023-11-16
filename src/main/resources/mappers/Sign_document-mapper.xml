@@ -30,6 +30,13 @@
 		accept = 1
 		ORDER BY seq DESC
 	</select>
+	
+		<select id="selectReview"
+		resultType="com.kdt.dto.Sign_documentDTO">
+		select * from sign_document where recipient = #{value} and
+		accept = 0
+		ORDER BY seq DESC
+	</select>
 
 	<select id="selectBySeq"
 		resultType="com.kdt.dto.Sign_documentDTO">
