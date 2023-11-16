@@ -32,6 +32,11 @@ public class Sign_documentDAO {
 		return db.selectList("Sign_document.selectWait", id);
 	}
 	
+	public List<Sign_documentDTO> selectReview(String id) {
+		return db.selectList("Sign_document.selectReview", id);
+	}
+	
+	
 	public List<Sign_documentDTO> selectVacationComplete(String id) {
 		return db.selectList("Sign_document.selectVacationComplete", id);
 	}
@@ -43,7 +48,11 @@ public class Sign_documentDAO {
 	public Sign_documentDTO selectBySeq(int seq) {
 		return db.selectOne("Sign_document.selectBySeq", seq);
 	}
-
+	
+	public Sign_documentDTO documentIntoBySeq(int seq) {
+		return db.selectOne("Sign_document.selectBySeq", seq);
+	}
+	
 	public int accept(Sign_documentDTO dto) {
 		return db.update("Sign_document.accept", dto);
 	}

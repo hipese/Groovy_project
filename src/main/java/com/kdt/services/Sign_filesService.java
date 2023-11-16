@@ -21,4 +21,9 @@ public class Sign_filesService {
 	public List<Sign_filesDTO> selectBySeq(int parent_seq) {
 		return fdao.selectBySeq(parent_seq);
 	}
+	
+	public List<Sign_filesDTO> documentInto_filesBySeq(int parent_seq) {
+		return fdao.documentInto_filesBySeq(parent_seq);
+	}
+	
 }
