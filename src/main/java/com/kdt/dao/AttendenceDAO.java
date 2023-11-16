@@ -29,5 +29,9 @@ public class AttendenceDAO {
 	public List<AttendenceDTO> selectById(String id) {
 		return db.selectList("Attendence.selectByID", id);
 	}
-
+	
+	public List<AttendenceDTO> detailsByID(String id) {
+		return db.selectList("Attendence.detailsByID", id);
+	}
+	
 }

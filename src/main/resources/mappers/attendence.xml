@@ -19,4 +19,7 @@
 		SELECT * FROM attendence WHERE id = #{id}
 	</select>
 
+	<select id="detailsByID" resultType="com.kdt.dto.AttendenceDTO">
+		SELECT * FROM attendanceView WHERE id = #{id}
+	</select>
 </mapper>

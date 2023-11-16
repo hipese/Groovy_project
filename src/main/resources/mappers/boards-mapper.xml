@@ -7,55 +7,106 @@
 <mapper namespace="Boards">
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="seq">
-		INSERT INTO com_board VALUES(default,#{title} ,#{writer},
-		#{contents}, default, default, #{category});
+		INSERT
+		INTO com_board VALUES(default,#{title} ,#{writer},
+		#{contents},
+		default, default, #{category});
 	</insert>
-	
-	<insert id="insertDept" useGeneratedKeys="true" keyProperty="seq">
+
+	<insert id="insertDept" useGeneratedKeys="true"
+		keyProperty="seq">
 		INSERT INTO dept_board VALUES(default,#{title} ,#{writer},
 		#{contents}, default, default, #{category}, #{dept});
 	</insert>
 
-	<select id="selectBySeq" resultType="com.kdt.dto.BoardDTO">
-		SELECT * FROM com_board WHERE SEQ=#{seq};
-	</select>
-	
-	<select id="selectDeptBySeq" resultType="com.kdt.dto.DeptBoardDTO">
-		SELECT * FROM dept_board WHERE SEQ=#{seq};
-	</select>
-
-	<select id="selectRecent" resultType="com.kdt.dto.BoardDTO">
-		SELECT * FROM com_board order by seq desc;
-	</select>
-	
-	<select id="selectDeptRecent" resultType="com.kdt.dto.DeptBoardDTO">
-		SELECT * FROM dept_board order by seq desc;
+	<select id="selectBySeq"
+		resultType="com.kdt.dto.BoardWithFileDTO">
+		SELECT b.*, f.*, m.name, m.group_name,
+		m.position,
+		m.profile_image FROM com_board b LEFT JOIN com_board_file
+		f ON b.seq =
+		f.parent_seq LEFT JOIN member m ON b.writer = m.id WHERE
+		b.seq = #{seq}
+		group by b.seq;
 	</select>
 
-	<select id="selectAllCom" resultType="com.kdt.dto.BoardDTO">
-		SELECT * FROM com_board WHERE
-		CATEGORY='공지' order by seq desc;
+	<select id="selectDeptBySeq"
+		resultType="com.kdt.dto.DBoardWithDFileDTO">
+		SELECT b.*, f.*, m.name, m.group_name,
+		m.position,
+		m.profile_image FROM dept_board b LEFT JOIN dept_board_file
+		f ON b.seq
+		= f.parent_seq LEFT JOIN member m ON b.writer = m.id WHERE
+		b.seq =
+		#{seq} group by b.seq;
 	</select>
 
-	<select id="selectAllComFree" resultType="com.kdt.dto.BoardDTO">
-		SELECT * FROM com_board
-		WHERE CATEGORY='자유' order by seq desc;
+	<select id="selectUPdateBoardBySeq"
+		resultType="com.kdt.dto.BoardDTO">
+		SELECT * FROM com_board where seq=#{seq};
 	</select>
 
-	<select id="selectAllDept" resultType="com.kdt.dto.DeptBoardDTO">
-		SELECT * FROM dept_board WHERE
-		CATEGORY='공지' and dept=#{dept} order by seq desc;
+	<select id="selectUpdateDeptBySeq"
+		resultType="com.kdt.dto.DeptBoardDTO">
+		SELECT * FROM dept_board where seq=#{seq};
 	</select>
 
-	<select id="selectAllDeptFree" resultType="com.kdt.dto.DeptBoardDTO">
-		SELECT * FROM dept_board
-		WHERE CATEGORY='자유' and dept=#{dept} order by seq desc;;
+	<select id="selectRecent"
+		resultType="com.kdt.dto.BoardWithMemberDTO">
+		SELECT b.*, f.fseq, m.name, m.group_name, m.position
+		FROM
+		com_board b
+		LEFT JOIN com_board_file f ON b.seq = f.parent_seq
+		LEFT JOIN
+		member m ON b.writer = m.id group by b.seq;
+	</select>
+
+	<select id="selectDeptRecent"
+		resultType="com.kdt.dto.DBoardWithMemberDTO">
+		SELECT b.*, f.fseq, m.name, m.group_name, m.position
+		FROM
+		dept_board b
+		LEFT JOIN dept_board_file f ON b.seq =
+		f.parent_seq
+		LEFT
+		JOIN member m ON b.writer = m.id where dept=#{dept} group by b.seq;
+	</select>
+
+	<select id="selectAllCom" resultType="com.kdt.dto.BoardWithMemberDTO">
+		SELECT b.*, f.fseq, m.name, m.group_name, m.position FROM com_board b LEFT
+		JOIN com_board_file f ON b.seq = f.parent_seq LEFT JOIN member m ON
+		b.writer = m.id WHERE CATEGORY = '공지' GROUP BY b.seq ORDER BY b.seq
+		desc;
+	</select>
+
+	<select id="selectAllComFree" resultType="com.kdt.dto.BoardWithMemberDTO">
+		SELECT b.*, f.fseq, m.name, m.group_name, m.position FROM com_board b LEFT
+		JOIN com_board_file f ON b.seq = f.parent_seq LEFT JOIN member m ON
+		b.writer = m.id WHERE CATEGORY = '자유' GROUP BY b.seq ORDER BY b.seq
+		desc;
+	</select>
+
+	<select id="selectAllDept" resultType="com.kdt.dto.DBoardWithMemberDTO">
+		SELECT b.*, f.fseq, m.name, m.group_name, m.position FROM dept_board b LEFT
+		JOIN dept_board_file f ON b.seq = f.parent_seq LEFT JOIN member m ON
+		b.writer = m.id WHERE CATEGORY = '공지' and
+		dept=#{dept} GROUP BY b.seq ORDER BY b.seq
+		desc;
+	</select>
+
+	<select id="selectAllDeptFree"
+		resultType="com.kdt.dto.DBoardWithMemberDTO">
+		SELECT b.*, f.fseq, m.name, m.group_name, m.position FROM dept_board b LEFT
+		JOIN dept_board_file f ON b.seq = f.parent_seq LEFT JOIN member m ON
+		b.writer = m.id WHERE CATEGORY = '자유' and
+		dept=#{dept} GROUP BY b.seq ORDER BY b.seq
+		desc;
 	</select>
 
 	<delete id="delete">
 		DELETE FROM com_board WHERE seq=#{seq};
 	</delete>
-	
+
 	<delete id="deleteDept">
 		DELETE FROM dept_board WHERE seq=#{seq};
 	</delete>
@@ -64,7 +115,7 @@
 		UPDATE com_board SET title=#{title},
 		contents=#{contents}, category=#{category} WHERE seq=#{seq};
 	</update>
-	
+
 	<update id="updateDept">
 		UPDATE dept_board SET title=#{title},
 		contents=#{contents}, category=#{category} WHERE seq=#{seq};
@@ -76,7 +127,8 @@
 	</update>
 
 	<update id="updateDeptViewCount" parameterType="map">
-		UPDATE dept_board SET
+		UPDATE dept_board
+		SET
 		view_count = #{view_count} WHERE seq = #{seq};
 	</update>
 

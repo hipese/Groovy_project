@@ -43,5 +43,25 @@ ORDER BY write_time DESC;
 	<select id="selectByRoomSeq" resultType="com.kdt.dto.MessageDTO">
 		select * from message where room_seq = #{room_seq}
 	</select>
+	
+	<update id="readMessage">
+		update participant set is_read = true where room_seq = #{room_seq} and user_id = #{user_id};
+	</update>
+	
+	<insert id="insertMessage" useGeneratedKeys="true" keyProperty="seq" keyColumn="seq">
+		insert into message values(null, #{id}, ${room_seq}, #{contents}, default, default )
+	</insert>
+	
+	<select id="selectBySeq" resultType="com.kdt.dto.MessageDTO">
+		select * from message where seq = ${seq};
+	</select>
+	
+	<select id="selectParticipants" resultType="string">
+		select user_id from participant where room_seq = ${room_seq}
+	</select>
+	
+	<update id="setUnreadedState">
+		update participant set is_read = false where room_seq = #{room_seq}
+	</update>
 
 </mapper>
