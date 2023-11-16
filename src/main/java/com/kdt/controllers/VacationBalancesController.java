@@ -15,12 +15,17 @@ import com.kdt.dto.VacationBalancesDTO;
 import com.kdt.dto.VacationRequsetDTO;
 import com.kdt.services.VacationBalancesService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/api/vacation")
 public class VacationBalancesController {
 	
 	@Autowired
 	VacationBalancesService vservice;
+	
+	@Autowired
+	HttpSession session;
 	
 	@GetMapping
 	public ResponseEntity<List> allVacationList(){
@@ -34,11 +39,12 @@ public class VacationBalancesController {
 		 return ResponseEntity.ok(dto);
 	}
 	
-	@GetMapping("/useVacation/{vactionDate}")
-	public ResponseEntity<VacationBalancesDTO> useVacation(@PathVariable String vactionDate){
-		VacationBalancesDTO dto= vservice.useVacation(vactionDate);
-		 return ResponseEntity.ok(dto);
+	@GetMapping("/myVacation/{memberID}/{total_vactionDate}")
+	public ResponseEntity<VacationBalancesDTO> myVacationUpdate(@PathVariable String memberID,@PathVariable int total_vactionDate ){
+		VacationBalancesDTO dto= vservice.myVacationUpdate(memberID, total_vactionDate);
+		return ResponseEntity.ok(dto);
 	}
+	
 	
 	@PostMapping("/add")
 	public ResponseEntity<VacationBalancesDTO> addVacation(@RequestBody VacationRequsetDTO vRequest){

@@ -23,9 +23,11 @@ public class VacationBalancesService {
 		return dao.myVacation(memberID);
 	}
 	
-	public VacationBalancesDTO useVacation(String vactionDate) {
-		return dao.myVacation(vactionDate);
+	public VacationBalancesDTO myVacationUpdate(String memberID, int total_vactionDate) {
+		VacationRequsetDTO vRequest =new VacationRequsetDTO(memberID,total_vactionDate);
+		return dao.myVacationUpdate(vRequest);
 	}
+	
 	
 	public VacationBalancesDTO addVacation(VacationRequsetDTO vRequset) {
 		return dao.addVacation(vRequset);
