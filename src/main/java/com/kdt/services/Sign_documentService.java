@@ -39,14 +39,6 @@ public class Sign_documentService {
 		return sdao.selectWait(id);
 	}
 	
-	public List<Sign_documentDTO> selectVacationComplete(String id){
-		return sdao.selectVacationComplete(id);
-	}
-	
-	public List<Sign_documentDTO> selectVacationWait(String id){
-		return sdao.selectVacationWait(id);
-	}
-	
 	public Sign_documentDTO selectBySeq(int seq) {
 		return sdao.selectBySeq(seq);
 	}
