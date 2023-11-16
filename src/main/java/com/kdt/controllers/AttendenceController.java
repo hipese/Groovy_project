@@ -103,7 +103,6 @@ public class AttendenceController {
 		return ResponseEntity.ok(list);
 	}
 	
-<<<<<<< HEAD
 	@GetMapping("/detail")
 	public ResponseEntity<List<AttendenceDTO>> detailsByID() {
 		String id = (String)session.getAttribute("loginID");
@@ -111,7 +110,7 @@ public class AttendenceController {
 		List<AttendenceDTO> list = AtdService.detailsByID(id);
 		return ResponseEntity.ok(list);
 	}
-=======
+
 	@GetMapping("/{seq}")
 	public ResponseEntity<Vacation_documentDTO> selectBySeq(@PathVariable Integer seq) {
 		Vacation_documentDTO list = vdService.selectBySeq(seq);
@@ -130,5 +129,5 @@ public class AttendenceController {
 		vdService.reject(dto);
 		return ResponseEntity.ok(seq);
 	}
->>>>>>> c9ec664a3818011c9be7dfd3c9ad90c40e5dac26
+
 }

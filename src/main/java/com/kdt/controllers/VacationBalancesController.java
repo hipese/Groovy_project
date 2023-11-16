@@ -34,6 +34,12 @@ public class VacationBalancesController {
 		 return ResponseEntity.ok(dto);
 	}
 	
+	@GetMapping("/useVacation/{vactionDate}")
+	public ResponseEntity<VacationBalancesDTO> useVacation(@PathVariable String vactionDate){
+		VacationBalancesDTO dto= vservice.useVacation(vactionDate);
+		 return ResponseEntity.ok(dto);
+	}
+	
 	@PostMapping("/add")
 	public ResponseEntity<VacationBalancesDTO> addVacation(@RequestBody VacationRequsetDTO vRequest){
 		VacationBalancesDTO dto=vservice.addVacation(vRequest);

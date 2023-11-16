@@ -23,6 +23,10 @@ public class VacationBalancesService {
 		return dao.myVacation(memberID);
 	}
 	
+	public VacationBalancesDTO useVacation(String vactionDate) {
+		return dao.myVacation(vactionDate);
+	}
+	
 	public VacationBalancesDTO addVacation(VacationRequsetDTO vRequset) {
 		return dao.addVacation(vRequset);
 	}
