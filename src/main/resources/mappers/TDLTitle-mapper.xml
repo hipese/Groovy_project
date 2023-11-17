@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TDLTitle">
+	<insert id="insert">
+		insert into tdlboard values(null,#{id},#{title},#{parent_seq})
+	</insert>
+	<select id="selectAll" resultType="com.kdt.dto.TDLTitleDTO">
+		select * from tdlboard where parent_seq=#{parent_seq}
+	</select>
+	<delete id="delete">
+		delete from tdlboard where seq=#{seq}
+	</delete>
+	<update id="update">
+		update tdlboard set title=#{title} where seq=#{seq}
+	</update>
+</mapper>

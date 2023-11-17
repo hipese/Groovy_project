@@ -35,22 +35,14 @@ public class VacationBalancesController {
 	
 	@GetMapping("/myVacation/{memberID}")
 	public ResponseEntity<VacationBalancesDTO> myVacation(@PathVariable String memberID){
+		System.out.println("테스트용");
 		VacationBalancesDTO dto= vservice.myVacation(memberID);
 		 return ResponseEntity.ok(dto);
 	}
 	
 	@GetMapping("/myVacation/{memberID}/{total_vactionDate}")
 	public ResponseEntity<VacationBalancesDTO> myVacationUpdate(@PathVariable String memberID,@PathVariable int total_vactionDate ){
-		System.out.println("항상 업데이트 한다.");
 		VacationBalancesDTO dto= vservice.myVacationUpdate(memberID, total_vactionDate);
-		return ResponseEntity.ok(dto);
-	}
-	
-	@GetMapping("/myVacation/{memberID}/{addVacation}/{total_vactionDate}")
-	public ResponseEntity<VacationBalancesDTO> myVacationUpdates(@PathVariable String memberID,
-			@PathVariable int addVacation,@PathVariable int total_vactionDate ){
-		System.out.println("여기로 오냐요~~~");
-		VacationBalancesDTO dto= vservice.myVacationUpdate(memberID, total_vactionDate+addVacation);
 		return ResponseEntity.ok(dto);
 	}
 	
