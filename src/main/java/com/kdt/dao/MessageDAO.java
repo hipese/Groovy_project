@@ -21,7 +21,6 @@ public class MessageDAO {
 	
 	public ChattingRoomDTO createRoom(ChattingRoomDTO dto) {
 		db.insert("Message.createRoom", dto);
-		System.out.println("Room Seq : " + dto.getSeq());
 		return dto;
 	}
 	
@@ -56,4 +55,22 @@ public class MessageDAO {
 	public String getName(String id) {
 		return db.selectOne("Member.selectName", id);
 	}
+	
+	public int readMessage(ParticipantDTO dto) {
+		return db.update("Message.readMessage", dto);
+	}
+	
+	public MessageDTO WSInsert(MessageDTO dto) {
+		db.insert("Message.insertMessage", dto);
+		return db.selectOne("Message.selectBySeq", dto);
+	}
+
+	public List<String> selectParticipants(int room_seq) {
+		return db.selectList("Message.selectParticipants", room_seq);
+	}
+	
+	public int setUnreadedState(int room_seq) {
+		return db.update("Message.setUnreadedState", room_seq);
+	}
+	
 }

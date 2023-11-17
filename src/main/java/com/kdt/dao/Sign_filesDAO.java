@@ -21,5 +21,9 @@ public class Sign_filesDAO {
 	public List<Sign_filesDTO> selectBySeq(int parent_seq) {
 		return db.selectList("Sign_files.selectBySeq", parent_seq);
 	}
-
+	
+	public List<Sign_filesDTO> documentInto_filesBySeq(int parent_seq) {
+		return db.selectList("Sign_files.selectBySeq", parent_seq);
+	}
+	
 }

@@ -25,21 +25,20 @@ public class Board_FileController {
 	@Autowired
 	Board_FileService fservice;
 
-	@GetMapping("/{seq}")
-	public ResponseEntity<List<Board_FileDTO>> selectBySeq(@PathVariable Integer seq) {
-		List<Board_FileDTO> files = fservice.selectBySeq(seq);
+	@GetMapping("/{parent_seq}")
+	public ResponseEntity<List<Board_FileDTO>> selectBySeq(@PathVariable Integer parent_seq) {
+		List<Board_FileDTO> files = fservice.selectBySeq(parent_seq);
 		return ResponseEntity.ok(files);
 	}
 
-	@GetMapping("/dept/{seq}")
-	public ResponseEntity<List<DeptBoard_FileDTO>> selectDeptBySeq(@PathVariable Integer seq) {
-		List<DeptBoard_FileDTO> files = fservice.selectDeptBySeq(seq);
+	@GetMapping("/dept/{parent_seq}")
+	public ResponseEntity<List<DeptBoard_FileDTO>> selectDeptBySeq(@PathVariable Integer parent_seq) {
+		List<DeptBoard_FileDTO> files = fservice.selectDeptBySeq(parent_seq);
 		return ResponseEntity.ok(files);
 	}   
 
 	@GetMapping("/download/{sys_name}")
 	public ResponseEntity<Resource> download(@PathVariable String sys_name) {
-		System.out.println(sys_name);
 		String filePath = "c:/uploads/" + sys_name;
 
 		byte[] fileContent;
@@ -58,9 +57,8 @@ public class Board_FileController {
 
 	}
 
-	@GetMapping("/Deptdownload/{sys_name}")
+	@GetMapping("/deptDownload/{sys_name}")
 	public ResponseEntity<Resource> Deptdownload(@PathVariable String sys_name) {
-		System.out.println(sys_name);
 		String filePath = "c:/uploads/" + sys_name;
 
 		byte[] fileContent;

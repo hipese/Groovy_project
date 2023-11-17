@@ -4,6 +4,7 @@ import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kdt.dto.AttendenceDTO;
+import com.kdt.dto.CalendarDTO;
 import com.kdt.services.AttendenceService;
+import com.kdt.services.CalendarService;
 
 @RestController
 @RequestMapping("/api/dash")
@@ -25,6 +28,9 @@ public class DashboardController {
 	
 	@Autowired
 	private AttendenceService AtdService;
+	
+	@Autowired
+	private CalendarService CService;
 
 	
 	@PostMapping("/checkin")
@@ -83,6 +89,13 @@ public class DashboardController {
 		return ResponseEntity.ok(dto);
 	}
 	
+	@GetMapping("/calendar/{id}")
+	public ResponseEntity<List<CalendarDTO>> getCalendar(@PathVariable String id){
+		
+		List<CalendarDTO> list = CService.selectOne(id);
+		
+		return ResponseEntity.ok(list);
+	}
 	
 
 }

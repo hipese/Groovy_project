@@ -9,17 +9,27 @@ public class AttendenceDTO {
 	private Timestamp workstart;
 	private Timestamp workend;
 	private Timestamp overendtime;
+	private Timestamp totalWorkTime;
+	private int status;
+	
+	
 	public AttendenceDTO() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	public AttendenceDTO(int attendanceid, String id, Timestamp workstart, Timestamp workend, Timestamp overendtime) {
+
+	public AttendenceDTO(int attendanceid, String id, Timestamp workstart, Timestamp workend, Timestamp overendtime,
+			Timestamp totalWorkTime, int status) {
 		super();
 		this.attendanceid = attendanceid;
 		this.id = id;
 		this.workstart = workstart;
 		this.workend = workend;
 		this.overendtime = overendtime;
+		this.totalWorkTime = totalWorkTime;
+		this.status = status;
 	}
+	
 	public int getAttendanceid() {
 		return attendanceid;
 	}
@@ -49,6 +59,18 @@ public class AttendenceDTO {
 	}
 	public void setOverendtime(Timestamp overendtime) {
 		this.overendtime = overendtime;
+	}
+	public Timestamp getTotalWorkTime() {
+		return totalWorkTime;
+	}
+	public void setTotalWorkTime(Timestamp totalWorkTime) {
+		this.totalWorkTime = totalWorkTime;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 	

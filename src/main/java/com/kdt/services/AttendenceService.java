@@ -29,5 +29,10 @@ public class AttendenceService {
 	public List<AttendenceDTO> selectByID(String id) {
 		return dao.selectById(id);
 	}
+	
+	public List<AttendenceDTO> detailsByID(String id) {
+		return dao.detailsByID(id);
+	}
+	
 
 }

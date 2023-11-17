@@ -77,7 +77,15 @@ public class SignController {
 		List<Sign_documentDTO> list = signservice.selectComplete(id);
 		return ResponseEntity.ok(list);
 	}
-
+	
+	
+	@GetMapping("/Review")
+	public ResponseEntity<List<Sign_documentDTO>> selectReview() {
+		String id = (String) session.getAttribute("loginID");
+		List<Sign_documentDTO> list = signservice.selectReview(id);
+		return ResponseEntity.ok(list);
+	}
+	
 	@GetMapping("/wait")
 	public ResponseEntity<List<Sign_documentDTO>> selectWait() {
 		String id = (String) session.getAttribute("loginID");
@@ -85,26 +93,19 @@ public class SignController {
 		return ResponseEntity.ok(list);
 	}
 	
-	@GetMapping("/vacation_complete")	
-	public ResponseEntity<List<Sign_documentDTO>> selectVacationComplete() {
-		String id = (String) session.getAttribute("loginID");
-		List<Sign_documentDTO> list = signservice.selectVacationComplete(id);
-		return ResponseEntity.ok(list);
-	}
-	
-	@GetMapping("/vacation_wait")	
-	public ResponseEntity<List<Sign_documentDTO>> selectVacationWait() {
-		String id = (String) session.getAttribute("loginID");
-		List<Sign_documentDTO> list = signservice.selectVacationWait(id);
-		return ResponseEntity.ok(list);
-	}
-
 	@GetMapping("/{seq}")
 	public ResponseEntity<Sign_documentDTO> selectBySeq(@PathVariable Integer seq) {
 		Sign_documentDTO list = signservice.selectBySeq(seq);
 		return ResponseEntity.ok(list);
 	}
-
+	
+	@GetMapping("/documentInto/{seq}")
+	public ResponseEntity<Sign_documentDTO> documentIntoBySeq(@PathVariable Integer seq) {
+		Sign_documentDTO list = signservice.documentIntoBySeq(seq);
+		return ResponseEntity.ok(list);
+	}
+	
+	
 	@PutMapping("/accept/{seq}")
 	public ResponseEntity<Integer> update(@PathVariable Integer seq, @RequestBody Sign_documentDTO dto) {
 		dto.setSeq(seq);
