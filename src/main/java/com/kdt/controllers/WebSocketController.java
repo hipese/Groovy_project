@@ -1,5 +1,6 @@
 package com.kdt.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.kdt.dto.MessageDTO;
-import com.kdt.dto.Realtime_NotificationsDTO;
 import com.kdt.services.MessageService;
 import com.kdt.services.Realtime_NotificationsService;
 
@@ -36,7 +36,6 @@ public class WebSocketController {
 	
 	@MessageMapping("/notice")
 	public ResponseEntity<Void> sendMessage(@RequestBody Map<String, Object> messageObject) {
-		Realtime_NotificationsDTO dto = new Realtime_NotificationsDTO();
 		String message = (String)messageObject.get("message");
 		String recipient = (String)messageObject.get("recipient");
 		Integer parent_seq = (Integer) messageObject.get("parent_seq");
@@ -51,14 +50,21 @@ public class WebSocketController {
 	@MessageMapping("/message")
 	public ResponseEntity<Void> message(@RequestBody Map<String, Object> messageObject) {
 		System.out.println(String.valueOf((int)messageObject.get("room_seq")) + " " + (int)messageObject.get("id") + " " + (String)messageObject.get("message") );
-//		List<String> list = messageService.WSgetParticipants((int)messageObject.get("room_seq"));
+		List<String> list = messageService.WSgetParticipants((int)messageObject.get("room_seq"));
 		MessageDTO dto = messageService.WSInsert((int)messageObject.get("room_seq"), (int)messageObject.get("id"), (String)messageObject.get("message"));
 		messageService.setUnreadedState((int)messageObject.get("room_seq"));
-//		for(String user_id : list) {
-//			if(user_id != (String)session.getAttribute("loginID"))
-//				template.convertAndSend("/queue/" + user_id, messageObject);
-//			template.convertAndSend("/queue/message/" + user_id, messageObject);
-//		}
+		String message = "메시지가 도착했습니다.";
+		for(String user_id : list) {
+//			System.out.println(user_id + "/" + String.valueOf((int)messageObject.get("id")));
+//			System.out.println(user_id.equals(String.valueOf((int)messageObject.get("id"))));
+			if(!user_id.equals(String.valueOf((int)messageObject.get("id")))) { 
+				Map<String, Object> msgObj = new HashMap<>();
+				msgObj.put("message", message);
+				msgObj.put("recipient", user_id);
+				template.convertAndSend("/queue/" + user_id, msgObj);
+				// rservice.insert(message, user_id, -1);
+			}
+		}
 		template.convertAndSend("/topic/message/" + String.valueOf((int)messageObject.get("room_seq")), dto);
 		return ResponseEntity.ok().build();
 	}
