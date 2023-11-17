@@ -67,7 +67,11 @@ public class MessageService {
 		return dao.setUnreadedState(room_seq);
 	}
 	
-	public int leaveRoom(String id, String room_seq) {
-		return dao.leaveRoom(new ParticipantDTO(Integer.parseInt(room_seq), id, false));
+	public MessageDTO leaveRoom(String id, String room_seq) {
+		String name = dao.getName(id);
+		MessageDTO dto = new MessageDTO(0,"System",Integer.parseInt(room_seq), name + "님이 채팅방을 나갔습니다.",null,false);
+		dao.initRoom(dto);
+		dao.leaveRoom(new ParticipantDTO(Integer.parseInt(room_seq), id, false));
+		return dto;
 	}
 }
