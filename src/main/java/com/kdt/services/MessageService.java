@@ -49,4 +49,21 @@ public class MessageService {
 	public List<MessageDTO> getMessagesByRoomSeq(String room_seq) {
 		return dao.getMessagesByRoomSeq(room_seq);
 	}
+	
+	public int readMessage(ParticipantDTO dto) {
+		return dao.readMessage(dto);
+	}
+	
+	public MessageDTO WSInsert(int room_seq, int id, String contents) {
+		String strID = String.valueOf(id);
+		return dao.WSInsert(new MessageDTO(0, strID, room_seq, contents, null , false));
+	}
+	
+	public List<String> WSgetParticipants(int room_seq) {
+		return dao.selectParticipants(room_seq);
+	}
+	
+	public int setUnreadedState(int room_seq) {
+		return dao.setUnreadedState(room_seq);
+	}
 }

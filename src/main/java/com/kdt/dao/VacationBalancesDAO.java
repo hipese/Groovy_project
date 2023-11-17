@@ -23,6 +23,11 @@ public class VacationBalancesDAO {
 		return db.selectOne("VacationBalance.selectVacationByMemberID", memberID);
 	}
 	
+	public VacationBalancesDTO myVacationUpdate(VacationRequsetDTO vRequset) {
+		db.update("VacationBalance.selectmyVacationUpdateByMemberID", vRequset);
+		return  db.selectOne("VacationBalance.selectVacationByMemberID", vRequset.getMemberID());
+	}
+	
 	public VacationBalancesDTO addVacation(VacationRequsetDTO vRequset) {
 		db.update("VacationBalance.addVacation", vRequset);
 		return db.selectOne("VacationBalance.selectVacationByMemberID", vRequset.getMemberID());

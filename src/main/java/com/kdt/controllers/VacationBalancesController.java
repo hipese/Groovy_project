@@ -15,12 +15,17 @@ import com.kdt.dto.VacationBalancesDTO;
 import com.kdt.dto.VacationRequsetDTO;
 import com.kdt.services.VacationBalancesService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/api/vacation")
 public class VacationBalancesController {
 	
 	@Autowired
 	VacationBalancesService vservice;
+	
+	@Autowired
+	HttpSession session;
 	
 	@GetMapping
 	public ResponseEntity<List> allVacationList(){
@@ -32,6 +37,21 @@ public class VacationBalancesController {
 	public ResponseEntity<VacationBalancesDTO> myVacation(@PathVariable String memberID){
 		VacationBalancesDTO dto= vservice.myVacation(memberID);
 		 return ResponseEntity.ok(dto);
+	}
+	
+	@GetMapping("/myVacation/{memberID}/{total_vactionDate}")
+	public ResponseEntity<VacationBalancesDTO> myVacationUpdate(@PathVariable String memberID,@PathVariable int total_vactionDate ){
+		System.out.println("항상 업데이트 한다.");
+		VacationBalancesDTO dto= vservice.myVacationUpdate(memberID, total_vactionDate);
+		return ResponseEntity.ok(dto);
+	}
+	
+	@GetMapping("/myVacation/{memberID}/{addVacation}/{total_vactionDate}")
+	public ResponseEntity<VacationBalancesDTO> myVacationUpdates(@PathVariable String memberID,
+			@PathVariable int addVacation,@PathVariable int total_vactionDate ){
+		System.out.println("여기로 오냐요~~~");
+		VacationBalancesDTO dto= vservice.myVacationUpdate(memberID, total_vactionDate+addVacation);
+		return ResponseEntity.ok(dto);
 	}
 	
 	@PostMapping("/add")

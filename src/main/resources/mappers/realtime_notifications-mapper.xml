@@ -21,8 +21,10 @@
 		resultType="com.kdt.dto.Realtime_NotificationsDTO">
 		SELECT *
 		FROM realtime_notifications
-		WHERE read_status = false
+		WHERE read_status =
+		false
 		AND recipient = #{id}
+		ORDER BY seq DESC
 	</select>
 
 </mapper>

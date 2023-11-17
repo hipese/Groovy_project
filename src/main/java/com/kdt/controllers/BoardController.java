@@ -1,8 +1,10 @@
 package com.kdt.controllers;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kdt.dto.BoardDTO;
+import com.kdt.dto.BoardWithFileDTO;
+import com.kdt.dto.BoardWithMemberDTO;
 import com.kdt.dto.Board_FileDTO;
+import com.kdt.dto.DBoardWithDFileDTO;
+import com.kdt.dto.DBoardWithMemberDTO;
 import com.kdt.dto.DeptBoardDTO;
 import com.kdt.dto.DeptBoard_FileDTO;
 import com.kdt.services.BoardService;
@@ -38,86 +44,80 @@ public class BoardController {
 
 	@PostMapping()
 	public ResponseEntity<String> insert(@RequestParam String title, @RequestParam String writer, @RequestParam(required = false) MultipartFile[] files, @RequestParam String contents, @RequestParam String category) throws Exception {
-	    System.out.println(title + " : " + writer + " : " + contents + " : " + category);
 
-	    BoardDTO dto = new BoardDTO();
-	    dto.setTitle(title);
-	    dto.setWriter(writer);
-	    dto.setContents(contents);
-	    dto.setCategory(category);
+		BoardDTO dto = new BoardDTO();
+		dto.setTitle(title);
+		dto.setWriter(writer);
+		dto.setContents(contents);
+		dto.setCategory(category);
 
-	    dto = service.insert(dto);
-	    int seq = dto.getSeq();
+		dto = service.insert(dto);
+		int seq = dto.getSeq();
 
-	    String upload = "c:/uploads";
-	    File uploadPath = new File(upload);
+		String upload = "c:/uploads";
+		File uploadPath = new File(upload);
 
-	    if (!uploadPath.exists()) {
-	        uploadPath.mkdirs();
-	    }
+		if (!uploadPath.exists()) {
+			uploadPath.mkdirs();
+		}
 
-	    if (files != null && files.length > 0) {
-	        for (MultipartFile file : files) {
-	            System.out.println(file.getOriginalFilename());
-	            String oriName = file.getOriginalFilename();
-	            String sysName = UUID.randomUUID() + "_" + oriName;
+		if (files != null && files.length > 0) {
+			for (MultipartFile file : files) {
+				String oriName = file.getOriginalFilename();
+				String sysName = UUID.randomUUID() + "_" + oriName;
 
-	            file.transferTo(new File(uploadPath, sysName));
+				file.transferTo(new File(uploadPath, sysName));
 
-	            Board_FileDTO fdto = new Board_FileDTO();
-	            fdto.setOri_name(oriName);
-	            fdto.setSys_name(sysName);
-	            fdto.setParent_seq(seq); // 게시물의 seq를 parent_seq로 설정
-	            fservice.insert(fdto);
-	        }
-	    }
-
-	    return ResponseEntity.ok("");
+				Board_FileDTO fdto = new Board_FileDTO();
+				fdto.setOri_name(oriName);
+				fdto.setSys_name(sysName);
+				fdto.setParent_seq(seq); // 게시물의 seq를 parent_seq로 설정
+				fservice.insert(fdto);
+			}
+		}
+		return ResponseEntity.ok("");
 	}
-	
+
 	@PostMapping("/dept")
 	public ResponseEntity<String> insertDept(@RequestParam String title, @RequestParam String writer, @RequestParam(required = false) MultipartFile[] files, @RequestParam String contents, @RequestParam String category, @RequestParam String dept) throws Exception {
-	    System.out.println(title + " : " + writer + " : " + contents + " : " + category + " : " + dept);
 
-	    DeptBoardDTO dto = new DeptBoardDTO();
-	    dto.setTitle(title);
-	    dto.setWriter(writer);
-	    dto.setContents(contents);
-	    dto.setCategory(category);
-	    dto.setDept(dept);
+		DeptBoardDTO dto = new DeptBoardDTO();
+		dto.setTitle(title);
+		dto.setWriter(writer);
+		dto.setContents(contents);
+		dto.setCategory(category);
+		dto.setDept(dept);
 
-	    dto = service.insertDept(dto);
-	    int seq = dto.getSeq();
+		dto = service.insertDept(dto);
+		int seq = dto.getSeq();
 
-	    String upload = "c:/uploads";
-	    File uploadPath = new File(upload);
+		String upload = "c:/uploads";
+		File uploadPath = new File(upload);
 
-	    if (!uploadPath.exists()) {
-	        uploadPath.mkdirs();
-	    }
+		if (!uploadPath.exists()) {
+			uploadPath.mkdirs();
+		}
 
-	    if (files != null && files.length > 0) {
-	        for (MultipartFile file : files) {
-	            System.out.println(file.getOriginalFilename());
-	            String oriName = file.getOriginalFilename();
-	            String sysName = UUID.randomUUID() + "_" + oriName;
+		if (files != null && files.length > 0) {
+			for (MultipartFile file : files) {
+				String oriName = file.getOriginalFilename();
+				String sysName = UUID.randomUUID() + "_" + oriName;
 
-	            file.transferTo(new File(uploadPath, sysName));
+				file.transferTo(new File(uploadPath, sysName));
 
-	            DeptBoard_FileDTO fdto = new DeptBoard_FileDTO();
-	            fdto.setOri_name(oriName);
-	            fdto.setSys_name(sysName);
-	            fdto.setParent_seq(seq);
-	            fservice.insertDept(fdto);
-	        }
-	    }
-
-	    return ResponseEntity.ok("");
+				DeptBoard_FileDTO fdto = new DeptBoard_FileDTO();
+				fdto.setOri_name(oriName);
+				fdto.setSys_name(sysName);
+				fdto.setParent_seq(seq);
+				fservice.insertDept(fdto);
+			}
+		}
+		return ResponseEntity.ok("");
 	}
 
 	@GetMapping("/com/{seq}")
-	public ResponseEntity <BoardDTO> selectBoardBySeq(@PathVariable Integer seq) {
-		BoardDTO message = service.selectBoardBySeq(seq);
+	public ResponseEntity <BoardWithFileDTO> selectBoardBySeq(@PathVariable Integer seq) {
+		BoardWithFileDTO message = service.selectBoardBySeq(seq);
 		int view_count = message.getView_count() + 1;
 		message.setView_count(view_count);
 
@@ -127,8 +127,8 @@ public class BoardController {
 
 	// 부서 소식 detail
 	@GetMapping("/dept/{seq}")
-	public ResponseEntity <DeptBoardDTO> selectDeptBySeq(@PathVariable Integer seq) {
-		DeptBoardDTO dept = service.selectDeptBySeq(seq);
+	public ResponseEntity <DBoardWithDFileDTO> selectDeptBySeq(@PathVariable Integer seq) {
+		DBoardWithDFileDTO dept = service.selectDeptBySeq(seq);
 		int view_count = dept.getView_count() + 1;
 		dept.setView_count(view_count);
 
@@ -137,63 +137,65 @@ public class BoardController {
 	}
 
 	@GetMapping("/recent")
-	public ResponseEntity<List<BoardDTO>> selectBoardRecent() {
-		List<BoardDTO> recent = service.selectBoardRecent();
+	public ResponseEntity<List<BoardWithMemberDTO>> selectBoardRecent() {
+		List<BoardWithMemberDTO> recent = service.selectBoardRecent();
 		return ResponseEntity.ok(recent);
 	}
-	
-	@GetMapping("/recentDept")
-	public ResponseEntity<List<DeptBoardDTO>> selectDeptRecent() {
-		List<DeptBoardDTO> recent = service.selectDeptRecent();
+
+	@GetMapping("/recentDept/{dept}")
+	public ResponseEntity<List<DBoardWithMemberDTO>> selectDeptRecent(@PathVariable String dept) {
+		List<DBoardWithMemberDTO> recent = service.selectDeptRecent(dept);
 		return ResponseEntity.ok(recent);
 	}
 
 	@GetMapping("/com")
-	public ResponseEntity<List<BoardDTO>> selectBoardAllCom() {
-		List<BoardDTO> Com = service.selectBoardAllCom();
+	public ResponseEntity<List<BoardWithMemberDTO>> selectBoardAllCom() {
+		List<BoardWithMemberDTO> Com = service.selectBoardAllCom();
 		return ResponseEntity.ok(Com);
 	}
 
 	@GetMapping("/comfree")
-	public ResponseEntity<List<BoardDTO>> selectBoardAllComFree() {
-		List<BoardDTO> ComFree = service.selectBoardAllComFree();
+	public ResponseEntity<List<BoardWithMemberDTO>> selectBoardAllComFree() {
+		List<BoardWithMemberDTO> ComFree = service.selectBoardAllComFree();
 		return ResponseEntity.ok(ComFree);
 	}
 
 	// 부서 내 소식 - 부서 공지
 	@GetMapping("/deptCom/{dept}")
-	public ResponseEntity<List<DeptBoardDTO>> selectBoardAllDept(@PathVariable String dept) {
-		List<DeptBoardDTO> Dept = service.selectBoardAllDept(dept);
+	public ResponseEntity<List<DBoardWithMemberDTO>> selectBoardAllDept(@PathVariable String dept) {
+		List<DBoardWithMemberDTO> Dept = service.selectBoardAllDept(dept);
 		return ResponseEntity.ok(Dept);
 	}
 
 	@GetMapping("/deptfree/{dept}")
-	public ResponseEntity<List<DeptBoardDTO>> selectBoardAllDeptFree(@PathVariable String dept) {
-		List<DeptBoardDTO> DeptFree = service.selectBoardAllDeptFree(dept);
+	public ResponseEntity<List<DBoardWithMemberDTO>> selectBoardAllDeptFree(@PathVariable String dept) {
+		List<DBoardWithMemberDTO> DeptFree = service.selectBoardAllDeptFree(dept);
 		return ResponseEntity.ok(DeptFree);
 	}
 
 	@DeleteMapping("/com/{seq}")
 	public ResponseEntity<String> deleteBoard(@PathVariable Integer seq) {
 		service.deleteBoard(seq);
-		return ResponseEntity.ok("삭제 성공!");
+		service.deleteAll(seq);
+		return ResponseEntity.ok("");
 	}
-	
+
 	@DeleteMapping("/dept/{seq}")
 	public ResponseEntity<String> deleteDept(@PathVariable Integer seq) {
 		service.deleteDept(seq);
-		return ResponseEntity.ok("삭제 성공!");
+		service.deleteDeptAll(seq);
+		return ResponseEntity.ok("");
 	}
 
 	@GetMapping("/update/{seq}")
 	public ResponseEntity <BoardDTO> selectUPdateBoardBySeq(@PathVariable Integer seq) {
-		BoardDTO message = service.selectBoardBySeq(seq);
+		BoardDTO message = service.selectUPdateBoardBySeq(seq);
 		return ResponseEntity.ok(message);
 	}
-	
+
 	@GetMapping("/updateDept/{seq}")
 	public ResponseEntity <DeptBoardDTO> selectUpdateDeptBySeq(@PathVariable Integer seq) {
-		DeptBoardDTO message = service.selectDeptBySeq(seq);
+		DeptBoardDTO message = service.selectUpdateDeptBySeq(seq);
 		return ResponseEntity.ok(message);
 	}
 
@@ -208,28 +210,27 @@ public class BoardController {
 
 		service.updateBoard(dto);
 
-	    String upload = "c:/uploads";
-	    File uploadPath = new File(upload);
+		String upload = "c:/uploads";
+		File uploadPath = new File(upload);
 
-	    if (!uploadPath.exists()) {
-	        uploadPath.mkdirs();
-	    }
+		if (!uploadPath.exists()) {
+			uploadPath.mkdirs();
+		}
 
-	    if (files != null && files.length > 0) {
-	        for (MultipartFile file : files) {
-	            System.out.println(file.getOriginalFilename());
-	            String oriName = file.getOriginalFilename();
-	            String sysName = UUID.randomUUID() + "_" + oriName;
+		if (files != null && files.length > 0) {
+			for (MultipartFile file : files) {
+				String oriName = file.getOriginalFilename();
+				String sysName = UUID.randomUUID() + "_" + oriName;
 
-	            file.transferTo(new File(uploadPath, sysName));
+				file.transferTo(new File(uploadPath, sysName));
 
-	            Board_FileDTO fdto = new Board_FileDTO();
-	            fdto.setOri_name(oriName);
-	            fdto.setSys_name(sysName);
-	            fdto.setParent_seq(seq);
-	            fservice.insert(fdto);
-	        }
-	    }
+				Board_FileDTO fdto = new Board_FileDTO();
+				fdto.setOri_name(oriName);
+				fdto.setSys_name(sysName);
+				fdto.setParent_seq(seq);
+				fservice.insert(fdto);
+			}
+		}
 
 		return ResponseEntity.ok().build();
 	}
@@ -245,32 +246,31 @@ public class BoardController {
 
 		service.updateDept(dto);
 
-	    String upload = "c:/uploads";
-	    File uploadPath = new File(upload);
+		String upload = "c:/uploads";
+		File uploadPath = new File(upload);
 
-	    if (!uploadPath.exists()) {
-	        uploadPath.mkdirs();
-	    }
+		if (!uploadPath.exists()) {
+			uploadPath.mkdirs();
+		}
 
-	    if (files != null && files.length > 0) {
-	        for (MultipartFile file : files) {
-	            System.out.println(file.getOriginalFilename());
-	            String oriName = file.getOriginalFilename();
-	            String sysName = UUID.randomUUID() + "_" + oriName;
+		if (files != null && files.length > 0) {
+			for (MultipartFile file : files) {
+				String oriName = file.getOriginalFilename();
+				String sysName = UUID.randomUUID() + "_" + oriName;
 
-	            file.transferTo(new File(uploadPath, sysName));
+				file.transferTo(new File(uploadPath, sysName));
 
-	            DeptBoard_FileDTO fdto = new DeptBoard_FileDTO();
-	            fdto.setOri_name(oriName);
-	            fdto.setSys_name(sysName);
-	            fdto.setParent_seq(seq);
-	            fservice.insertDept(fdto);
-	        }
-	    }
+				DeptBoard_FileDTO fdto = new DeptBoard_FileDTO();
+				fdto.setOri_name(oriName);
+				fdto.setSys_name(sysName);
+				fdto.setParent_seq(seq);
+				fservice.insertDept(fdto);
+			}
+		}
 
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Void> errorHandler(Exception e){
 		e.printStackTrace();
