@@ -35,6 +35,7 @@ public class VacationBalancesController {
 	
 	@GetMapping("/myVacation/{memberID}")
 	public ResponseEntity<VacationBalancesDTO> myVacation(@PathVariable String memberID){
+		System.out.println("테스트용");
 		VacationBalancesDTO dto= vservice.myVacation(memberID);
 		 return ResponseEntity.ok(dto);
 	}
