@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,6 +25,8 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 public class MessageController {
 
+	@Autowired
+    private	SimpMessagingTemplate template;
 	@Autowired
 	private HttpSession session;
 	@Autowired
@@ -63,4 +65,10 @@ public class MessageController {
 		return ResponseEntity.ok(service.readMessage(new ParticipantDTO(Integer.parseInt(room_seq), (String)session.getAttribute("loginID"), true)));
 	}
 	
+	@DeleteMapping("leaveRoom")
+	public ResponseEntity<Void> leaveRoom(String room_seq) {
+		MessageDTO dto = service.leaveRoom((String)session.getAttribute("loginID"), room_seq);
+		template.convertAndSend("/topic/message/"+room_seq, dto);
+		return ResponseEntity.ok().build();
+	}
 }
