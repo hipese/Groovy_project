@@ -72,5 +72,9 @@ public class SurveyService {
 	public List<HashMap<String, Object>> selectShortResult(int seq){
 		return dao.selectShortResult(seq);
 	}
+	
+	public int deleteSurvey(int seq) {
+		return dao.deleteSurvey(seq);
+	}
 
 }

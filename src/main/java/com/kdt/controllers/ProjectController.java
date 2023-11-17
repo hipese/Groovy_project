@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -121,6 +122,29 @@ public class ProjectController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@GetMapping("/getManager/{seq}")
+	public ResponseEntity<String> getManager(@PathVariable int seq){
+		String result = PService.selectManager(seq);
+		return ResponseEntity.ok(result);
+	}
+	
+	@DeleteMapping("/delete/{seq}")
+	public ResponseEntity<Integer> deleteProject(@PathVariable int seq){
+		int result = PService.deleteProject(seq);
+		return ResponseEntity.ok(result);
+	}
+	
+	@DeleteMapping("/todo/delete/{seq}")
+	public ResponseEntity<Integer> deleteTodo(@PathVariable int seq){
+		int result = PService.deleteTodo(seq);
+		return ResponseEntity.ok(result);
+	}
+	
+	@DeleteMapping("/delete/member/{seq}/{id}")
+	public ResponseEntity<Integer> deleteMember(@PathVariable int seq, @PathVariable String id){
+		int result = PService.deleteMember(seq, id);
+		return ResponseEntity.ok(result);
+	}
 	
 
 }

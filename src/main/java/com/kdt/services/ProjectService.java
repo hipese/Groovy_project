@@ -1,5 +1,6 @@
 package com.kdt.services;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,5 +53,25 @@ public class ProjectService {
 	public int updateState(Map<String,Object> data) {
 		return dao.updateState(data);		
 	}
-
+	
+	public String selectManager(int seq) {
+		return dao.selectManager(seq);
+	}
+	
+	public int deleteProject(int seq) {
+		return dao.deleteProject(seq);
+	}
+	
+	public int deleteTodo(int seq) {
+		return dao.deleteTodo(seq);
+	}
+	
+	public int deleteMember(int pseq, String id) {
+		Map<String, Object> param = new HashMap<>();
+		
+		param.put("pseq", pseq);
+		param.put("id", id);
+		
+		return dao.deleteMember(param);
+	}
 }
