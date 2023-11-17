@@ -12,4 +12,7 @@
 	<delete id="delete">
 		delete from tdlboard where seq=#{seq}
 	</delete>
+	<update id="update">
+		update tdlboard set title=#{title} where seq=#{seq}
+	</update>
 </mapper>

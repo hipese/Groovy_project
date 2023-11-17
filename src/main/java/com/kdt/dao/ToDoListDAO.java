@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kdt.dto.TDLTitleDTO;
 import com.kdt.dto.ToDoListDTO;
 
 @Repository
@@ -24,5 +25,8 @@ public class ToDoListDAO {
 	}
 	public int delete(int seq) {
 		return ss.delete("ToDoList.delete", seq);
+	}
+	public int update(ToDoListDTO dto) {
+		return ss.update("ToDoList.update",dto);
 	}
 }

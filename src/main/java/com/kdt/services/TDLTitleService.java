@@ -23,4 +23,7 @@ public class TDLTitleService {
 	public int delete(int seq) {
 		return this.tdltdao.delete(seq);
 	}
+	public int update(TDLTitleDTO dto) {
+		return this.tdltdao.update(dto);
+	}
 }

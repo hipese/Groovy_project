@@ -22,4 +22,7 @@ public class TDLTitleDAO {
 	public int delete(int seq) {
 		return ss.delete("TDLTitle.delete",seq);
 	}
+	public int update(TDLTitleDTO dto) {
+		return ss.update("TDLTitle.update",dto);
+	}
 }

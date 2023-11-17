@@ -9,9 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kdt.dto.TDLTitleDTO;
@@ -46,6 +49,13 @@ public class TDLTitleController {
 	@DeleteMapping("/{seq}")
 	public ResponseEntity<Integer> delete(int seq) throws Exception {
 		tdltservice.delete(seq);
+		return ResponseEntity.ok().build();
+	}
+	
+	@PutMapping("/{seq}")
+	public ResponseEntity<Integer> update(@PathVariable int seq, @RequestBody TDLTitleDTO dto) throws Exception {
+		dto.setSeq(seq);
+		tdltservice.update(dto);
 		return ResponseEntity.ok().build();
 	}
 	@ExceptionHandler(Exception.class)

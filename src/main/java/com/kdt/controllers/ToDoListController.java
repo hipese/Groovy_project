@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kdt.dto.TDLTitleDTO;
 import com.kdt.dto.ToDoListDTO;
 import com.kdt.services.ToDoListService;
 
@@ -54,6 +56,13 @@ public class ToDoListController {
 	@DeleteMapping("/{seq}")
 	public ResponseEntity<Integer> delete(@PathVariable Integer seq) throws Exception {
 		tdlservice.delete(seq);
+		return ResponseEntity.ok().build();
+	}
+	
+	@PutMapping("/{seq}")
+	public ResponseEntity<Integer> update(@PathVariable int seq, @RequestBody ToDoListDTO dto) throws Exception {
+		dto.setSeq(seq);
+		tdlservice.update(dto);
 		return ResponseEntity.ok().build();
 	}
 	
