@@ -67,5 +67,9 @@ ORDER BY write_time DESC;
 	<delete id="leaveRoom">
 		delete from participant where room_seq = ${room_seq} and user_id = #{user_id}
 	</delete>
+	
+	<select id="getNameById" resultType="string">
+		select name from member where id = #{id};
+	</select>
 
 </mapper>
