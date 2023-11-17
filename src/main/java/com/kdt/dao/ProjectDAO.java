@@ -50,6 +50,22 @@ public class ProjectDAO {
 		return db.update("Project.updateState",data);
 	}
 	
+	public String selectManager(int seq) {
+		return db.selectOne("Project.selectManager",seq);
+	}
+	
+	public int deleteProject(int seq) {
+		return db.delete("Project.deleteProject",seq);
+	}
+	
+	public int deleteTodo(int seq) {
+		return db.delete("Project.deleteTodo",seq);
+	}
+	
+	public int deleteMember(Map<String, Object> param) {
+		return db.delete("Project.deleteMember",param);
+	}
+	
 //	ProjectCreate
 	
 	public int insertProject(ProjectDTO dto) {
@@ -61,12 +77,6 @@ public class ProjectDAO {
 		return db.insert("Project.insertProjectMember",dto);
 	}
 	
-	public String selectManager(int seq) {
-		return db.selectOne("Project.selectManager",seq);
-	}
 	
-	public int deleteProject(int seq) {
-		return db.delete("Project.deleteProject",seq);
-	}
 
 }

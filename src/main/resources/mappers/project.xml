@@ -48,5 +48,13 @@
 	<delete id="deleteProject">
 		delete from project where pseq = #{value};
 	</delete>
+	
+	<delete id="deleteTodo">
+		delete from project_schedule  where pschedule_seq = #{value}
+	</delete>
+	
+	<delete id="deleteMember">
+		delete from project_member where pseq = #{pseq} and id = #{id};
+	</delete>
 
 </mapper>

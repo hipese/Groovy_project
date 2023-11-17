@@ -134,5 +134,17 @@ public class ProjectController {
 		return ResponseEntity.ok(result);
 	}
 	
+	@DeleteMapping("/todo/delete/{seq}")
+	public ResponseEntity<Integer> deleteTodo(@PathVariable int seq){
+		int result = PService.deleteTodo(seq);
+		return ResponseEntity.ok(result);
+	}
+	
+	@DeleteMapping("/delete/member/{seq}/{id}")
+	public ResponseEntity<Integer> deleteMember(@PathVariable int seq, @PathVariable String id){
+		int result = PService.deleteMember(seq, id);
+		return ResponseEntity.ok(result);
+	}
+	
 
 }
