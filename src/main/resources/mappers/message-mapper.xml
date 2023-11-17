@@ -63,5 +63,9 @@ ORDER BY write_time DESC;
 	<update id="setUnreadedState">
 		update participant set is_read = false where room_seq = #{room_seq}
 	</update>
+	
+	<delete id="leaveRoom">
+		delete from participant where room_seq = ${room_seq} and user_id = #{user_id}
+	</delete>
 
 </mapper>
