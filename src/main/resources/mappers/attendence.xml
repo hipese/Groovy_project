@@ -20,6 +20,6 @@
 	</select>
 
 	<select id="detailsByID" resultType="com.kdt.dto.AttendenceDTO">
-		SELECT * FROM attendanceView WHERE id = #{id}
+		SELECT * FROM attendenceView WHERE id = #{id}
 	</select>
 </mapper>
