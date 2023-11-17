@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kdt.dao.ToDoListDAO;
+import com.kdt.dto.TDLTitleDTO;
 import com.kdt.dto.ToDoListDTO;
 
 @Service
@@ -27,5 +28,8 @@ public class ToDoListService {
 	}
 	public int delete(int seq) {
 		return this.tdldao.delete(seq);
+	}
+	public int update(ToDoListDTO dto) {
+		return this.tdldao.update(dto);
 	}
 }

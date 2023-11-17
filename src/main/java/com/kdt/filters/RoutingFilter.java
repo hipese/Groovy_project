@@ -21,7 +21,6 @@ public class RoutingFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         String requestURI = req.getRequestURI();
-
         if(requestURI.startsWith("/ws-message")) {
             chain.doFilter(request, response);
             return;
@@ -38,6 +37,11 @@ public class RoutingFilter implements Filter {
         }
         
         if(requestURI.startsWith("/profiles")) {
+            chain.doFilter(request, response);
+            return;
+        }
+        
+        if(requestURI.endsWith("js")||requestURI.endsWith("css")||requestURI.endsWith("json")||requestURI.endsWith("jpg")||requestURI.endsWith("jpeg")||requestURI.endsWith("webp")||requestURI.endsWith("png")||requestURI.endsWith("svg")) {
             chain.doFilter(request, response);
             return;
         }
