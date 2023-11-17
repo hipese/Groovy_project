@@ -29,6 +29,9 @@ public class AttendenceService {
 	public List<AttendenceDTO> selectByID(String id) {
 		return dao.selectById(id);
 	}
+	public int attendenceCount(String id) {
+		return dao.attendenceCount(id);
+	}
 	
 	public List<AttendenceDTO> detailsByID(String id) {
 		return dao.detailsByID(id);

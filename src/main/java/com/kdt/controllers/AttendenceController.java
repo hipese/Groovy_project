@@ -98,10 +98,18 @@ public class AttendenceController {
 	@GetMapping
 	public ResponseEntity<List<AttendenceDTO>> selectByID() {
 		String id = (String)session.getAttribute("loginID");
-		System.out.println(id);
+		
 		List<AttendenceDTO> list = AtdService.selectByID(id);
 		return ResponseEntity.ok(list);
 	}
+	@GetMapping("attendenceCount")
+	public ResponseEntity<Integer> attendenceCount() {
+		String id = (String)session.getAttribute("loginID");
+		int count = AtdService.attendenceCount(id);
+		return ResponseEntity.ok(count);
+	}
+	
+	
 	
 	@GetMapping("/detail")
 	public ResponseEntity<List<AttendenceDTO>> detailsByID() {
