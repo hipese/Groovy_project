@@ -73,4 +73,7 @@ public class MessageDAO {
 		return db.update("Message.setUnreadedState", room_seq);
 	}
 	
+	public int leaveRoom(ParticipantDTO dto) {
+		return db.delete("Message.leaveRoom", dto);
+	}
 }

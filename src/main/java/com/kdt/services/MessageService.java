@@ -66,4 +66,8 @@ public class MessageService {
 	public int setUnreadedState(int room_seq) {
 		return dao.setUnreadedState(room_seq);
 	}
+	
+	public int leaveRoom(String id, String room_seq) {
+		return dao.leaveRoom(new ParticipantDTO(Integer.parseInt(room_seq), id, false));
+	}
 }
