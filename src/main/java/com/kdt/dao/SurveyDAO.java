@@ -73,4 +73,8 @@ public class SurveyDAO {
 	public List<HashMap<String, Object>> selectShortResult(int seq){
 		return db.selectList("Survey.selectShortResult",seq);
 	}
+	
+	public int deleteSurvey(int seq) {
+		return db.delete("Survey.deleteSurvey",seq);
+	}
 }
