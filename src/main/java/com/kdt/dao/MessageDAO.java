@@ -76,4 +76,8 @@ public class MessageDAO {
 	public int leaveRoom(ParticipantDTO dto) {
 		return db.delete("Message.leaveRoom", dto);
 	}
+	
+	public String getNameById(String id) {
+		return db.selectOne("Message.getNameById", id);
+	}
 }
