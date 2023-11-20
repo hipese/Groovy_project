@@ -21,7 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kdt.dto.MailDTO;
 import com.kdt.dto.MailReceiptDTO;
+import com.kdt.dto.MailWithMemberDTO;
 import com.kdt.dto.Mail_FileDTO;
+import com.kdt.dto.RWasteWithMemFileDTO;
+import com.kdt.dto.Re_MemberDTO;
+import com.kdt.dto.WasteMailDTO;
+import com.kdt.dto.WasteRMailDTO;
+import com.kdt.dto.WasteWithMemFileDTO;
 import com.kdt.services.MailService;
 import com.kdt.services.Mail_FileService;
 
@@ -79,7 +85,7 @@ public class MailController {
 				Mail_FileDTO fdto = new Mail_FileDTO();
 				fdto.setOri_name(oriName);
 				fdto.setSys_name(sysName);
-				fdto.setParent_seq(seq);
+				fdto.setFparent_seq(seq);
 				fservice.insert(fdto);
 			}
 		}
@@ -88,69 +94,73 @@ public class MailController {
 	}
 
 	@GetMapping("/{seq}")
-	public ResponseEntity <MailDTO> selectMailBySeq(@PathVariable Integer seq) {
-		MailDTO mail = service.selectBySeq(seq);
+	public ResponseEntity <MailWithMemberDTO> selectMailBySeq(@PathVariable Integer seq) {
+		MailWithMemberDTO mail = service.selectBySeq(seq);
 		return ResponseEntity.ok(mail);
 	}
 
-	@GetMapping("/waste/inbox")
-	public ResponseEntity<List<MailDTO>> selectDelInbox() {
-		List<MailDTO> inbox = service.selectDelInbox();
+	@GetMapping("/mem/{seq}")
+	public ResponseEntity <Re_MemberDTO> selectMember(@PathVariable Integer seq) {
+		Re_MemberDTO mail = service.selectMember(seq);
+		return ResponseEntity.ok(mail);
+	}
+	
+	@GetMapping("/waste/inbox/{member_id}")
+	public ResponseEntity<List<WasteWithMemFileDTO>> selectDelInbox(@PathVariable String member_id) {
+		List<WasteWithMemFileDTO> inbox = service.selectDelInbox(member_id);
 		return ResponseEntity.ok(inbox);
 	}
 
-	@GetMapping("/waste/send")
-	public ResponseEntity<List<MailReceiptDTO>> selectDelSent() {
-		List<MailReceiptDTO> send = service.selectDelSent();
+	@GetMapping("/waste/send/{member_id}")
+	public ResponseEntity<List<RWasteWithMemFileDTO>> selectDelSent(@PathVariable String member_id) {
+		List<RWasteWithMemFileDTO> send = service.selectDelSent(member_id);
 		return ResponseEntity.ok(send);
 	}
 
 	@GetMapping("/inbox/{receipient}")
-	public ResponseEntity<List<MailReceiptDTO>> selectMailAll(@PathVariable String receipient) {
-		List<MailReceiptDTO> inbox = service.selectAll(receipient);
+	public ResponseEntity<List<MailWithMemberDTO>> selectMailAll(@PathVariable String receipient) {
+		List<MailWithMemberDTO> inbox = service.selectAll(receipient);
 		return ResponseEntity.ok(inbox);
 	}
 
 	@GetMapping("/send/{sender}")
-	public ResponseEntity<List<MailDTO>> selectAllSend(@PathVariable String sender) {
-		List<MailDTO> Send = service.selectAllSend(sender);
+	public ResponseEntity<List<MailWithMemberDTO>> selectAllSend(@PathVariable String sender) {
+		List<MailWithMemberDTO> Send = service.selectAllSend(sender);
 		return ResponseEntity.ok(Send);
 	}
 
-	@GetMapping("/temp")
-	public ResponseEntity<List<MailDTO>> selectAllTemp() {
-		List<MailDTO> Temp = service.selectAllTemp();
-		return ResponseEntity.ok(Temp);
-	}
-
-	@GetMapping("/spam")
-	public ResponseEntity<List<MailDTO>> selectAllSpam() {
-		List<MailDTO> Spam = service.selectAllSpam();
-		return ResponseEntity.ok(Spam);
-	}
-
-	@GetMapping("/tome")
-	public ResponseEntity<List<MailDTO>> selectAllToMe() {
-		List<MailDTO> ToMe = service.selectAllToMe();
+	@GetMapping("/tome/{sender}")
+	public ResponseEntity<List<MailWithMemberDTO>> selectAllToMe(@PathVariable String sender) {
+		List<MailWithMemberDTO> ToMe = service.selectAllToMe(sender);
 		return ResponseEntity.ok(ToMe);
 	}
 
 	@PutMapping("/inbox/{seq}")
-	public ResponseEntity<String> updateInbox(@PathVariable Integer seq) {
+	public ResponseEntity<String> updateInbox(@PathVariable Integer seq, @RequestParam String member_id) {
 		service.updateInbox(seq);
-		return ResponseEntity.ok("성공이랄까");
+		
+		WasteMailDTO dto = new WasteMailDTO();
+		dto.setParent_seq(seq);
+		dto.setMember_id(member_id);
+		dto = service.insertWaste(dto);
+		return ResponseEntity.ok("");
 	}
 
 	@PutMapping("/sent/{seq}")
-	public ResponseEntity<String> updateSent(@PathVariable Integer seq) {
+	public ResponseEntity<String> updateSent(@PathVariable Integer seq, @RequestParam String member_id) {
 		service.updateSent(seq);
-		return ResponseEntity.ok("성공이랄까");
+		
+		WasteRMailDTO dto = new WasteRMailDTO();
+		dto.setParent_seq(seq);
+		dto.setMember_id(member_id);
+		dto = service.insertRWaste(dto);
+		return ResponseEntity.ok("");
 	}
 
 	@PutMapping("/read/{seq}")
 	public ResponseEntity<String> isRead(@PathVariable Integer seq) {
 		service.isRead(seq);
-		return ResponseEntity.ok("성공이랄까");
+		return ResponseEntity.ok("");
 	}
 
 	@DeleteMapping("/inbox/{seq}")
