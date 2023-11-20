@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kdt.dto.PositionRankDTO;
@@ -22,5 +23,11 @@ public class PositionRankController {
 	public ResponseEntity<List<PositionRankDTO>> selectAll(){
 		List<PositionRankDTO> list=pservice.selectAll();
 		return ResponseEntity.ok(list);
+	}
+	
+	@GetMapping("/isRanking/{position}/{myposition}")
+	public ResponseEntity<Boolean> isRanking(@PathVariable String position ){
+		pservice.isRanking(position);
+		return ResponseEntity.ok(true);
 	}
 }

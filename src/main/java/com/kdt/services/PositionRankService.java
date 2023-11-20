@@ -19,4 +19,8 @@ public class PositionRankService {
 		return dao.selectAll();
 	}
 	
+	public boolean isRanking(String position){
+		return dao.isRanking(position);
+	}
+
 }

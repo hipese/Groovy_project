@@ -18,4 +18,9 @@ public class PositionRankDAO {
 	public List<PositionRankDTO> selectAll(){
 		return db.selectList("PositionRank.selectAll");
 	}
+	
+	public boolean isRanking(String position){
+		return db.selectOne("PositionRank.isRanking",position);
+	}
+
 }
