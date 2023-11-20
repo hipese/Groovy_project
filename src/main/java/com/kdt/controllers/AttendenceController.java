@@ -1,7 +1,7 @@
 package com.kdt.controllers;
 
 import java.io.File;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kdt.dto.AttendenceDTO;
-import com.kdt.dto.Sign_documentDTO;
 import com.kdt.dto.Vacation_documentDTO;
 import com.kdt.dto.Vacation_filesDTO;
 import com.kdt.services.AttendenceService;
@@ -51,14 +50,14 @@ public class AttendenceController {
 			uploadPath.mkdir();
 		}
 
-		String document_type = dto.getDocument_type();
-		String contents = dto.getContents();
-		String recipient = dto.getRecipient();
-		int accept = dto.getAccept();
-		String title = dto.getTitle();
-		Timestamp startDate = dto.getStartDate();
-		Timestamp endDate = dto.getEndDate();
-		int total_date = dto.getTotal_date();
+//		String document_type = dto.getDocument_type();
+//		String contents = dto.getContents();
+//		String recipient = dto.getRecipient();
+//		int accept = dto.getAccept();
+//		String title = dto.getTitle();
+//		Timestamp startDate = dto.getStartDate();
+//		Timestamp endDate = dto.getEndDate();
+//		int total_date = dto.getTotal_date();
 
 		int parent_seq = vdService.insert(dto);
 
@@ -102,14 +101,23 @@ public class AttendenceController {
 		List<AttendenceDTO> list = AtdService.selectByID(id);
 		return ResponseEntity.ok(list);
 	}
+	
+	@GetMapping("/myAttendence")
+	public ResponseEntity<AttendenceDTO> myAttendence() {
+		
+		String id = (String)session.getAttribute("loginID");
+	    Date today = new Date();
+		AttendenceDTO dto = AtdService.myAttendence(id ,today);
+		return ResponseEntity.ok(dto);
+	}
+	
+	//출석일수 불러오기
 	@GetMapping("attendenceCount")
 	public ResponseEntity<Integer> attendenceCount() {
 		String id = (String)session.getAttribute("loginID");
 		int count = AtdService.attendenceCount(id);
 		return ResponseEntity.ok(count);
 	}
-	
-	
 	
 	@GetMapping("/detail")
 	public ResponseEntity<List<AttendenceDTO>> detailsByID() {
