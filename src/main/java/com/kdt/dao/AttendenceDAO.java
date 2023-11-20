@@ -26,6 +26,10 @@ public class AttendenceDAO {
 		return db.update("Attendence.updateWorkEnd",dto);
 	}
 	
+	public int attendenceCount(String id) {
+		return db.selectOne("Attendence.attendenceCount", id);
+	}
+	
 	public List<AttendenceDTO> selectById(String id) {
 		return db.selectList("Attendence.selectByID", id);
 	}

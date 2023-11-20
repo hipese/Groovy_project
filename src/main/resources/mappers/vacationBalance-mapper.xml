@@ -27,7 +27,7 @@
 	</update>
 
 	<update id="subtractVacation">
-		update VacationBalances set UsedDays =
-		UsedDays+#{amount} where MemberID=#{memberID}
+		update VacationBalances set TotalAnnualEntitlement =
+		TotalAnnualEntitlement-#{amount} where MemberID=#{memberID}
 	</update>
 </mapper>

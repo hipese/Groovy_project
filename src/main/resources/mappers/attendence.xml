@@ -15,11 +15,14 @@
 		update attendence set workend = #{workend} where DATE(workstart) = CURDATE() and id = #{id}
 	</update>
 	
+	<select id="attendenceCount" resultType="Integer">
+		select count(*) from attendenceView where id=#{id} AND  status=1
+	</select>
 	<select id="selectByID" resultType="com.kdt.dto.AttendenceDTO">
 		SELECT * FROM attendence WHERE id = #{id}
 	</select>
 
 	<select id="detailsByID" resultType="com.kdt.dto.AttendenceDTO">
-		SELECT * FROM attendanceView WHERE id = #{id}
+		SELECT * FROM attendenceView WHERE id = #{id}
 	</select>
 </mapper>
