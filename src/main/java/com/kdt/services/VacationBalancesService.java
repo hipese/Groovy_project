@@ -23,6 +23,11 @@ public class VacationBalancesService {
 		return dao.myVacation(memberID);
 	}
 	
+	public VacationBalancesDTO selectIDVacation(String selectID) {
+		return dao.selectIDVacation(selectID);
+	}
+	
+	
 	public VacationBalancesDTO myVacationUpdate(String memberID, int total_vactionDate) {
 		VacationRequsetDTO vRequest =new VacationRequsetDTO(memberID,total_vactionDate);
 		return dao.myVacationUpdate(vRequest);

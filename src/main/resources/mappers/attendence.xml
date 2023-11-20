@@ -4,25 +4,42 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Attendence">
 	<insert id="insertCheckIn">
-		insert into attendence values(0, #{id}, #{workstart}, null, null)
+		insert into attendence values(0, #{id}, #{workstart},
+		null, null)
 	</insert>
-	
-	<select id="selectWorkStart" resultType="com.kdt.dto.AttendenceDTO">
-		SELECT * FROM attendence WHERE DATE(workstart) = CURDATE() and id = #{value};
+
+	<select id="selectWorkStart"
+		resultType="com.kdt.dto.AttendenceDTO">
+		SELECT * FROM attendence WHERE DATE(workstart) = CURDATE()
+		and id = #{value};
 	</select>
-	
+
 	<update id="updateWorkEnd">
-		update attendence set workend = #{workend} where DATE(workstart) = CURDATE() and id = #{id}
+		update attendence set workend = #{workend} where
+		DATE(workstart) = CURDATE() and id = #{id}
 	</update>
-	
+
 	<select id="attendenceCount" resultType="Integer">
-		select count(*) from attendenceView where id=#{id} AND  status=1
+		select count(*) from
+		attendenceView where id=#{id} AND status=1
 	</select>
+
+	<select id="myAttendence" resultType="com.kdt.dto.AttendenceDTO">
+		SELECT *
+		FROM attendenceView
+		WHERE id=#{id}
+		AND YEAR(workstart) = YEAR(#{today})
+		AND MONTH(workstart) = MONTH(#{today})
+		AND DAY(workstart) = DAY(#{today})
+	</select>
+
 	<select id="selectByID" resultType="com.kdt.dto.AttendenceDTO">
-		SELECT * FROM attendence WHERE id = #{id}
+		SELECT * FROM attendence
+		WHERE id = #{id}
 	</select>
 
 	<select id="detailsByID" resultType="com.kdt.dto.AttendenceDTO">
-		SELECT * FROM attendenceView WHERE id = #{id}
+		SELECT * FROM attendenceView
+		WHERE id = #{id}
 	</select>
 </mapper>

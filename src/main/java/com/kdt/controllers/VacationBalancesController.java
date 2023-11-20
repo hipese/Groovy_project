@@ -33,15 +33,24 @@ public class VacationBalancesController {
 		return ResponseEntity.ok(dto);
 	}
 	
-	@GetMapping("/myVacation/{memberID}")
-	public ResponseEntity<VacationBalancesDTO> myVacation(@PathVariable String memberID){
-		System.out.println("테스트용");
+	@GetMapping("/myVacation")
+	public ResponseEntity<VacationBalancesDTO> myVacation(){
+		String memberID = (String) session.getAttribute("loginID");
 		VacationBalancesDTO dto= vservice.myVacation(memberID);
 		 return ResponseEntity.ok(dto);
 	}
 	
-	@GetMapping("/myVacation/{memberID}/{total_vactionDate}")
-	public ResponseEntity<VacationBalancesDTO> myVacationUpdate(@PathVariable String memberID,@PathVariable int total_vactionDate ){
+	@GetMapping("/selectVacation/{selectID}")
+	public ResponseEntity<VacationBalancesDTO> selectIDVacation(@PathVariable String selectID){
+		System.out.println("요청 오냐?:"+selectID);
+		VacationBalancesDTO dto= vservice.selectIDVacation(selectID);
+		 return ResponseEntity.ok(dto);
+	}
+	
+	
+	@GetMapping("/myVacation/{total_vactionDate}")
+	public ResponseEntity<VacationBalancesDTO> myVacationUpdate(@PathVariable int total_vactionDate ){
+		String memberID = (String) session.getAttribute("loginID");
 		VacationBalancesDTO dto= vservice.myVacationUpdate(memberID, total_vactionDate);
 		return ResponseEntity.ok(dto);
 	}
