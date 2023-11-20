@@ -68,4 +68,14 @@ public class WebSocketController {
 		template.convertAndSend("/topic/message/" + String.valueOf((int)messageObject.get("room_seq")), dto);
 		return ResponseEntity.ok().build();
 	}
+	
+	@MessageMapping("/board")
+	public void sendBoard(String message) {
+	    Map<String, Object> messageObject = new HashMap<>();
+	    Integer parent_seq = -1;
+	    messageObject.put("message", message);
+	    messageObject.put("parent_seq", parent_seq);
+	    template.convertAndSend("/topic/board", messageObject);
+	}
+
 }
