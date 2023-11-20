@@ -16,6 +16,6 @@ public class PositionRankDAO {
 	private SqlSession db;
 	
 	public List<PositionRankDTO> selectAll(){
-		return db.selectList("");
+		return db.selectList("PositionRank.selectAll");
 	}
 }
