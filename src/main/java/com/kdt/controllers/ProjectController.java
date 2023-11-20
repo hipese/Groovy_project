@@ -47,7 +47,7 @@ public class ProjectController {
 		pmdto.setGroup_name(mdto.getGroup_name());
 		int result = PService.insertMember(pmdto);
 		
-		return ResponseEntity.ok(result);
+		return ResponseEntity.ok(pseq);
 	}
 	
 	@PostMapping("/addSchedule/{seq}")
@@ -64,8 +64,8 @@ public class ProjectController {
 	public ResponseEntity<Integer> insertMember(@PathVariable int seq, @RequestBody ProjectMemberDTO dto){
 		dto.setPseq(seq);
 		System.out.println("s - "+dto.getPseq()+" "+dto.getId()+" "+dto.getName());
-		int result = PService.insertMember(dto);
-		return ResponseEntity.ok(result);
+		PService.insertMember(dto);
+		return ResponseEntity.ok(seq);
 	}
 	
 	@GetMapping
