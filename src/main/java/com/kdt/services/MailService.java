@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 import com.kdt.dao.MailDAO;
 import com.kdt.dto.MailDTO;
 import com.kdt.dto.MailReceiptDTO;
+import com.kdt.dto.MailWithMemberDTO;
+import com.kdt.dto.RWasteWithMemFileDTO;
+import com.kdt.dto.Re_MemberDTO;
+import com.kdt.dto.WasteMailDTO;
+import com.kdt.dto.WasteRMailDTO;
+import com.kdt.dto.WasteWithMemFileDTO;
 
 @Service
 public class MailService {
@@ -25,39 +31,45 @@ public class MailService {
 		this.dao.insertReceipt(dto);
 		return dto;
 	}
+	
+	public WasteMailDTO insertWaste(WasteMailDTO dto) {
+		this.dao.insertWaste(dto);
+		return dto;
+	}
+	
+	public WasteRMailDTO insertRWaste(WasteRMailDTO dto) {
+		this.dao.insertRWaste(dto);
+		return dto;
+	}
 
 	// 특정 조회
-	public MailDTO selectBySeq(Integer seq) {
+	public MailWithMemberDTO selectBySeq(Integer seq) {
 		return this.dao.selectBySeq(seq);
+	}
+	
+	public Re_MemberDTO selectMember(Integer seq) {
+		return this.dao.selectMember(seq);
 	}
 
 	// 조회
-	public List<MailDTO> selectDelInbox() {
-		return this.dao.selectDelInbox();
+	public List<WasteWithMemFileDTO> selectDelInbox(String member_id) {
+		return this.dao.selectDelInbox(member_id);
 	}
 
-	public List<MailReceiptDTO> selectDelSent() {
-		return this.dao.selectDelSent();
+	public List<RWasteWithMemFileDTO> selectDelSent(String member_id) {
+		return this.dao.selectDelSent(member_id);
 	}
 
-	public List<MailReceiptDTO> selectAll(String receipient) {
+	public List<MailWithMemberDTO> selectAll(String receipient) {
 		return this.dao.selectAll(receipient);
 	}
 
-	public List<MailDTO> selectAllSend(String sender) {
+	public List<MailWithMemberDTO> selectAllSend(String sender) {
 		return this.dao.selectAllSend(sender);
 	}
 
-	public List<MailDTO> selectAllTemp() {
-		return this.dao.selectAllTemp();
-	}
-
-	public List<MailDTO> selectAllSpam() {
-		return this.dao.selectAllSpam();
-	}
-
-	public List<MailDTO> selectAllToMe() {
-		return this.dao.selectAllToMe();
+	public List<MailWithMemberDTO> selectAllToMe(String sender) {
+		return this.dao.selectAllToMe(sender);
 	}
 
 	// 휴지통으로
