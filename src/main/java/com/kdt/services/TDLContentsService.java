@@ -28,4 +28,7 @@ public class TDLContentsService {
 	public int swcontents(TDLContentsDTO dto) {
 		return this.tdlcdao.swcontents(dto);
 	}
+	public int update(TDLContentsDTO dto) {
+		return this.tdlcdao.update(dto);
+	}
 }
