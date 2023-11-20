@@ -1,35 +1,33 @@
 package com.kdt.dto;
 
 public class Mail_FileDTO {
-	private int seq;
-	private int parent_seq;
+	private int mfseq;
+	private int fparent_seq;
 	private String ori_name;
 	private String sys_name;
-	private String file_size;
 	
-	public Mail_FileDTO(int seq, int parent_seq, String ori_name, String sys_name, String file_size) {
+	public Mail_FileDTO(int mfseq, int fparent_seq, String ori_name, String sys_name) {
 		super();
-		this.seq = seq;
-		this.parent_seq = parent_seq;
+		this.mfseq = mfseq;
+		this.fparent_seq = fparent_seq;
 		this.ori_name = ori_name;
 		this.sys_name = sys_name;
-		this.file_size = file_size;
 	}
 
-	public int getSeq() {
-		return seq;
+	public int getMfseq() {
+		return mfseq;
 	}
 
-	public void setSeq(int seq) {
-		this.seq = seq;
+	public void setMfseq(int mfseq) {
+		this.mfseq = mfseq;
 	}
 
-	public int getParent_seq() {
-		return parent_seq;
+	public int getFparent_seq() {
+		return fparent_seq;
 	}
 
-	public void setParent_seq(int parent_seq) {
-		this.parent_seq = parent_seq;
+	public void setFparent_seq(int fparent_seq) {
+		this.fparent_seq = fparent_seq;
 	}
 
 	public String getOri_name() {
@@ -46,14 +44,6 @@ public class Mail_FileDTO {
 
 	public void setSys_name(String sys_name) {
 		this.sys_name = sys_name;
-	}
-
-	public String getFile_size() {
-		return file_size;
-	}
-
-	public void setFile_size(String file_size) {
-		this.file_size = file_size;
 	}
 
 	public Mail_FileDTO() {}

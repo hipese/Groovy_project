@@ -7,65 +7,140 @@
 <mapper namespace="Mails">
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="seq">
-		INSERT INTO sender_mail VALUES(default, #{sender}, #{receipient}, #{title} ,
+		INSERT
+		INTO sender_mail VALUES(default, #{sender}, #{receipient}, #{title} ,
 		#{contents}, #{write_date}, default, default);
 	</insert>
-	
+
 	<insert id="insertReceipt">
-		INSERT INTO receipient_mail VALUES(default, #{parent_seq}, #{sender}, #{receipient}, #{title} ,
-		#{contents}, #{write_date}, default, default, default);
+		INSERT INTO receipient_mail VALUES(default,
+		#{parent_seq}, #{sender}, #{receipient}, #{title} ,
+		#{contents},
+		#{write_date}, default, default, default);
 	</insert>
 
-	<select id="selectBySeq" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM sender_mail WHERE SEQ=#{seq};
-	</select>
-	
-	<select id="selectDelInbox" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM sender_mail WHERE is_delete=true order by seq desc; 
-	</select>
-	
-	<select id="selectDelSent" resultType="com.kdt.dto.MailReceiptDTO">
-		SELECT * FROM receipient_mail WHERE is_delete=true order by seq desc;
+	<insert id="insertWaste">
+		INSERT INTO waste_mail VALUES(default, #{parent_seq},
+		#{member_id});
+	</insert>
+
+	<insert id="insertRWaste">
+		INSERT INTO waste_receipient_mail VALUES(default,
+		#{parent_seq}, #{member_id});
+	</insert>
+
+	<select id="selectBySeq"
+		resultType="com.kdt.dto.MailWithMemberDTO">
+		SELECT r.*, m.name, m.group_name, m.position, m.email, f.*
+		FROM
+		receipient_mail r JOIN member m ON r.receipient = m.id LEFT JOIN
+		mail_file
+		f ON r.seq = f.fparent_seq WHERE seq=#{seq} group by r.seq;
 	</select>
 
-	<select id="selectAll" resultType="com.kdt.dto.MailReceiptDTO">
-	    SELECT * FROM receipient_mail WHERE receipient=#{receipient} And is_delete=false order by seq desc;
+	<select id="selectMember" resultType="com.kdt.dto.Re_MemberDTO">
+		SELECT m.name,
+		m.group_name, m.position, m.email FROM
+		receipient_mail r JOIN member m
+		ON r.sender = m.id WHERE seq=#{seq} group by r.seq;
 	</select>
 
-	<select id="selectAllSend" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM sender_mail WHERE sender=#{sender} And is_delete=false order by seq desc;
+	<select id="selectDelInbox"
+		resultType="com.kdt.dto.WasteWithMemFileDTO">
+		SELECT r.sender, r.receipient, r.title, r.write_date,
+		r.is_read, w.*,
+		m.name, m.group_name, m.position, m.email, f.*
+		FROM
+		waste_mail w
+		JOIN receipient_mail r ON r.seq = w.parent_seq
+		JOIN member
+		m ON r.receipient = m.id
+		LEFT JOIN mail_file f ON w.parent_seq =
+		f.fparent_seq
+		WHERE r.sender = #{member_id}
+		GROUP BY w.parent_seq
+		ORDER
+		BY ws_seq DESC;
 	</select>
 
-	<select id="selectAllTemp" resultType="com.kdt.dto.MailDTO">
-	
+	<select id="selectDelSent"
+		resultType="com.kdt.dto.RWasteWithMemFileDTO">
+		SELECT r.sender, r.receipient, r.title, r.write_date,
+		r.is_read, w.*,
+		m.name, m.group_name, m.position, m.email, f.*
+		FROM
+		waste_receipient_mail w
+		JOIN receipient_mail r ON r.seq = w.parent_seq
+		JOIN member m ON r.receipient = m.id
+		LEFT JOIN mail_file f ON
+		w.parent_seq = f.fparent_seq
+		WHERE r.receipient = #{member_id}
+		GROUP BY
+		w.parent_seq
+		ORDER BY wr_seq DESC;
 	</select>
 
-	<select id="selectAllSpam" resultType="com.kdt.dto.MailDTO">
-	
+	<select id="selectAll"
+		resultType="com.kdt.dto.MailWithMemberDTO">
+		SELECT r.*, m.name, m.group_name, m.position, m.email, f.*
+		FROM
+		receipient_mail r JOIN member m ON r.sender = m.id LEFT JOIN
+		mail_file
+		f ON r.parent_seq = f.fparent_seq WHERE r.receipient =
+		#{receipient} AND
+		r.is_delete = false AND r.sender!= r.receipient group
+		by r.parent_seq
+		ORDER BY r.seq DESC;
 	</select>
 
-	<select id="selectAllToMe" resultType="com.kdt.dto.MailDTO">
-		SELECT * FROM sender_mail WHERE sender=receipient And is_delete=false order by seq desc;
+	<select id="selectAllSend"
+		resultType="com.kdt.dto.MailWithMemberDTO">
+		SELECT r.seq, r.parent_seq, r.sender, r.receipient,
+		r.title, r.contents, r.write_date, r.is_read, s.is_delete, s.is_mark,
+		m.name, m.group_name, m.position, m.email, f.*
+		FROM receipient_mail r
+		JOIN member m ON r.receipient = m.id
+		LEFT JOIN sender_mail s ON r.seq = s.seq
+		LEFT JOIN mail_file f ON r.seq = f.fparent_seq
+		WHERE r.sender = #{sender} AND s.is_delete = false AND r.sender !=
+		r.receipient
+		GROUP BY r.seq
+		ORDER BY r.seq DESC;
+	</select>
+
+	<select id="selectAllToMe"
+		resultType="com.kdt.dto.MailWithMemberDTO">
+		SELECT r.*, m.name, m.group_name, m.position, m.email, f.*
+		FROM
+		receipient_mail r JOIN member m ON r.receipient = m.id LEFT JOIN
+		mail_file
+		f ON r.parent_seq = f.fparent_seq WHERE r.sender = #{sender}
+		AND sender=receipient AND
+		r.is_delete = false group by r.parent_seq
+		ORDER BY r.seq DESC;
 	</select>
 
 	<update id="updateInbox">
-		UPDATE receipient_mail SET is_delete=true WHERE seq=#{seq};
+		UPDATE receipient_mail SET is_delete=true WHERE
+		seq=#{seq};
 	</update>
-	
+
 	<update id="updateSent">
-		UPDATE sender_mail SET is_delete=true WHERE seq=#{seq};
+		UPDATE sender_mail SET is_delete=true WHERE
+		seq=#{seq};
 	</update>
-	
+
 	<update id="isRead">
-		UPDATE receipient_mail SET is_read=true WHERE seq=#{seq};
+		UPDATE receipient_mail SET is_read=true WHERE
+		seq=#{seq};
 	</update>
-	
+
 	<delete id="deleteInbox">
-	    DELETE FROM sender_mail WHERE seq=#{seq};
+		DELETE FROM waste_mail WHERE seq=#{seq};
 	</delete>
-	
+
 	<delete id="deleteSent">
-	    DELETE FROM receipient_mail WHERE seq=#{seq};
+		DELETE FROM waste_receipient_mail WHERE seq=#{seq};
 	</delete>
 
 </mapper>
