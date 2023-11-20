@@ -1,6 +1,7 @@
 package com.kdt.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,9 @@ public class PositionRankDAO {
 		return db.selectList("PositionRank.selectAll");
 	}
 	
-	public boolean isRanking(String position){
-		return db.selectOne("PositionRank.isRanking",position);
+	public PositionRankDTO isRanking(String position) {
+		PositionRankDTO dto=db.selectOne("PositionRank.ByRank", position);
+	    return dto;
 	}
 
 }
