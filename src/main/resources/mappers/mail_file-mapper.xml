@@ -5,11 +5,11 @@
 <mapper namespace="Mail_file">
 
 	<insert id="insert">
-		insert into mail_file values(null,#{parent_seq},#{ori_name},#{sys_name},0)
+		insert into mail_file values(null,#{fparent_seq},#{ori_name},#{sys_name})
 	</insert>
 	
 	<select id="selectBySeq" resultType="com.kdt.dto.Board_FileDTO">
-		select * from mail_file where parent_seq = #{parent_seq}
+		select * from mail_file where fparent_seq = #{fparent_seq}
 	</select>
 
 </mapper>

@@ -19,7 +19,7 @@ import com.kdt.dto.Mail_FileDTO;
 import com.kdt.services.Mail_FileService;
 
 @RestController
-@RequestMapping("/api/MailFile")
+@RequestMapping("/api/mailFile")
 public class Mail_FileController {
     @Autowired
     Mail_FileService fservice;

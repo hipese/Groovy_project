@@ -8,6 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import com.kdt.dto.MailDTO;
 import com.kdt.dto.MailReceiptDTO;
+import com.kdt.dto.MailWithMemberDTO;
+import com.kdt.dto.RWasteWithMemFileDTO;
+import com.kdt.dto.Re_MemberDTO;
+import com.kdt.dto.WasteMailDTO;
+import com.kdt.dto.WasteRMailDTO;
+import com.kdt.dto.WasteWithMemFileDTO;
 
 @Repository
 public class MailDAO {
@@ -23,36 +29,40 @@ public class MailDAO {
 		return db.insert("Mails.insertReceipt", dto);
 	}
 	
-	public MailDTO selectBySeq(int seq){ 
+	public int insertWaste(WasteMailDTO dto) {
+		return db.insert("Mails.insertWaste", dto);
+	}
+	
+	public int insertRWaste(WasteRMailDTO dto) {
+		return db.insert("Mails.insertRWaste", dto);
+	}
+	
+	public MailWithMemberDTO selectBySeq(int seq){ 
 		return db.selectOne("Mails.selectBySeq",seq);
 	}	
 	
-	public List<MailDTO>selectDelInbox(){ 
-		return db.selectList("Mails.selectDelInbox");
+	public Re_MemberDTO selectMember(int seq){ 
+		return db.selectOne("Mails.selectMember",seq);
+	}	
+	
+	public List<WasteWithMemFileDTO>selectDelInbox(String member_id){ 
+		return db.selectList("Mails.selectDelInbox", member_id);
 	}
 	
-	public List<MailReceiptDTO>selectDelSent(){ 
-		return db.selectList("Mails.selectDelSent");
+	public List<RWasteWithMemFileDTO>selectDelSent(String member_id){ 
+		return db.selectList("Mails.selectDelSent",member_id);
 	}
 	
-	public List<MailReceiptDTO>selectAll(String receipient){ 
+	public List<MailWithMemberDTO>selectAll(String receipient){ 
 		return db.selectList("Mails.selectAll", receipient);
 	}
 
-	public List<MailDTO>selectAllSend(String sender){ 
+	public List<MailWithMemberDTO>selectAllSend(String sender){ 
 		return db.selectList("Mails.selectAllSend", sender);
 	}
-	
-	public List<MailDTO>selectAllTemp(){ 
-		return db.selectList("Mails.selectAllTemp");
-	}
-	
-	public List<MailDTO>selectAllSpam(){ 
-		return db.selectList("Mails.selectAllSpam");
-	}
 
-	public List<MailDTO>selectAllToMe(){ 
-		return db.selectList("Mails.selectAllToMe");
+	public List<MailWithMemberDTO>selectAllToMe(String sender){ 
+		return db.selectList("Mails.selectAllToMe", sender);
 	}
 	
 	public int updateInbox(Integer seq) {
