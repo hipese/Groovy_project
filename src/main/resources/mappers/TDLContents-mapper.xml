@@ -18,4 +18,7 @@
 	<update id="switch" parameterType="map">
 		update tdlcontents set `order`=#{order} where seq=#{seq}
 	</update>
+	<update id="update">
+		update tdlcontents set contents=#{contents} where seq=#{seq}
+	</update>
 </mapper>

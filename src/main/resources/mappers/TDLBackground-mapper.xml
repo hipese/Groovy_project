@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TDLBackground">
+	<insert id="insert">
+		insert into tdlbackground values(null,#{id},#{bgselect},#{parent_seq})
+	</insert>
+	<select id="selectAll" resultType="com.kdt.dto.TDLBackgroundDTO">
+		select * from tdlbackground where id=#{id}
+	</select>
+	<update id="update">
+		update tdlbackground set bgselect=#{bgselect} where parent_seq=#{parent_seq}
+	</update>
+</mapper>
