@@ -26,7 +26,7 @@ public class PositionRankService {
 	public boolean isRanking(String position ,String myposition){
 		PositionRankDTO mypositionRank=dao.isRanking(myposition);
 		PositionRankDTO selectPositionRank=dao.isRanking(position);
-		return mypositionRank.getRanks()>=selectPositionRank.getRanks()? true:false;
+		return mypositionRank.getRanks()>selectPositionRank.getRanks()? true:false;
 	}
 
 }

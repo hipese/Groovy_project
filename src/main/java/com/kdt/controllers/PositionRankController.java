@@ -27,10 +27,7 @@ public class PositionRankController {
 	
 	@GetMapping("/isRanking/{position}/{myposition}")
 	public ResponseEntity<Boolean> isRanking(@PathVariable String position, @PathVariable String myposition  ){
-		
-		System.out.println(position+" : "+myposition);
 		boolean isRank=pservice.isRanking(position,myposition);
-		System.out.println(isRank);
 		return ResponseEntity.ok(isRank);
 	}
 }
