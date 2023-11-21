@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kdt.dto.TDLContentsDTO;
@@ -27,7 +28,6 @@ public class TDLContentsController {
 	
 	@PostMapping
 	public ResponseEntity<Integer> post(@RequestBody TDLContentsDTO dto) throws Exception {
-		System.out.println(dto.getContents() + " : " + dto.getOrder() + " : " + dto.getParent_seq() );
 		tdlcservice.post(dto);
 		return ResponseEntity.ok().build();
 	}
@@ -53,6 +53,12 @@ public class TDLContentsController {
 		for (TDLContentsDTO dto : dtos) {
 	        tdlcservice.swcontents(dto);
 	    }
+		return ResponseEntity.ok().build();
+	}
+	@PutMapping("/{seq}")
+	public ResponseEntity<Integer> update(@PathVariable int seq, @RequestBody TDLContentsDTO dto) throws Exception {
+		dto.setSeq(seq);
+		tdlcservice.update(dto);
 		return ResponseEntity.ok().build();
 	}
 	@ExceptionHandler(Exception.class)

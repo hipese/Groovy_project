@@ -34,14 +34,12 @@ public class TDLTitleController {
 	
 	@PostMapping
 	public ResponseEntity<Integer> post(@RequestBody TDLTitleDTO dto) throws Exception {
-		System.out.println(dto.getId() + " : " + dto.getTitle() + " : " + dto.getParent_seq());
 		tdltservice.post(dto);
 		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping("/{parent_seq}")
 	public ResponseEntity<List<TDLTitleDTO>> selectAll(int parent_seq) throws Exception {
-		System.out.println(parent_seq);
 		List<TDLTitleDTO> list = new ArrayList<>();
 		list = tdltservice.selectAll(parent_seq);
 		return ResponseEntity.ok(list);

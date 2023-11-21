@@ -33,4 +33,7 @@ public class TDLContentsDAO {
 	    params.put("seq", dto.getSeq());
 	    return ss.update("TDLContents.switch", params);
 	}
+	public int update(TDLContentsDTO dto) {
+		return ss.update("TDLContents.update",dto);
+	}
 }
