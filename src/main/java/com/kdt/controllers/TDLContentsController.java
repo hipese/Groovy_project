@@ -28,7 +28,6 @@ public class TDLContentsController {
 	
 	@PostMapping
 	public ResponseEntity<Integer> post(@RequestBody TDLContentsDTO dto) throws Exception {
-		System.out.println(dto.getContents() + " : " + dto.getOrder() + " : " + dto.getParent_seq() );
 		tdlcservice.post(dto);
 		return ResponseEntity.ok().build();
 	}

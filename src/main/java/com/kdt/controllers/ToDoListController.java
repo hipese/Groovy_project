@@ -34,10 +34,10 @@ public class ToDoListController {
 	private HttpSession session;
 	
 	@PostMapping
-	public ResponseEntity<Integer> post(@RequestBody ToDoListDTO dto) throws Exception {
+	public ResponseEntity<ToDoListDTO> post(@RequestBody ToDoListDTO dto) throws Exception {
 		dto.setId((String)session.getAttribute("loginID"));
 		tdlservice.post(dto);
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(dto);
 	}
 	
 	@GetMapping
