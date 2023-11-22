@@ -57,7 +57,7 @@
 		m ON r.receipient = m.id
 		LEFT JOIN mail_file f ON w.parent_seq =
 		f.fparent_seq
-		WHERE r.sender = #{member_id}
+		WHERE r.receipient = #{member_id}
 		GROUP BY w.parent_seq
 		ORDER
 		BY ws_seq DESC;
@@ -74,7 +74,7 @@
 		JOIN member m ON r.receipient = m.id
 		LEFT JOIN mail_file f ON
 		w.parent_seq = f.fparent_seq
-		WHERE r.receipient = #{member_id}
+		WHERE r.sender = #{member_id}
 		AND r.receipient!=r.sender
 		GROUP BY
 		w.parent_seq
@@ -137,11 +137,11 @@
 	</update>
 
 	<delete id="deleteInbox">
-		DELETE FROM waste_mail WHERE seq=#{seq};
+		DELETE FROM waste_receipient_mail WHERE wr_seq=#{seq};
 	</delete>
 
 	<delete id="deleteSent">
-		DELETE FROM waste_receipient_mail WHERE seq=#{seq};
+		DELETE FROM waste_mail WHERE ws_seq=#{seq};
 	</delete>
 
 </mapper>
