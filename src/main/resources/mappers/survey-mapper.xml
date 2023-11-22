@@ -58,5 +58,8 @@
 		delete from survey where surseq = #{value};
 	</delete>
 	
+	<select id="isAlreadyRes" resultType="boolean">
+		select count(*) as count from SurveyResView where (multi_res_writer = #{id} or short_res_writer = #{id}) and surseq = #{seq};
+	</select>
 
 </mapper>
