@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kdt.commons.Encryption;
 import com.kdt.dto.DepartmentDTO;
+import com.kdt.dto.ExternalContactDTO;
 import com.kdt.dto.MemberDTO;
 import com.kdt.dto.PositionDTO;
 import com.kdt.services.AdminService;
@@ -28,7 +29,8 @@ public class AdminController {
 
 	@Autowired
 	private AdminService service;
-
+	
+	
 	// 사용자 추가
 	@PostMapping()
 	public ResponseEntity<String> insert(@RequestParam String name, @RequestParam String id, @RequestParam String password, @RequestParam String group_name, @RequestParam String position, @RequestParam String contact, @RequestParam String email) throws Exception {
@@ -64,7 +66,22 @@ public class AdminController {
 		dto = service.insertPosition(dto);
 		return ResponseEntity.ok("");
 	}
-	
+
+	// 외부 주소록 추가
+	@PostMapping("/excontact")
+	public ResponseEntity<String> insertContact(@RequestParam String company, @RequestParam String group_name, @RequestParam String name, @RequestParam String position, @RequestParam String contact, @RequestParam String email){
+		ExternalContactDTO dto = new ExternalContactDTO();
+		dto.setCompany(company);
+		dto.setGroup_name(group_name);
+		dto.setName(name);
+		dto.setPosition(position);
+		dto.setContact(contact);
+		dto.setEmail(email);
+
+		dto = service.insertContact(dto);
+		return ResponseEntity.ok("");
+	}
+
 	// 사용자 수 불러오기
 	@GetMapping("/countUser")
 	public ResponseEntity<Integer> countMember(){
@@ -128,6 +145,13 @@ public class AdminController {
 		return ResponseEntity.ok("");
 	}
 
+	// 외부 주소록 삭제
+	@DeleteMapping("/delete/contact/{seq}")
+	public ResponseEntity<String> deletePosition(@PathVariable int seq) {
+		service.deleteContact(seq);
+		return ResponseEntity.ok("");
+	}
+
 	// 사용자 정보 수정
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Void> update(@PathVariable String id, @RequestParam String name, @RequestParam String group_name, @RequestParam String position){
@@ -141,15 +165,15 @@ public class AdminController {
 
 		return ResponseEntity.ok().build();
 	}
-	
+
 	// 비밀번호 수정
 	@PutMapping("/updatePw/{id}")
 	public ResponseEntity<Void> updatePassword(@PathVariable String id, @RequestParam String password) throws Exception{
-		
+
 		String Encry = Encryption.getSHA512(password);
-		
+
 		service.updatePassword(Encry, id);
-		
+
 		return ResponseEntity.ok().build();
 	}
 

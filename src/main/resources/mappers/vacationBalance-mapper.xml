@@ -16,9 +16,27 @@
 		#{memberID};
 	</select>
 
+	<insert id="Initial_Vacation">
+		INSERT INTO VacationBalances (MemberID, Year,
+		TotalAnnualEntitlement, UsedDays)
+		SELECT m.id, YEAR(CURDATE()),
+		CASE
+			WHEN m.position = '인턴' THEN 15
+			WHEN m.position = '사원' THEN 20
+			WHEN m.position = '대리' THEN 25
+			WHEN m.position = '팀장' THEN 30
+			WHEN m.position = '부장' THEN 35
+			WHEN m.position = '대표' THEN 40
+			ELSE 20
+			END,0
+		FROM member m
+		WHERE m.id = #{id}; 
+	</insert>
+
 	<update id="selectmyVacationUpdateByMemberID">
 		update VacationBalances set UsedDays =
-		#{amount} where MemberID=#{memberID}
+		#{amount} where
+		MemberID=#{memberID}
 	</update>
 
 	<update id="addVacation">
