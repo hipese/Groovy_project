@@ -18,6 +18,10 @@
 		INSERT INTO position VALUES(#{position});
 	</insert>
 	
+	<insert id="insertContact">
+		INSERT INTO external_contact VALUES(null, #{company}, #{name}, #{group_name}, #{position}, #{contact}, #{email});
+	</insert>
+	
 	<select id="countMember" resultType="java.lang.Integer">
 	    SELECT COUNT(*) FROM member WHERE (group_name IS NULL OR NOT group_name = '휴직');
 	</select>
@@ -27,7 +31,7 @@
 	</select>
 	
 	<select id="selectAllUser" resultType="com.kdt.dto.MemberDTO">
-		SELECT * FROM member;
+		SELECT * FROM member WHERE group_name!='휴직';
 	</select>
 
 	<select id="selectAllInactive" resultType="com.kdt.dto.MemberDTO">
@@ -54,6 +58,10 @@
 		DELETE FROM position WHERE position=#{position};
 	</delete>
 
+    <delete id="deleteContact">
+		DELETE FROM external_contact WHERE seq=#{seq};
+	</delete>
+	
 	<update id="update">
 		UPDATE member SET name=#{name},
 		group_name=#{group_name}, position=#{position} WHERE id=#{id};

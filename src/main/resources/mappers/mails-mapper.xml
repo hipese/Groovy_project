@@ -75,6 +75,7 @@
 		LEFT JOIN mail_file f ON
 		w.parent_seq = f.fparent_seq
 		WHERE r.receipient = #{member_id}
+		AND r.receipient!=r.sender
 		GROUP BY
 		w.parent_seq
 		ORDER BY wr_seq DESC;
