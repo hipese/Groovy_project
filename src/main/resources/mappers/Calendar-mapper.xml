@@ -15,4 +15,7 @@
 	<select id="selectOne" resultType="com.kdt.dto.CalendarDTO">
 		select * from calendar where id = #{value};
 	</select>
+	<update id="update">
+		update calendar set starttime=#{starttime}, endtime=#{endtime} where seq=#{seq}
+	</update>
 </mapper>
