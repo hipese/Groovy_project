@@ -15,6 +15,11 @@ public class VacationBalancesDAO {
 	@Autowired
 	private SqlSession db;
 	
+	
+	public int Initial_Vacation(String id) {
+		return db.insert("VacationBalance.Initial_Vacation",id);
+	}
+	
 	public List<VacationBalancesDTO> allVacationList(){
 		return db.selectList("VacationBalance.selectAll");
 	}
