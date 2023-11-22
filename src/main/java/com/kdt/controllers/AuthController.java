@@ -1,5 +1,8 @@
 package com.kdt.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +53,14 @@ public class AuthController {
 	public ResponseEntity<String> isLogined() {
 		String id = (String) session.getAttribute("loginID");
 		return ResponseEntity.ok(id);
+	}
+	
+	@GetMapping("check-session")
+	public ResponseEntity<Map<String, Boolean>> checkSession() {
+	    Map<String, Boolean> response = new HashMap<>();
+	    String id = (String) session.getAttribute("loginID");
+	    response.put("loggedIn", id != null && !id.isEmpty());
+	    return ResponseEntity.ok(response);
 	}
 
 	@ExceptionHandler(Exception.class)
