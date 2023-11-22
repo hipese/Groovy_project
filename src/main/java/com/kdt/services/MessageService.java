@@ -1,14 +1,13 @@
 package com.kdt.services;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kdt.dao.MessageDAO;
 import com.kdt.dto.ChattingRoomDTO;
+import com.kdt.dto.MemberDTO;
 import com.kdt.dto.MessageDTO;
 import com.kdt.dto.ParticipantDTO;
 import com.kdt.dto.RoomInfoDTO;
@@ -73,5 +72,9 @@ public class MessageService {
 		dao.initRoom(dto);
 		dao.leaveRoom(new ParticipantDTO(Integer.parseInt(room_seq), id, false));
 		return dto;
+	}
+	
+	public List<MemberDTO> getMemberInfo() {
+		return dao.getMemberInfo();
 	}
 }

@@ -71,5 +71,9 @@ ORDER BY write_time DESC;
 	<select id="getNameById" resultType="string">
 		select name from member where id = #{id};
 	</select>
+	
+	<select id="getMemberInfo" resultType="com.kdt.dto.MemberDTO">
+		select id, name, position, profile_image from member;
+	</select>
 
 </mapper>
