@@ -1,13 +1,13 @@
 package com.kdt.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kdt.dto.ChattingRoomDTO;
+import com.kdt.dto.MemberDTO;
 import com.kdt.dto.MessageDTO;
 import com.kdt.dto.ParticipantDTO;
 import com.kdt.dto.RoomInfoDTO;
@@ -79,5 +79,9 @@ public class MessageDAO {
 	
 	public String getNameById(String id) {
 		return db.selectOne("Message.getNameById", id);
+	}
+	
+	public List<MemberDTO> getMemberInfo() {
+		return db.selectList("Message.getMemberInfo");
 	}
 }
