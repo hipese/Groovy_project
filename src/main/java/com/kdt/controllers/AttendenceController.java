@@ -122,7 +122,6 @@ public class AttendenceController {
 	@GetMapping("/detail")
 	public ResponseEntity<List<AttendenceDTO>> detailsByID() {
 		String id = (String)session.getAttribute("loginID");
-		System.out.println("출석정보 구해온다."+id);
 		List<AttendenceDTO> list = AtdService.detailsByID(id);
 		return ResponseEntity.ok(list);
 	}
