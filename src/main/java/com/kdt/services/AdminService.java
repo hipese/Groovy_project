@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kdt.dao.AdminDAO;
 import com.kdt.dto.DepartmentDTO;
+import com.kdt.dto.ExternalContactDTO;
 import com.kdt.dto.MemberDTO;
 import com.kdt.dto.PositionDTO;
 
@@ -28,6 +29,11 @@ public class AdminService {
 
 	public PositionDTO insertPosition(PositionDTO dto) {
 		this.dao.insertPosition(dto);
+		return dto;
+	}
+	
+	public ExternalContactDTO insertContact(ExternalContactDTO dto) {
+		this.dao.insertContact(dto);
 		return dto;
 	}
 
@@ -65,6 +71,10 @@ public class AdminService {
 
 	public int deletePosition(String position) {
 		return this.dao.deletePosition(position);
+	}
+	
+	public int deleteContact(int seq) {
+		return this.dao.deleteContact(seq);
 	}
 
 	public int update(MemberDTO dto) {
