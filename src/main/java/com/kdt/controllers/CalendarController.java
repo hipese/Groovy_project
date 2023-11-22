@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +49,13 @@ public class CalendarController {
 		calservice.delete(seq);
 		return ResponseEntity.ok().build();
 	}
+	@PutMapping("/{seq}")
+	public ResponseEntity<Integer> update(@RequestBody CalendarDTO dto) throws Exception {
+		calservice.update(dto);
+		return ResponseEntity.ok().build();
+	}
+	
+	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<Void> errorHandler(Exception e){
 		e.printStackTrace();
