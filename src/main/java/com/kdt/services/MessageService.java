@@ -1,5 +1,6 @@
 package com.kdt.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class MessageService {
 	private MessageDAO dao;
 	
 	public void createRoomAndAddParticipants(String room_name, List<String> list) {
+
 		ChattingRoomDTO dto = new ChattingRoomDTO();
 		ParticipantDTO pdto = new ParticipantDTO();
 		dto.setRoom_name(room_name);
@@ -67,8 +69,10 @@ public class MessageService {
 	}
 	
 	public MessageDTO leaveRoom(String id, String room_seq) {
+		Timestamp date=new Timestamp(System.currentTimeMillis());
+		
 		String name = dao.getName(id);
-		MessageDTO dto = new MessageDTO(0,"System",Integer.parseInt(room_seq), name + "님이 채팅방을 나갔습니다.",null,false);
+		MessageDTO dto = new MessageDTO(0,"System",Integer.parseInt(room_seq), name + "님이 채팅방을 나갔습니다.",date,false);
 		dao.initRoom(dto);
 		dao.leaveRoom(new ParticipantDTO(Integer.parseInt(room_seq), id, false));
 		return dto;
