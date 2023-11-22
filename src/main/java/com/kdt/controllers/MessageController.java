@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kdt.dto.MemberDTO;
 import com.kdt.dto.MessageDTO;
 import com.kdt.dto.ParticipantDTO;
 import com.kdt.dto.RoomInfoDTO;
@@ -70,5 +71,10 @@ public class MessageController {
 		MessageDTO dto = service.leaveRoom((String)session.getAttribute("loginID"), room_seq);
 		template.convertAndSend("/topic/message/"+room_seq, dto);
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("getMembersInfo")
+	public ResponseEntity<List<MemberDTO>> getMembersInfo() {
+		return ResponseEntity.ok(service.getMemberInfo());
 	}
 }
