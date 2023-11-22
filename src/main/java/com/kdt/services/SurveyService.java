@@ -2,6 +2,7 @@ package com.kdt.services;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,13 @@ public class SurveyService {
 	
 	public int deleteSurvey(int seq) {
 		return dao.deleteSurvey(seq);
+	}
+	
+	public boolean selectIsRes(int seq, String id) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("seq", seq);
+		return dao.selectRes(param);
 	}
 
 }
