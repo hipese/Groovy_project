@@ -29,7 +29,8 @@ public class AdminController {
 
 	@Autowired
 	private AdminService service;
-
+	
+	
 	// 사용자 추가
 	@PostMapping()
 	public ResponseEntity<String> insert(@RequestParam String name, @RequestParam String id, @RequestParam String password, @RequestParam String group_name, @RequestParam String position, @RequestParam String contact, @RequestParam String email) throws Exception {
