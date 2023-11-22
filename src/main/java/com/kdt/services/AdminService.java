@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kdt.dao.AdminDAO;
+import com.kdt.dao.VacationBalancesDAO;
 import com.kdt.dto.DepartmentDTO;
 import com.kdt.dto.MemberDTO;
 import com.kdt.dto.PositionDTO;
@@ -15,9 +17,13 @@ public class AdminService {
 
 	@Autowired
 	private AdminDAO dao;
+	
+	@Autowired
+	private VacationBalancesDAO vdao;
 
 	public MemberDTO insert(MemberDTO dto) {
 		this.dao.insert(dto);
+		vdao.Initial_Vacation(dto.getId());
 		return dto;
 	}
 
