@@ -223,6 +223,12 @@ public class SurveyConrtoller {
 		int result = SService.deleteSurvey(seq);
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping("/getRes/{seq}/{id}")
+	public ResponseEntity<Boolean> selectRes(@PathVariable int seq, @PathVariable String id){
+		boolean result = SService.selectIsRes(seq, id);
+		return ResponseEntity.ok(result);	
+	}
 
 }
 

@@ -2,6 +2,7 @@ package com.kdt.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,5 +77,9 @@ public class SurveyDAO {
 	
 	public int deleteSurvey(int seq) {
 		return db.delete("Survey.deleteSurvey",seq);
+	}
+	
+	public boolean selectRes(Map<String, Object> param) {
+		return db.selectOne("Survey.isAlreadyRes",param);
 	}
 }
