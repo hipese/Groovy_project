@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kdt.dto.DepartmentDTO;
+import com.kdt.dto.ExternalContactDTO;
 import com.kdt.dto.MemberDTO;
 import com.kdt.dto.PositionDTO;
 
@@ -28,6 +29,10 @@ public class AdminDAO {
 
 	public int insertPosition(PositionDTO dto) {
 		return db.insert("Admins.insertPosition", dto);
+	}
+	
+	public int insertContact(ExternalContactDTO dto) {
+		return db.insert("Admins.insertContact", dto);
 	}
 
 	public int countMember() {
@@ -64,6 +69,10 @@ public class AdminDAO {
 
 	public int deletePosition(String seq) {
 		return db.delete("Admins.deletePosition",seq);
+	}
+	
+	public int deleteContact(int seq) {
+		return db.delete("Admins.deleteContact",seq);
 	}
 
 	public int update(MemberDTO dto) {
