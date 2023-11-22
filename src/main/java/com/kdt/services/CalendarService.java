@@ -30,4 +30,8 @@ public class CalendarService {
 	public List<CalendarDTO> selectOne(String id){
 		return this.caldao.selectOne(id);
 	}
+	
+	public int update(CalendarDTO dto) {
+		return this.caldao.update(dto);
+	}
 }

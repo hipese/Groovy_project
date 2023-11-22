@@ -26,4 +26,8 @@ public class CalendarDAO {
 	public List<CalendarDTO> selectOne(String id){
 		return ss.selectList("Calendar.selectOne",id);
 	}
+	
+	public int update(CalendarDTO dto) {
+		return ss.update("Calendar.update",dto);
+	}
 }
