@@ -38,7 +38,6 @@ public class ProjectController {
 	public ResponseEntity<Integer> newProject(@RequestBody ProjectDTO dto){
 		System.out.println(dto.getPmanager());
 		int pseq = PService.insertProject(dto);
-		System.out.println("pseq : "+pseq);
 		MemberDTO mdto = mService.getprofile(dto.getPmanager());
 		
 		ProjectMemberDTO pmdto = new ProjectMemberDTO();
@@ -52,7 +51,6 @@ public class ProjectController {
 	
 	@PostMapping("/addSchedule/{seq}")
 	public ResponseEntity<Integer> insertSchedule(@PathVariable int seq, @RequestBody ProjectScheduleDTO dto){
-		System.out.println(dto.getPschedule_importance());
 		dto.setPseq(seq);
 		
 		int result = PService.insertSchedule(dto);
@@ -63,7 +61,6 @@ public class ProjectController {
 	@PostMapping("/addMember/{seq}")
 	public ResponseEntity<Integer> insertMember(@PathVariable int seq, @RequestBody ProjectMemberDTO dto){
 		dto.setPseq(seq);
-		System.out.println("s - "+dto.getPseq()+" "+dto.getId()+" "+dto.getName());
 		PService.insertMember(dto);
 		return ResponseEntity.ok(seq);
 	}

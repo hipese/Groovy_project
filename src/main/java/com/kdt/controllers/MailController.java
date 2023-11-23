@@ -67,7 +67,7 @@ public class MailController {
 
 		Rdto = service.insertReceipt(Rdto);
 
-		String upload = "c:/uploads";
+		String upload = "/home/ubuntu/uploads";
 		File uploadPath = new File(upload);
 
 		if (!uploadPath.exists()) {

@@ -38,7 +38,7 @@ public class SignController {
 	@PostMapping
 	public ResponseEntity<Integer> post(Sign_documentDTO dto, MultipartFile[] files) throws Exception {
 
-		String upload = "c:/uploads";
+		String upload = "/home/ubuntu/uploads/";
 		File uploadPath = new File(upload);
 		if (!uploadPath.exists()) {
 			uploadPath.mkdir();

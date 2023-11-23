@@ -36,7 +36,7 @@ public class Vacation_filesController {
     public ResponseEntity<Resource> download(@PathVariable String sys_name) {
         // 파일 경로를 설정합니다. 이 경로는 서버에서 파일을 찾을 경로여야 합니다.
     	System.out.println(sys_name);
-        String filePath = "c:/vdocument/" + sys_name;
+        String filePath = "/home/ubuntu/uploads/" + sys_name;
 
         // 파일을 읽어와서 바이트 배열로 변환합니다.
         byte[] fileContent;
