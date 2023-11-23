@@ -43,7 +43,8 @@ public class ProjectDAO {
 	}
 	
 	public int insertSchedule(ProjectScheduleDTO dto) {
-		return db.insert("Project.insertSchedule",dto);
+		db.insert("Project.insertSchedule",dto);
+		return dto.getPschedule_seq();
 	}
 	
 	public int updateState(Map<String,Object> data) {
