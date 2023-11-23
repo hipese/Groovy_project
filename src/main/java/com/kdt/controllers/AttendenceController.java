@@ -44,7 +44,7 @@ public class AttendenceController {
 	@PostMapping
 	public ResponseEntity<Integer> post(Vacation_documentDTO dto, MultipartFile[] files) throws Exception {
 
-		String upload = "c:/vdocument";
+		String upload = "/home/ubuntu/uploads/";
 		File uploadPath = new File(upload);
 		if (!uploadPath.exists()) {
 			uploadPath.mkdir();

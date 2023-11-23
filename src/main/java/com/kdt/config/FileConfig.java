@@ -9,8 +9,8 @@ public class FileConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/uploads/**").addResourceLocations("file:c:/uploads/");
-		registry.addResourceHandler("/profiles/**").addResourceLocations("file:c:/profiles/");
+		registry.addResourceHandler("/uploads/**").addResourceLocations("file:/home/ubuntu/uploads/");
+		registry.addResourceHandler("/profiles/**").addResourceLocations("file:/home/ubuntu/profiles/");
 	}
 	
 }

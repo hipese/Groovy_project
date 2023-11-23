@@ -120,13 +120,13 @@ public class MemberController {
 		
 		mservice.updateImage(id, fileName);
 		
-		File uploadPath=new File("c:/profiles");
+		File uploadPath=new File("/home/ubuntu/profiles/");
 		
 		if(!uploadPath.exists()) {
 			uploadPath.mkdir();
 		}
 		
-		Path storageLocation = Paths.get("C:\\profiles");
+		Path storageLocation = Paths.get("/home/ubuntu/profiles/");
 		
 		try {
 			if (cfile.isEmpty()) {
