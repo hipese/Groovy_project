@@ -39,7 +39,7 @@ public class Board_FileController {
 
 	@GetMapping("/download/{sys_name}")
 	public ResponseEntity<Resource> download(@PathVariable String sys_name) {
-		String filePath = "c:/uploads/" + sys_name;
+		String filePath = "/home/ubuntu/uploads" + sys_name;
 
 		byte[] fileContent;
 		try (InputStream inputStream = new FileInputStream(new File(filePath))) {
@@ -59,7 +59,7 @@ public class Board_FileController {
 
 	@GetMapping("/deptDownload/{sys_name}")
 	public ResponseEntity<Resource> Deptdownload(@PathVariable String sys_name) {
-		String filePath = "c:/uploads/" + sys_name;
+		String filePath = "/home/ubuntu/uploads/" + sys_name;
 
 		byte[] fileContent;
 		try (InputStream inputStream = new FileInputStream(new File(filePath))) {

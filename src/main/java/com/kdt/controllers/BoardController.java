@@ -54,7 +54,7 @@ public class BoardController {
 		dto = service.insert(dto);
 		int seq = dto.getSeq();
 
-		String upload = "c:/uploads";
+		String upload = "/home/ubuntu/uploads";
 		File uploadPath = new File(upload);
 
 		if (!uploadPath.exists()) {
@@ -91,7 +91,7 @@ public class BoardController {
 		dto = service.insertDept(dto);
 		int seq = dto.getSeq();
 
-		String upload = "c:/uploads";
+		String upload = "/home/ubuntu/uploads";
 		File uploadPath = new File(upload);
 
 		if (!uploadPath.exists()) {
@@ -210,7 +210,7 @@ public class BoardController {
 
 		service.updateBoard(dto);
 
-		String upload = "c:/uploads";
+		String upload = "/home/ubuntu/uploads";
 		File uploadPath = new File(upload);
 
 		if (!uploadPath.exists()) {
@@ -246,7 +246,7 @@ public class BoardController {
 
 		service.updateDept(dto);
 
-		String upload = "c:/uploads";
+		String upload = "/home/ubuntu/uploads";
 		File uploadPath = new File(upload);
 
 		if (!uploadPath.exists()) {
